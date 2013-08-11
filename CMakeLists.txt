@@ -8,6 +8,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -I${CMAKE_CURRENT_SOURCE_DIR}/src -O2
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG}")
 
 ADD_LIBRARY(litejit_lib
+            src/core/instance.c
             )
 
 SET_TARGET_PROPERTIES(
@@ -17,11 +18,14 @@ SET_TARGET_PROPERTIES(
     OUTPUT_NAME litejit
 )
 
-#######################
-#######################
-##    CLEAR RULE     ##
-#######################
-#######################
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+    add_custom_target(doc
+        ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/doc/Doxyfile
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "Generating API documentation with Doxygen" VERBATIM
+                     )
+endif(DOXYGEN_FOUND)
 
 CONFIGURE_FILE(
   "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_clear.cmake.in"
