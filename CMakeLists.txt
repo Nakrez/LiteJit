@@ -7,7 +7,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "-Wall -Wextra -I${CMAKE_CURRENT_SOURCE_DIR}/src -O0 -
 set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -I${CMAKE_CURRENT_SOURCE_DIR}/src -O2 -s -DNDEBUG")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG}")
 
-ADD_LIBRARY(litejit_lib
+ADD_LIBRARY(litejit_lib SHARED
             src/core/instance.c
             )
 
