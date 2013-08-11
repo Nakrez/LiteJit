@@ -1,4 +1,4 @@
-SET(alias "/")
+SET(alias "/" "/test/")
 
 FOREACH(name ${alias})
 EXEC_PROGRAM(

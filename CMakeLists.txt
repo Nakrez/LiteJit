@@ -18,6 +18,14 @@ SET_TARGET_PROPERTIES(
     OUTPUT_NAME litejit
 )
 
+# Test rule (make test)
+
+enable_testing()
+
+add_subdirectory(test)
+
+# Documentation rule (make doc)
+
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
     add_custom_target(doc
@@ -26,6 +34,8 @@ if(DOXYGEN_FOUND)
         COMMENT "Generating API documentation with Doxygen" VERBATIM
                      )
 endif(DOXYGEN_FOUND)
+
+# Clean working directory (make distclean)
 
 CONFIGURE_FILE(
   "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_clear.cmake.in"
