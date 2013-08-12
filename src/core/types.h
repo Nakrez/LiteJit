@@ -30,9 +30,19 @@
 #ifndef TYPES_H
 # define TYPES_H
 
+/**
+**  @brief  The enumeration of all built in type in @a LiteJit
+*/
 typedef enum ljit_types_e
 {
+    /**
+    **  @brief  32 bits signed integer
+    */
     LJIT_INT,
+
+    /**
+    **  @brief  32 bits unsigned integer
+    */
     LJIT_UINT,
 } ljit_types;
 
