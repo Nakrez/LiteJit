@@ -21,36 +21,53 @@
 */
 
 /**
- *  @file   instance.h
- *  @brief  Instance is one of the main component of @a LiteJit. It keeps all
- *          references of everything done by the library (generated
- *          functions, ...)
- *  @author Baptiste Covolato <b.covolato@gmail.com>
- *
- */
+**  @file   instance.h
+**  @brief  Instance is one of the main component of @a LiteJit. It keeps all
+**          references of everything done by the library (generated
+**          functions, ...)
+**  @author Baptiste Covolato <b.covolato@gmail.com>
+**
+*/
+
 #ifndef INSTANCE_H
 # define INSTANCE_H
 
 # include <stdlib.h>
 
+# include "arch.h"
+
 /**
- * Tracks every generated function, ...
- */
+** Tracks every generated function, ...
+*/
+
 typedef struct ljit_instance_s
 {
-
+    /**
+    **  The configured target architecture
+    */
+    ljit_arch_type target_arch;
 } ljit_instance;
 
 /**
- *  @brief  Create a new instance.
- *  @return The new instance allocated or NULL if something went wrong
- */
+**  @brief  Create a new instance.
+**  @return The new instance allocated or NULL if something went wrong
+*/
+
 ljit_instance *ljit_new_instance(void);
 
 /**
- *  @brief  Destroy an instance and free all associated functions, ...
- *  @param  instance    The instance you want to destroy
- */
+**  @brief  Destroy an instance and free all associated functions, ...
+**  @param  instance    The instance you want to destroy
+*/
+
 void ljit_free_instance(ljit_instance *instance);
+
+/**
+**  @brief  Set the target architecture
+**  @param  instance    The instance in which you want to set architecture
+**  @param  arch        The target architecture
+*/
+
+void ljit_set_arch(ljit_instance *instance, ljit_arch_type arch);
 
 #endif /* !INSTANCE_H */

@@ -29,9 +29,25 @@
 #ifndef ARCH_H
 # define ARCH_H
 
+/**
+**  @brief  The different target architecture supported by @a LiteJit
+*/
+
 typedef enum ljit_arch_type_e
 {
-    LJIT_ARCH_X86
+    /**
+    **  No architecture
+    */
+    LJIT_ARCH_NONE,
+
+    /**
+    **  X86 Architecture
+    */
+    LJIT_ARCH_X86,
+
+    /**
+    **  X64 Architecture
+    */
     LJIT_ARCH_X64
 } ljit_arch_type;
 
