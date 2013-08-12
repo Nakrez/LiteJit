@@ -31,10 +31,23 @@
 # define FUNCTION_H
 
 # include <stdlib.h>
+# include <string.h>
+
+# include "types.h"
+
+/**
+**  @brief  Signature of a function
+*/
+
+typedef struct ljit_signature_s
+{
+    ljit_types ret_type;
+    ljit_types *params_type;
+} ljit_signature;
 
 typedef struct ljit_function_s
 {
-
+    ljit_signature *signature;
 } ljit_function;
 
 /**
@@ -51,5 +64,23 @@ ljit_function *ljit_new_function(void);
 */
 
 void ljit_free_function(ljit_function *fun);
+
+/**
+**  @brief  Create the signature of a function
+**  @param  fun             The function to which you want to add the signature
+**  @param  ret_type        The return type of the function
+**  @param  param_number    The number of parameter of the signature
+**  @param  param_types     An array that represent the type of each parameter
+**
+**  @return 0 if everythin went well
+**          -1 if they were a allocation problem
+**          -2 if fun is NULL
+*/
+
+int ljit_new_signature(ljit_function *fun,
+                       ljit_types ret_type,
+                       int param_number,
+                       ljit_types *param_types);
+
 
 #endif /* !FUNCTION_H */
