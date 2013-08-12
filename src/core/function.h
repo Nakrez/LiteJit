@@ -24,6 +24,7 @@
 **  @file   function.h
 **  @brief  Interface for function creation
 **  @author Baptiste Covolato <b.covolato@gmail.com>
+**  @date   12 August 2013
 */
 
 #ifndef FUNCTION_H

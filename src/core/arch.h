@@ -21,11 +21,12 @@
 */
 
 /**
- *  @file   arch.h
- *  @brief  Description of different architectures.
- *  @author Baptiste Covolato <b.covolato@gmail.com>
- *
- */
+**  @file   arch.h
+**  @brief  Description of different architectures.
+**  @author Baptiste Covolato <b.covolato@gmail.com>
+**  @date   12 August 2013
+*/
+
 #ifndef ARCH_H
 # define ARCH_H
 

@@ -26,7 +26,7 @@
 **          references of everything done by the library (generated
 **          functions, ...)
 **  @author Baptiste Covolato <b.covolato@gmail.com>
-**
+**  @date   11 August 2013
 */
 
 #ifndef INSTANCE_H
