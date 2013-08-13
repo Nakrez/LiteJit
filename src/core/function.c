@@ -1,6 +1,6 @@
 #include "function.h"
 
-ljit_function *ljit_create_function(void)
+ljit_function *ljit_new_function(void)
 {
     ljit_function *new_function = NULL;
 
