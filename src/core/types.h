@@ -46,5 +46,15 @@ typedef enum ljit_types_e
     LJIT_UINT,
 } ljit_types;
 
+/**
+**  @brief  Base type of all @a LiteJit types
+*/
 
+typedef struct ljit_base_type_s
+{
+    /**
+    **  @brief  The identification of the type
+    */
+    ljit_types type;
+} ljit_base_type;
 #endif /* !TYPES_H */
