@@ -1,6 +1,6 @@
 #include "function.h"
 
-ljit_function *ljit_new_function(void)
+ljit_function *ljit_new_function(ljit_instance *instance)
 {
     ljit_function *new_function = NULL;
 
@@ -8,6 +8,7 @@ ljit_function *ljit_new_function(void)
         return NULL;
 
     new_function->signature = NULL;
+    new_function->instance = instance;
 
     return new_function;
 }
@@ -16,7 +17,6 @@ static void ljit_free_signature(ljit_signature *sig)
 {
     if (!sig)
         return;
-
 
     free(sig->params_type);
     free(sig);

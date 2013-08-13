@@ -33,6 +33,7 @@
 # include <stdlib.h>
 # include <string.h>
 
+# include "instance-def.h"
 # include "types.h"
 
 /**
@@ -47,6 +48,7 @@ typedef struct ljit_signature_s
 
 typedef struct ljit_function_s
 {
+    ljit_instance *instance;
     ljit_signature *signature;
 } ljit_function;
 
@@ -55,7 +57,7 @@ typedef struct ljit_function_s
 **  @return The new function created if everything went well, NULL otherwise
 */
 
-ljit_function *ljit_new_function(void);
+ljit_function *ljit_new_function(ljit_instance *instance);
 
 /**
 **  @brief  Free the memory allocated for a function (The function won't be
