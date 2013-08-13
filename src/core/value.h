@@ -39,9 +39,41 @@
 typedef struct ljit_value_s
 {
     /**
-    **  @brief  The identification of the type
+    **  @brief  The type of the value
     */
     ljit_types type;
 } ljit_value;
+
+/**
+**  @brief  4 bit signed integer value
+*/
+typedef struct ljit_int_s
+{
+    /**
+    **  @brief  The type of the value
+    */
+    ljit_types type;
+
+    /**
+    **  @brief  The content of the signed integer value
+    */
+    int val;
+} ljit_int;
+
+/**
+**  @brief  4 bit unsigned integer value
+*/
+typedef struct ljit_uint_s
+{
+    /**
+    **  @brief  The type of the value
+    */
+    ljit_types type;
+
+    /**
+    **  @brief  The content of the unsigned integer value
+    */
+    unsigned int val;
+} ljit_uint;
 
 #endif /* !VALUE_H */
