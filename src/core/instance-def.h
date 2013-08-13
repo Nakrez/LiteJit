@@ -33,7 +33,7 @@
 # include "arch.h"
 
 /**
-** Tracks every generated function, ...
+** Keep all configuration informations
 */
 
 typedef struct ljit_instance_s

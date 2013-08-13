@@ -23,8 +23,7 @@
 /**
 **  @file   instance.h
 **  @brief  Instance is one of the main component of @a LiteJit. It keeps all
-**          references of everything done by the library (generated
-**          functions, ...)
+**          the configuration of the library
 **  @author Baptiste Covolato <b.covolato@gmail.com>
 **  @date   11 August 2013
 */
