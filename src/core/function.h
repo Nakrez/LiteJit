@@ -42,13 +42,32 @@
 
 typedef struct ljit_signature_s
 {
+    /**
+    **  @brief  The return type of the function
+    */
     ljit_types ret_type;
+
+    /**
+    **  @brief  An array containing the type of each parameter
+    */
     ljit_types *params_type;
 } ljit_signature;
 
+/**
+**  @brief  The content of a @a LiteJit function. It contains all information
+**          that allows you to create and use a function
+*/
+
 typedef struct ljit_function_s
 {
+    /**
+    **  @brief  The instance the function is using
+    */
     ljit_instance *instance;
+
+    /**
+    **  @brief  The signature of the function
+    */
     ljit_signature *signature;
 } ljit_function;
 
