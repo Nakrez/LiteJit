@@ -30,7 +30,7 @@
 #ifndef BYTECODE_H
 # define BYTECODE_H
 
-# include "types.h"
+# include "value.h"
 
 /**
 **  @brief  All bytecode instruction
@@ -70,7 +70,7 @@ typedef struct ljit_bytecode_one_s
     /**
     **  @brief  The first operand of the instruction
     */
-    ljit_base_type *op1;
+    ljit_value *op1;
 } ljit_bytecode_one;
 
 /**
@@ -87,12 +87,12 @@ typedef struct ljit_bytecode_two_s
     /**
     **  @brief  The first operand of the instruction
     */
-    ljit_base_type *op1;
+    ljit_value *op1;
 
     /**
     **  @brief  The second operand of the instruction
     */
-    ljit_base_type *op2;
+    ljit_value *op2;
 } ljit_bytecode_two;
 
 #endif /* !BYTECODE_H */

@@ -21,29 +21,27 @@
 */
 
 /**
-**  @file   types.h
-**  @brief  Description of all types available in @a LiteJit
+**  @file   value.h
+**  @brief  Description of all value available in @a LiteJit
 **  @author Baptiste Covolato <b.covolato@gmail.com>
 **  @date   12 August 2013
 */
 
-#ifndef TYPES_H
-# define TYPES_H
+#ifndef VALUE_H
+# define VALUE_H
+
+# include "types.h"
 
 /**
-**  @brief  The enumeration of all built in type in @a LiteJit
+**  @brief  Base value of all @a LiteJit
 */
-typedef enum ljit_types_e
+
+typedef struct ljit_value_s
 {
     /**
-    **  @brief  32 bits signed integer
+    **  @brief  The identification of the type
     */
-    LJIT_INT,
+    ljit_types type;
+} ljit_value;
 
-    /**
-    **  @brief  32 bits unsigned integer
-    */
-    LJIT_UINT,
-} ljit_types;
-
-#endif /* !TYPES_H */
+#endif /* !VALUE_H */
