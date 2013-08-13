@@ -12,8 +12,22 @@ ljit_function *ljit_create_function(void)
     return new_function;
 }
 
+static void ljit_free_signature(ljit_signature *sig)
+{
+    if (!sig)
+        return;
+
+
+    free(sig->params_type);
+    free(sig);
+}
+
 void ljit_free_function(ljit_function *fun)
 {
+    if (!fun)
+        return;
+
+    ljit_free_signature(fun->signature);
     free(fun);
 }
 
