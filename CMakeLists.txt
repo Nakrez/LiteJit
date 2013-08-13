@@ -10,6 +10,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG}")
 ADD_LIBRARY(litejit_lib SHARED
             src/core/instance.c
             src/core/function.c
+            src/core/bytecode.c
             )
 
 SET_TARGET_PROPERTIES(
