@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 project(LiteJit C)
 
-set(CMAKE_CXX_FLAGS_DEBUG "-Wall -Wextra -I${CMAKE_CURRENT_SOURCE_DIR}/src -O0 -g -ggdb")
+set(CMAKE_CXX_FLAGS_DEBUG "-Wall -Wextra -I${CMAKE_CURRENT_SOURCE_DIR}/src -O0 -g -ggdb -DLJIT_DEBUG")
 
 set(CMAKE_CXX_FLAGS_RELEASE "-Wall -Wextra -I${CMAKE_CURRENT_SOURCE_DIR}/src -O2 -s -DNDEBUG")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_DEBUG}")

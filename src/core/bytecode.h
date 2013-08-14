@@ -22,85 +22,15 @@
 
 /**
 **  @file   bytecode.h
-**  @brief  Internal @a LiteJit bytecode
+**  @brief  All function declaration to use @a LiteJit bytecode
 **  @author Baptiste Covolato <b.covolato@gmail.com>
-**  @date   13 August 2013
+**  @date   14 August 2013
 */
 
 #ifndef BYTECODE_H
 # define BYTECODE_H
 
-# include "types.h"
-
-/**
-**  @brief  All bytecode instruction
-*/
-
-typedef enum ljit_bytecode_type_e
-{
-    /** 0 Operand instructions **/
-
-    /** 1 Operand instructions **/
-
-    /** 2 Operand instructions **/
-
-    /** Special instructions **/
-
-    /**
-    **  @brief  Get the xth parameter
-    */
-    GET_PARAM,
-} ljit_bytecode_type;
-
-/**
-**  @brief  @a LiteJit bytecode instructions that does not need operand
-*/
-
-typedef struct ljit_bytecode_s
-{
-    /**
-    **  @brief  The type of the instruction
-    */
-    ljit_bytecode_type type;
-} ljit_bytecode;
-
-/**
-**  @brief  @a LiteJit bytecode instructions that uses one operand
-*/
-
-typedef struct ljit_bytecode_one_s
-{
-    /**
-    **  @brief  The type of the instruction
-    */
-    ljit_bytecode_type type;
-
-    /**
-    **  @brief  The first operand of the instruction
-    */
-    ljit_value op1;
-} ljit_bytecode_one;
-
-/**
-**  @brief  @a LiteJit bytecode instructions that uses two operands
-*/
-
-typedef struct ljit_bytecode_two_s
-{
-    /**
-    **  @brief  The type of the instruction
-    */
-    ljit_bytecode_type type;
-
-    /**
-    **  @brief  The first operand of the instruction
-    */
-    ljit_value op1;
-
-    /**
-    **  @brief  The second operand of the instruction
-    */
-    ljit_value op2;
-} ljit_bytecode_two;
+# include "function.h"
+# include "bytecode-def.h"
 
 #endif /* !BYTECODE_H */
