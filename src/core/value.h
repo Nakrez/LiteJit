@@ -47,6 +47,7 @@ typedef struct ljit_value_s
 /**
 **  @brief  4 bit signed integer value
 */
+
 typedef struct ljit_int_s
 {
     /**
@@ -63,6 +64,7 @@ typedef struct ljit_int_s
 /**
 **  @brief  4 bit unsigned integer value
 */
+
 typedef struct ljit_uint_s
 {
     /**
