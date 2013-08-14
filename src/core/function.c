@@ -31,6 +31,7 @@ void ljit_free_function(ljit_function *fun)
     free(fun);
 }
 
+/** TODO : Check if one of the parameter as type VOID **/
 int ljit_new_signature(ljit_function *fun,
                        ljit_types ret_type,
                        int param_number,

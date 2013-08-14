@@ -36,14 +36,96 @@
 typedef enum ljit_types_e
 {
     /**
-    **  @brief  32 bits signed integer
+    **  @brief  Void type with C meaning. Usable only as return type of a
+    **          function.
+    */
+    LJIT_VOID,
+
+    /**
+    **  @brief  8-bit signed integer
+    */
+    LJIT_CHAR,
+
+    /**
+    **  @brief  8-bit unsigned integer
+    */
+    LJIT_UCHAR,
+
+    /**
+    **  @brief  16-bit signed integer
+    */
+    LJIT_SHORT,
+
+    /**
+    **  @brief  16-bit unsigned integer
+    */
+    LJIT_USHORT,
+
+    /**
+    **  @brief  32-bit signed integer
     */
     LJIT_INT,
 
     /**
-    **  @brief  32 bits unsigned integer
+    **  @brief  32-bit unsigned integer
     */
     LJIT_UINT,
+
+    /**
+    **  @brief  64-bit signed integer
+    */
+    LJIT_LONG,
+
+    /**
+    **  @brief  64-bit unsigned intger
+    */
+    LJIT_ULONG
 } ljit_types;
+
+/**
+**  @brief  Base value of all @a LiteJit
+*/
+
+typedef struct ljit_value_s
+{
+    /**
+    **  @brief  The type of the value
+    */
+    ljit_types type;
+} ljit_value;
+
+/**
+**  @brief  4 bit signed integer value
+*/
+
+typedef struct ljit_int_s
+{
+    /**
+    **  @brief  The type of the value
+    */
+    ljit_types type;
+
+    /**
+    **  @brief  The content of the signed integer value
+    */
+    int val;
+} ljit_int;
+
+/**
+**  @brief  4 bit unsigned integer value
+*/
+
+typedef struct ljit_uint_s
+{
+    /**
+    **  @brief  The type of the value
+    */
+    ljit_types type;
+
+    /**
+    **  @brief  The content of the unsigned integer value
+    */
+    unsigned int val;
+} ljit_uint;
 
 #endif /* !TYPES_H */

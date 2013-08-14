@@ -30,7 +30,7 @@
 #ifndef BYTECODE_H
 # define BYTECODE_H
 
-# include "value.h"
+# include "types.h"
 
 /**
 **  @brief  All bytecode instruction
