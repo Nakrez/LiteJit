@@ -35,6 +35,7 @@
 
 # include "instance-def.h"
 # include "types.h"
+# include "bytecode-list.h"
 
 /**
 **  @brief  Signature of a function
@@ -69,6 +70,11 @@ typedef struct ljit_function_s
     **  @brief  The signature of the function
     */
     ljit_signature *signature;
+
+    /**
+    **  @brief  The bytecode representing the function
+    */
+    ljit_bytecode_list *bytecode;
 } ljit_function;
 
 /**

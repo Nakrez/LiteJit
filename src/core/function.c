@@ -9,6 +9,13 @@ ljit_function *ljit_new_function(ljit_instance *instance)
 
     new_function->signature = NULL;
     new_function->instance = instance;
+    new_function->bytecode = ljit_new_bytecode_list();
+
+    if (!new_function->bytecode)
+    {
+        free(new_function);
+        return NULL;
+    }
 
     return new_function;
 }
@@ -27,6 +34,7 @@ void ljit_free_function(ljit_function *fun)
     if (!fun)
         return;
 
+    ljit_free_bytecode_list(fun->bytecode);
     ljit_free_signature(fun->signature);
     free(fun);
 }
