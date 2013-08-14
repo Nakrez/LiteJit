@@ -78,7 +78,7 @@ typedef struct ljit_bytecode_one_s
     /**
     **  @brief  The first operand of the instruction
     */
-    ljit_value *op1;
+    ljit_value op1;
 } ljit_bytecode_one;
 
 /**
@@ -95,12 +95,12 @@ typedef struct ljit_bytecode_two_s
     /**
     **  @brief  The first operand of the instruction
     */
-    ljit_value *op1;
+    ljit_value op1;
 
     /**
     **  @brief  The second operand of the instruction
     */
-    ljit_value *op2;
+    ljit_value op2;
 } ljit_bytecode_two;
 
 #endif /* !BYTECODE_H */

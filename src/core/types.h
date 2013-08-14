@@ -86,19 +86,25 @@ typedef enum ljit_types_e
 **  @brief  Base value of all @a LiteJit
 */
 
-typedef struct ljit_value_s
+struct ljit_value_s
 {
     /**
     **  @brief  The type of the value
     */
     ljit_types type;
-} ljit_value;
+};
+
+/**
+**  @brief  Pointer typedef to @a ljit_value_s
+*/
+
+typedef struct ljit_value_s * ljit_value;
 
 /**
 **  @brief  4 bit signed integer value
 */
 
-typedef struct ljit_int_s
+struct ljit_int_s
 {
     /**
     **  @brief  The type of the value
@@ -109,13 +115,19 @@ typedef struct ljit_int_s
     **  @brief  The content of the signed integer value
     */
     int val;
-} ljit_int;
+};
+
+/**
+**  @brief  Pointer typedef to @a ljit_int_s
+*/
+
+typedef struct ljit_int_s * ljit_int;
 
 /**
 **  @brief  4 bit unsigned integer value
 */
 
-typedef struct ljit_uint_s
+struct ljit_uint_s
 {
     /**
     **  @brief  The type of the value
@@ -126,6 +138,12 @@ typedef struct ljit_uint_s
     **  @brief  The content of the unsigned integer value
     */
     unsigned int val;
-} ljit_uint;
+};
+
+/**
+**  @brief  Pointer typedef to @a ljit_uint_s
+*/
+
+typedef struct ljit_uint_s * ljit_uint;
 
 #endif /* !TYPES_H */
