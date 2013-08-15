@@ -31,12 +31,14 @@
 # define INTERNAL_H
 
 # include <ljit/types.h>
+# include <ljit/function.h>
 
 /**
 **  @brief  Create a new temporary value
+**  @param  fun     The function that contains the temporary value
 **  @param  type    The type of the new temporary value
 */
 
-ljit_value _ljit_new_temporary(ljit_types type);
+ljit_value _ljit_new_temporary(ljit_function *fun, ljit_types type);
 
 #endif /* !INTERNAL_H */
