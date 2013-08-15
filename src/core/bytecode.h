@@ -38,8 +38,8 @@
 **  @param  fun The function where you want to get the @a pos parameter
 **  @param  pos The position of the parameter
 **
-**  @return The parameter if everything went well
-**          NULL if the @pos index does not match the definition of the
+**  @return The parameter if everything went well.
+**          NULL if the @a pos index does not match the definition of the
 **          function
 */
 
