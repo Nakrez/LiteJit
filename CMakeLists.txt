@@ -8,6 +8,7 @@ set(CMAKE_C_FLAGS_RELEASE "-Wall -Wextra -I${CMAKE_CURRENT_SOURCE_DIR}/include -
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS_DEBUG}")
 
 ADD_LIBRARY(litejit_lib SHARED
+            src/core/internal.c
             src/core/instance.c
             src/core/function.c
             src/core/types.c
