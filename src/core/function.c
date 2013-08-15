@@ -10,6 +10,7 @@ ljit_function *ljit_new_function(ljit_instance *instance)
     new_function->signature = NULL;
     new_function->instance = instance;
     new_function->bytecode = ljit_new_bytecode_list();
+    new_function->uniq_index = 0;
 
     if (!new_function->bytecode)
     {
@@ -61,7 +62,8 @@ int ljit_new_signature(ljit_function *fun,
             return -1;
         }
 
-        memcpy(sig->params_type, param_types, sizeof(param_types));
+        memcpy(sig->params_type, param_types,
+               sizeof(ljit_types) * param_number);
     }
     else
         sig->params_type = NULL;
@@ -69,4 +71,6 @@ int ljit_new_signature(ljit_function *fun,
     sig->ret_type = ret_type;
 
     fun->signature = sig;
+
+    return 0;
 }

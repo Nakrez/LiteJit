@@ -75,6 +75,11 @@ typedef struct ljit_function_s
     **  @brief  The bytecode representing the function
     */
     ljit_bytecode_list *bytecode;
+
+    /**
+    **  @brief  Unique index for temporary value old by the function
+    */
+    unsigned short uniq_index;
 } ljit_function;
 
 /**
