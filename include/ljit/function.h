@@ -33,21 +33,7 @@
 # include <stdlib.h>
 # include <string.h>
 
-# include "instance.h"
-# include "types.h"
-
-/**
-**  @brief  Signature of a function
-*/
-
-typedef struct _ljit_signature_s ljit_signature;
-
-/**
-**  @brief  The content of a @a LiteJit function. It contains all information
-**          that allows you to create and use a function
-*/
-
-typedef struct _ljit_function_s ljit_function;
+# include "typedef.h"
 
 /**
 **  @brief  Create a new function definition

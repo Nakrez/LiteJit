@@ -30,6 +30,7 @@
 #ifndef LJIT_H
 # define LJIT_H
 
+# include <ljit/typedef.h>
 # include <ljit/arch.h>
 # include <ljit/types.h>
 # include <ljit/function.h>

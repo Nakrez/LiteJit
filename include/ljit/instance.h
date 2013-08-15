@@ -33,13 +33,8 @@
 
 # include <stdlib.h>
 
+# include "typedef.h"
 # include "arch.h"
-
-/**
-** Keep all configuration informations
-*/
-
-typedef struct _ljit_instance_s ljit_instance;
 
 /**
 **  @brief  Create a new instance.

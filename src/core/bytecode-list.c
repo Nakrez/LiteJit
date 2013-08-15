@@ -15,7 +15,7 @@ ljit_bytecode_list *ljit_new_bytecode_list(void)
     return list;
 }
 
-void ljit_free_bytecode_list(ljit_bytecode_list *list)
+void ljit_free_bytecode_list(ljit_function *fun, ljit_bytecode_list *list)
 {
     struct ljit_bytecode_list_element_s *l;
     struct ljit_bytecode_list_element_s *tmp;
@@ -29,7 +29,7 @@ void ljit_free_bytecode_list(ljit_bytecode_list *list)
     {
         tmp = l->next;
 
-        _ljit_free_bytecode(l->instr);
+        _ljit_free_bytecode(fun, l->instr);
         free(l);
 
         l = tmp;

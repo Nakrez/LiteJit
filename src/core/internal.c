@@ -28,14 +28,26 @@ ljit_value _ljit_new_temporary(ljit_function *fun, ljit_types type)
     return val;
 }
 
-void _ljit_free_bytecode(ljit_bytecode *instr)
+void _ljit_free_temporary(ljit_function *fun, ljit_value tmp)
+{
+    if (!tmp && tmp->index >= fun->tmp_table_size
+        && fun->temporary_table[tmp->index] != tmp)
+        return;
+
+    fun->temporary_table[tmp->index] = NULL;
+
+    free(tmp->data);
+    free(tmp);
+}
+
+void _ljit_free_bytecode(ljit_function *fun, ljit_bytecode *instr)
 {
     if (!instr)
         return;
 
-    ljit_free_value(instr->op1);
-    ljit_free_value(instr->op2);
-    ljit_free_value(instr->ret_val);
+    ljit_free_value(fun, instr->op1);
+    ljit_free_value(fun, instr->op2);
+    ljit_free_value(fun, instr->ret_val);
 
     free(instr);
 }

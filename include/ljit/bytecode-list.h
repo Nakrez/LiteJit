@@ -32,46 +32,7 @@
 
 # include <stdlib.h>
 
-# include "bytecode.h"
-
-/**
-**  @brief  Bytecode list element
-*/
-
-struct ljit_bytecode_list_element_s
-{
-    /**
-    **  @brief  The content of the element
-    */
-    ljit_bytecode *instr;
-
-    /**
-    **  @brief  The next element of the list
-    */
-    struct ljit_bytecode_list_element_s *next;
-};
-
-/**
-**  @brief  Bytecode list container
-*/
-
-typedef struct
-{
-    /**
-    **  @brief  The head of the list
-    */
-    struct ljit_bytecode_list_element_s *head;
-
-    /**
-    **  @brief  The tail of the list
-    */
-    struct ljit_bytecode_list_element_s *tail;
-
-    /**
-    **  @brief  The size of the list
-    */
-    unsigned int size;
-} ljit_bytecode_list;
+# include "typedef.h"
 
 /**
 **  @brief  Create a new bytecode list
@@ -84,10 +45,12 @@ ljit_bytecode_list *ljit_new_bytecode_list(void);
 
 /**
 **  @brief  Destroy a bytecode list
+**  param   fun     The function that holds the bytecode list
 **  param   list    The list you want to destroy
 */
 
-void ljit_free_bytecode_list(ljit_bytecode_list *list);
+void ljit_free_bytecode_list(ljit_function *fun, ljit_bytecode_list *list);
+
 /**
 **  @brief  Add an instruction to a bytecode list. The element is added at the
 **          end of the list.

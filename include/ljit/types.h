@@ -32,88 +32,7 @@
 
 # include <stdlib.h>
 
-/**
-**  @brief  The enumeration of all built in type in @a LiteJit
-*/
-
-typedef enum _ljit_types_e
-{
-    /**
-    **  @brief  Void type with C meaning. Usable only as return type of a
-    **          function.
-    */
-    LJIT_VOID,
-
-    /**
-    **  @brief  8-bit signed integer
-    */
-    LJIT_CHAR,
-
-    /**
-    **  @brief  8-bit unsigned integer
-    */
-    LJIT_UCHAR,
-
-    /**
-    **  @brief  16-bit signed integer
-    */
-    LJIT_SHORT,
-
-    /**
-    **  @brief  16-bit unsigned integer
-    */
-    LJIT_USHORT,
-
-    /**
-    **  @brief  32-bit signed integer
-    */
-    LJIT_INT,
-
-    /**
-    **  @brief  32-bit unsigned integer
-    */
-    LJIT_UINT,
-
-    /**
-    **  @brief  64-bit signed integer
-    */
-    LJIT_LONG,
-
-    /**
-    **  @brief  64-bit unsigned intger
-    */
-    LJIT_ULONG
-} ljit_types;
-
-/**
-**  @brief  Pointer typedef to @a ljit_value_s
-*/
-
-typedef struct ljit_value_s * ljit_value;
-
-/**
-**  @brief  8-bit signed integer value
-*/
-
-typedef char ljit_char;
-
-/**
-**  @brief  8-bit unsigned integer value
-*/
-
-typedef unsigned char ljit_uchar;
-
-/**
-**  @brief  32-bit signed integer value
-*/
-
-typedef int ljit_int;
-
-/**
-**  @brief  32-bit unsigned integer value
-*/
-
-typedef unsigned int ljit_uint;
+# include "typedef.h"
 
 /**
 **  @brief  Create a new @a LiteJit value of type @a type
@@ -129,7 +48,7 @@ ljit_value ljit_new_value(ljit_types type);
 **  @param  value   The value you want to free
 */
 
-void ljit_free_value(ljit_value value);
+void ljit_free_value(ljit_function *fun, ljit_value value);
 
 /**
 **  @brief  Create a new 8-bit unsigned integer constant
