@@ -80,6 +80,16 @@ typedef struct ljit_function_s
     **  @brief  Unique index for temporary value old by the function
     */
     unsigned short uniq_index;
+
+    /**
+    **  @brief  The size of the temporary table
+    */
+    unsigned short tmp_table_size;
+
+    /**
+    **  @brief  The temporary table hold by the function
+    */
+    ljit_value *temporary_table;
 } ljit_function;
 
 /**

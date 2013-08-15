@@ -9,11 +9,21 @@ ljit_function *ljit_new_function(ljit_instance *instance)
 
     new_function->signature = NULL;
     new_function->instance = instance;
+    new_function->tmp_table_size = 8;
+
+    if ((new_function->temporary_table = malloc(8 * sizeof(ljit_value))) == NULL)
+    {
+        free(new_function);
+        return NULL;
+    }
+
+    memset(new_function->temporary_table, 0, 8 * sizeof(ljit_value));
     new_function->bytecode = ljit_new_bytecode_list();
     new_function->uniq_index = 0;
 
     if (!new_function->bytecode)
     {
+        free(new_function->temporary_table);
         free(new_function);
         return NULL;
     }
@@ -35,6 +45,16 @@ void ljit_free_function(ljit_function *fun)
     if (!fun)
         return;
 
+    for (unsigned short i = 0; i < fun->tmp_table_size; ++i)
+    {
+        if (fun->temporary_table[i])
+        {
+            free(fun->temporary_table[i]->data);
+            free(fun->temporary_table[i]);
+        }
+    }
+
+    free(fun->temporary_table);
     ljit_free_bytecode_list(fun->bytecode);
     ljit_free_signature(fun->signature);
     free(fun);

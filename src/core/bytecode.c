@@ -18,7 +18,6 @@ static ljit_bytecode *_ljit_new_bytecode(ljit_bytecode_type type,
     return instr;
 }
 
-
 ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos)
 {
     ljit_value ret_val = NULL;
@@ -43,6 +42,7 @@ ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos)
         return NULL;
     }
 
+    instr->ret_val = ret_val;
     ljit_bytecode_list_add(&fun->bytecode, instr);
 
     return ret_val;
