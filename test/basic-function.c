@@ -1,8 +1,6 @@
 #include <assert.h>
 
-#include <ljit/instance.h>
-#include <ljit/function.h>
-#include <ljit/bytecode.h>
+#include <ljit/ljit.h>
 
 int main(void)
 {

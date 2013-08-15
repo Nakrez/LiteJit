@@ -36,7 +36,54 @@
 **  @brief  The enumeration of all built in type in @a LiteJit
 */
 
-typedef enum _ljit_types_e ljit_types;
+typedef enum _ljit_types_e
+{
+    /**
+    **  @brief  Void type with C meaning. Usable only as return type of a
+    **          function.
+    */
+    LJIT_VOID,
+
+    /**
+    **  @brief  8-bit signed integer
+    */
+    LJIT_CHAR,
+
+    /**
+    **  @brief  8-bit unsigned integer
+    */
+    LJIT_UCHAR,
+
+    /**
+    **  @brief  16-bit signed integer
+    */
+    LJIT_SHORT,
+
+    /**
+    **  @brief  16-bit unsigned integer
+    */
+    LJIT_USHORT,
+
+    /**
+    **  @brief  32-bit signed integer
+    */
+    LJIT_INT,
+
+    /**
+    **  @brief  32-bit unsigned integer
+    */
+    LJIT_UINT,
+
+    /**
+    **  @brief  64-bit signed integer
+    */
+    LJIT_LONG,
+
+    /**
+    **  @brief  64-bit unsigned intger
+    */
+    LJIT_ULONG
+} ljit_types;
 
 /**
 **  @brief  Pointer typedef to @a ljit_value_s

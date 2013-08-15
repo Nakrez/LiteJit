@@ -35,5 +35,6 @@
 # include <ljit/function.h>
 # include <ljit/bytecode.h>
 # include <ljit/bytecode-list.h>
+# include <ljit/defs.h>
 
 #endif /* !LJIT_H */

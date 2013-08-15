@@ -36,7 +36,21 @@
 **  @brief  All bytecode instruction
 */
 
-typedef enum _ljit_bytecode_type_e ljit_bytecode_type;
+typedef enum _ljit_bytecode_type_e
+{
+    /** 0 Operand instructions **/
+
+    /** 1 Operand instructions **/
+
+    /** 2 Operand instructions **/
+
+    /** Special instructions **/
+
+    /**
+    **  @brief  Get the xth parameter
+    */
+    GET_PARAM
+} ljit_bytecode_type;
 
 /**
 **  @brief  @a LiteJit bytecode instructions that does not need operand
