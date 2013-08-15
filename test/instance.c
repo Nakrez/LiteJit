@@ -1,6 +1,6 @@
 #include <assert.h>
 
-#include "../src/core/instance.h"
+#include <ljit/instance.h>
 
 int main(void)
 {

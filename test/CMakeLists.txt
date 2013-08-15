@@ -1,3 +1,4 @@
+add_definitions(-I../include)
 ## Instance test
 add_executable(instance_test
                EXCLUDE_FROM_ALL
