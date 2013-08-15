@@ -62,35 +62,6 @@ typedef struct ljit_bytecode_s
     **  @brief  The type of the instruction
     */
     ljit_bytecode_type type;
-} ljit_bytecode;
-
-/**
-**  @brief  @a LiteJit bytecode instructions that uses one operand
-*/
-
-typedef struct ljit_bytecode_one_s
-{
-    /**
-    **  @brief  The type of the instruction
-    */
-    ljit_bytecode_type type;
-
-    /**
-    **  @brief  The first operand of the instruction
-    */
-    ljit_value op1;
-} ljit_bytecode_one;
-
-/**
-**  @brief  @a LiteJit bytecode instructions that uses two operands
-*/
-
-typedef struct ljit_bytecode_two_s
-{
-    /**
-    **  @brief  The type of the instruction
-    */
-    ljit_bytecode_type type;
 
     /**
     **  @brief  The first operand of the instruction
@@ -101,25 +72,6 @@ typedef struct ljit_bytecode_two_s
     **  @brief  The second operand of the instruction
     */
     ljit_value op2;
-} ljit_bytecode_two;
-
-/** Specific instructions structure **/
-
-/**
-**  @brief  The structure representing GET_PARAM instruction
-*/
-
-typedef struct ljit_bytecode_get_param_s
-{
-    /**
-    **  @brief  The type of the instruction. Always GET_PARAM
-    */
-    ljit_bytecode_type type;
-
-    /**
-    **  @brief  The number of the parameter
-    */
-    unsigned int number;
-} ljit_bytecode_get_param;
+} ljit_bytecode;
 
 #endif /* !BYTECODE_DEF_H */

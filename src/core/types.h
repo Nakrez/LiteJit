@@ -92,6 +92,11 @@ struct ljit_value_s
     **  @brief  The type of the value
     */
     ljit_types type;
+
+    /**
+    **  @brief  The data holed by the value
+    */
+    void *data;
 };
 
 /**
@@ -104,46 +109,12 @@ typedef struct ljit_value_s * ljit_value;
 **  @brief  4 bit signed integer value
 */
 
-struct ljit_int_s
-{
-    /**
-    **  @brief  The type of the value
-    */
-    ljit_types type;
-
-    /**
-    **  @brief  The content of the signed integer value
-    */
-    int val;
-};
-
-/**
-**  @brief  Pointer typedef to @a ljit_int_s
-*/
-
-typedef struct ljit_int_s * ljit_int;
+typedef int ljit_int;
 
 /**
 **  @brief  4 bit unsigned integer value
 */
 
-struct ljit_uint_s
-{
-    /**
-    **  @brief  The type of the value
-    */
-    ljit_types type;
-
-    /**
-    **  @brief  The content of the unsigned integer value
-    */
-    unsigned int val;
-};
-
-/**
-**  @brief  Pointer typedef to @a ljit_uint_s
-*/
-
-typedef struct ljit_uint_s * ljit_uint;
+typedef unsigned int ljit_uint;
 
 #endif /* !TYPES_H */
