@@ -1,4 +1,4 @@
-#include "bytecode-list.h"
+#include <ljit/bytecode-list.h>
 
 ljit_bytecode_list *ljit_new_bytecode_list(void)
 {

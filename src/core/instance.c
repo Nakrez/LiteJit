@@ -1,4 +1,4 @@
-#include "instance.h"
+#include <ljit/instance.h>
 
 ljit_instance *ljit_new_instance(void)
 {

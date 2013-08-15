@@ -101,6 +101,16 @@ struct ljit_value_s
     unsigned char is_cst : 1;
 
     /**
+    **  @brief  Indicates if the value is a temporary value
+    */
+    unsigned char is_tmp : 1;
+
+    /**
+    **  @brief  Unique identifier used to identified temporaries/registers
+    */
+    unsigned short index;
+
+    /**
     **  @brief  The data holed by the value
     */
     void *data;

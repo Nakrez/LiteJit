@@ -1,4 +1,4 @@
-#include "types.h"
+#include <ljit/types.h>
 
 ljit_value ljit_new_value(ljit_types type)
 {
@@ -9,6 +9,8 @@ ljit_value ljit_new_value(ljit_types type)
 
     val->type = type;
     val->is_cst = 0;
+    val->is_tmp = 0;
+    val->index = 0;
     val->data = NULL;
 
     return val;

@@ -40,7 +40,7 @@
 **
 **  @return The parameter if everything went well.
 **          NULL if the @a pos index does not match the definition of the
-**          function
+**          function or there is an allocation problem.
 */
 
 ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos);
