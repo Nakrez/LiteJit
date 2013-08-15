@@ -32,6 +32,7 @@
 
 # include <ljit/types.h>
 # include <ljit/function.h>
+# include <ljit/bytecode-def.h>
 
 /**
 **  @brief  Create a new temporary value
@@ -40,5 +41,11 @@
 */
 
 ljit_value _ljit_new_temporary(ljit_function *fun, ljit_types type);
+
+/**
+**  @brief  Delete a bytecode instruction
+**  @param  instr   The instruction to delete
+*/
+void _ljit_free_bytecode(ljit_bytecode *instr);
 
 #endif /* !INTERNAL_H */

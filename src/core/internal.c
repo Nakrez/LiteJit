@@ -12,3 +12,15 @@ ljit_value _ljit_new_temporary(ljit_function *fun, ljit_types type)
 
     return val;
 }
+
+void _ljit_free_bytecode(ljit_bytecode *instr)
+{
+    if (!instr)
+        return;
+
+    ljit_free_value(instr->op1);
+    ljit_free_value(instr->op2);
+    ljit_free_value(instr->ret_val);
+
+    free(instr);
+}

@@ -18,17 +18,6 @@ static ljit_bytecode *_ljit_new_bytecode(ljit_bytecode_type type,
     return instr;
 }
 
-static void _ljit_free_bytecode(ljit_bytecode *instr)
-{
-    if (!instr)
-        return;
-
-    ljit_free_value(instr->op1);
-    ljit_free_value(instr->op2);
-    ljit_free_value(instr->ret_val);
-
-    free(instr);
-}
 
 ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos)
 {

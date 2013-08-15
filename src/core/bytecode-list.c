@@ -1,4 +1,5 @@
 #include <ljit/bytecode-list.h>
+#include "internal.h"
 
 ljit_bytecode_list *ljit_new_bytecode_list(void)
 {
@@ -16,10 +17,23 @@ ljit_bytecode_list *ljit_new_bytecode_list(void)
 
 void ljit_free_bytecode_list(ljit_bytecode_list *list)
 {
+    struct ljit_bytecode_list_element_s *l;
+    struct ljit_bytecode_list_element_s *tmp;
+
     if (!list)
         return;
 
-    /* FIXME : Add destruction of the list content */
+    l = list->head;
+
+    while (l)
+    {
+        tmp = l->next;
+
+        _ljit_free_bytecode(l->instr);
+        free(l);
+
+        l = tmp;
+    }
 
     free(list);
 }
