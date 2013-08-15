@@ -132,7 +132,7 @@ typedef char ljit_char;
 **  @brief  8-bit unsigned integer value
 */
 
-typedef char ljit_uchar;
+typedef unsigned char ljit_uchar;
 
 /**
 **  @brief  32-bit signed integer value

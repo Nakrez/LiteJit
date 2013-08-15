@@ -32,6 +32,11 @@
 
 # include <ljit/types.h>
 
+/**
+**  @brief  Create a new temporary value
+**  @param  type    The type of the new temporary value
+*/
+
 ljit_value _ljit_new_temporary(ljit_types type);
 
 #endif /* !INTERNAL_H */
