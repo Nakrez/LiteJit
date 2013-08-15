@@ -146,6 +146,13 @@ typedef unsigned int ljit_uint;
 ljit_value ljit_new_value(ljit_types type);
 
 /**
+**  @brief  Destroy a previous allocated value
+**  @param  value   The value you want to free
+*/
+
+void ljit_free_value(ljit_value value);
+
+/**
 **  @brief  Create a new 8-bit unsigned integer constant
 **  @param  value   The value of the new constant
 **

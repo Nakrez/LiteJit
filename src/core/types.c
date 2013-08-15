@@ -14,6 +14,15 @@ ljit_value ljit_new_value(ljit_types type)
     return val;
 }
 
+void ljit_free_value(ljit_value value)
+{
+    if (!value)
+        return;
+
+     free(value->data);
+     free(value);
+}
+
 ljit_value ljit_new_uchar_cst(ljit_uchar value)
 {
     ljit_value cst = ljit_new_value(LJIT_UCHAR);
@@ -24,7 +33,7 @@ ljit_value ljit_new_uchar_cst(ljit_uchar value)
 
     if ((val = malloc(sizeof(ljit_uchar))) == NULL)
     {
-        free(cst);
+        ljit_free_value(cst);
         return NULL;
     }
 
