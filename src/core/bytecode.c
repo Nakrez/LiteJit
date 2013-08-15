@@ -52,5 +52,7 @@ ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos)
         return NULL;
     }
 
+    ljit_bytecode_list_add(&fun->bytecode, instr);
+
     return ret_val;
 }
