@@ -106,13 +106,25 @@ struct ljit_value_s
 typedef struct ljit_value_s * ljit_value;
 
 /**
-**  @brief  4 bit signed integer value
+**  @brief  8-bit signed integer value
+*/
+
+typedef char ljit_char;
+
+/**
+**  @brief  8-bit unsigned integer value
+*/
+
+typedef char ljit_uchar;
+
+/**
+**  @brief  32-bit signed integer value
 */
 
 typedef int ljit_int;
 
 /**
-**  @brief  4 bit unsigned integer value
+**  @brief  32-bit unsigned integer value
 */
 
 typedef unsigned int ljit_uint;
