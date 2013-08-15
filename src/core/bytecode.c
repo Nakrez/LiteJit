@@ -36,6 +36,7 @@ ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos)
     ljit_bytecode *instr = NULL;
     ljit_value pos_cst = NULL;
 
+    /* Allocate new constant that represent the number of the parameter */
     if ((pos_cst = ljit_new_uchar_cst(pos)) == NULL)
         return NULL;
 
@@ -45,7 +46,8 @@ ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos)
         return NULL;
     }
 
-    if ((ret_val = _ljit_new_temporary(fun->signature->params_type[pos])) == NULL)
+    if ((ret_val = _ljit_new_temporary(fun,
+                                       fun->signature->params_type[pos])) == NULL)
     {
         ljit_free_value(pos_cst);
         _ljit_free_bytecode(instr);
