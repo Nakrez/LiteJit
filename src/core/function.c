@@ -1,4 +1,5 @@
 #include <ljit/function.h>
+#include "internal.h"
 
 ljit_function *ljit_new_function(ljit_instance *instance)
 {

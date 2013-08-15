@@ -35,86 +35,8 @@
 /**
 **  @brief  The enumeration of all built in type in @a LiteJit
 */
-typedef enum ljit_types_e
-{
-    /**
-    **  @brief  Void type with C meaning. Usable only as return type of a
-    **          function.
-    */
-    LJIT_VOID,
 
-    /**
-    **  @brief  8-bit signed integer
-    */
-    LJIT_CHAR,
-
-    /**
-    **  @brief  8-bit unsigned integer
-    */
-    LJIT_UCHAR,
-
-    /**
-    **  @brief  16-bit signed integer
-    */
-    LJIT_SHORT,
-
-    /**
-    **  @brief  16-bit unsigned integer
-    */
-    LJIT_USHORT,
-
-    /**
-    **  @brief  32-bit signed integer
-    */
-    LJIT_INT,
-
-    /**
-    **  @brief  32-bit unsigned integer
-    */
-    LJIT_UINT,
-
-    /**
-    **  @brief  64-bit signed integer
-    */
-    LJIT_LONG,
-
-    /**
-    **  @brief  64-bit unsigned intger
-    */
-    LJIT_ULONG
-} ljit_types;
-
-/**
-**  @brief  Base value of all @a LiteJit
-*/
-
-struct ljit_value_s
-{
-    /**
-    **  @brief  The type of the value
-    */
-    ljit_types type;
-
-    /**
-    **  @brief  Indicates if the value is a constant
-    */
-    unsigned char is_cst : 1;
-
-    /**
-    **  @brief  Indicates if the value is a temporary value
-    */
-    unsigned char is_tmp : 1;
-
-    /**
-    **  @brief  Unique identifier used to identified temporaries/registers
-    */
-    unsigned short index;
-
-    /**
-    **  @brief  The data holed by the value
-    */
-    void *data;
-};
+typedef enum _ljit_types_e ljit_types;
 
 /**
 **  @brief  Pointer typedef to @a ljit_value_s

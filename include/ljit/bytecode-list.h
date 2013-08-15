@@ -32,7 +32,7 @@
 
 # include <stdlib.h>
 
-# include "bytecode-def.h"
+# include "bytecode.h"
 
 /**
 **  @brief  Bytecode list element

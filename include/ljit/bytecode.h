@@ -31,7 +31,18 @@
 # define BYTECODE_H
 
 # include "function.h"
-# include "bytecode-def.h"
+
+/**
+**  @brief  All bytecode instruction
+*/
+
+typedef enum _ljit_bytecode_type_e ljit_bytecode_type;
+
+/**
+**  @brief  @a LiteJit bytecode instructions that does not need operand
+*/
+
+typedef struct _ljit_bytecode_s ljit_bytecode;
 
 /**
 **  @brief  Return the @a pos parameter of the function

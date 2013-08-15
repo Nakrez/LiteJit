@@ -33,64 +33,21 @@
 # include <stdlib.h>
 # include <string.h>
 
-# include "instance-def.h"
+# include "instance.h"
 # include "types.h"
-# include "bytecode-list.h"
 
 /**
 **  @brief  Signature of a function
 */
 
-typedef struct ljit_signature_s
-{
-    /**
-    **  @brief  The return type of the function
-    */
-    ljit_types ret_type;
-
-    /**
-    **  @brief  An array containing the type of each parameter
-    */
-    ljit_types *params_type;
-} ljit_signature;
+typedef struct _ljit_signature_s ljit_signature;
 
 /**
 **  @brief  The content of a @a LiteJit function. It contains all information
 **          that allows you to create and use a function
 */
 
-typedef struct ljit_function_s
-{
-    /**
-    **  @brief  The instance the function is using
-    */
-    ljit_instance *instance;
-
-    /**
-    **  @brief  The signature of the function
-    */
-    ljit_signature *signature;
-
-    /**
-    **  @brief  The bytecode representing the function
-    */
-    ljit_bytecode_list *bytecode;
-
-    /**
-    **  @brief  Unique index for temporary value old by the function
-    */
-    unsigned short uniq_index;
-
-    /**
-    **  @brief  The size of the temporary table
-    */
-    unsigned short tmp_table_size;
-
-    /**
-    **  @brief  The temporary table hold by the function
-    */
-    ljit_value *temporary_table;
-} ljit_function;
+typedef struct _ljit_function_s ljit_function;
 
 /**
 **  @brief  Create a new function definition

@@ -21,62 +21,19 @@
 */
 
 /**
-**  @file   bytecode-def.h
-**  @brief  Internal @a LiteJit bytecode
+**  @file   ljit.h
+**  @brief  Main include that contains all @LiteJit interface
 **  @author Baptiste Covolato <b.covolato@gmail.com>
-**  @date   14 August 2013
+**  @date   15 August 2013
 */
 
-#ifndef BYTECODE_DEF_H
-# define BYTECODE_DEF_H
+#ifndef LJIT_H
+# define LJIT_H
 
-# include "types.h"
+# include <ljit/arch.h>
+# include <ljit/types.h>
+# include <ljit/function.h>
+# include <ljit/bytecode.h>
+# include <ljit/bytecode-list.h>
 
-/**
-**  @brief  All bytecode instruction
-*/
-
-typedef enum ljit_bytecode_type_e
-{
-    /** 0 Operand instructions **/
-
-    /** 1 Operand instructions **/
-
-    /** 2 Operand instructions **/
-
-    /** Special instructions **/
-
-    /**
-    **  @brief  Get the xth parameter
-    */
-    GET_PARAM,
-} ljit_bytecode_type;
-
-/**
-**  @brief  @a LiteJit bytecode instructions that does not need operand
-*/
-
-typedef struct ljit_bytecode_s
-{
-    /**
-    **  @brief  The type of the instruction
-    */
-    ljit_bytecode_type type;
-
-    /**
-    **  @brief  The first operand of the instruction
-    */
-    ljit_value op1;
-
-    /**
-    **  @brief  The second operand of the instruction
-    */
-    ljit_value op2;
-
-    /**
-    **  @brief  The value returned by this instruction
-    */
-    ljit_value  ret_val;
-} ljit_bytecode;
-
-#endif /* !BYTECODE_DEF_H */
+#endif /* !LJIT_H */

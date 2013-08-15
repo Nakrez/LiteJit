@@ -1,4 +1,5 @@
 #include <ljit/types.h>
+#include "internal.h"
 
 ljit_value ljit_new_value(ljit_types type)
 {
