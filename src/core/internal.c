@@ -2,6 +2,17 @@
 
 static int _ljit_resize_tmp_table(ljit_function *fun)
 {
+    unsigned short old_size = fun->tmp_table_size;
+
+    fun->tmp_table_size *= 2;
+
+    if ((fun->temporary_table = realloc(fun->temporary_table,
+                                        sizeof(ljit_value) *
+                                        fun->tmp_table_size)) == NULL)
+        return -1;
+
+    memset(fun->temporary_table + old_size, 0, old_size * sizeof(ljit_value));
+
     return 0;
 }
 
