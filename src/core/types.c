@@ -4,7 +4,7 @@ ljit_value ljit_new_value(ljit_types type)
 {
     ljit_value val = NULL;
 
-    if ((val = malloc(sizeof(ljit_value))) == NULL)
+    if ((val = malloc(sizeof(struct ljit_value_s))) == NULL)
         return NULL;
 
     val->type = type;
