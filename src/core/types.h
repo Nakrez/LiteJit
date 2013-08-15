@@ -30,6 +30,8 @@
 #ifndef TYPES_H
 # define TYPES_H
 
+# include <stdlib.h>
+
 /**
 **  @brief  The enumeration of all built in type in @a LiteJit
 */
@@ -94,6 +96,11 @@ struct ljit_value_s
     ljit_types type;
 
     /**
+    **  @brief  Indicates if the value is a constant
+    */
+    unsigned char is_cst : 1;
+
+    /**
     **  @brief  The data holed by the value
     */
     void *data;
@@ -128,5 +135,23 @@ typedef int ljit_int;
 */
 
 typedef unsigned int ljit_uint;
+
+/**
+**  @brief  Create a new @a LiteJit value of type @a type
+**  @param  type    The type of the new value
+**
+**  @return The new value created or NULL if an allocation error happened
+*/
+
+ljit_value ljit_new_value(ljit_types type);
+
+/**
+**  @brief  Create a new 8-bit unsigned integer constant
+**  @param  value   The value of the new constant
+**
+**  @return The new constant or NULL if an allocation error happened
+*/
+
+ljit_value ljit_new_uchar_cst(ljit_uchar value);
 
 #endif /* !TYPES_H */

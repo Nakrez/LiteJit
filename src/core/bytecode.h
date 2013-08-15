@@ -43,6 +43,6 @@
 **          function
 */
 
-ljit_value ljit_inst_get_param(ljit_function *fun, unsigned char pos);
+ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos);
 
 #endif /* !BYTECODE_H */
