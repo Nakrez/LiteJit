@@ -93,6 +93,18 @@ ljit_value ljit_inst_sub(ljit_function *fun, ljit_value op1, ljit_value op2);
 ljit_value ljit_inst_mul(ljit_function *fun, ljit_value op1, ljit_value op2);
 
 /**
+**  @brief  Return the result of division of @a op1 and @a op2
+**  @param  fun The function where you want to the @a div instruction
+**  @param  op1 The first operand of the division
+**  @param  op2 The second operand of the division
+**
+**  @return The temporary that holds the result of the division.
+**          NULL if an allocation error occured
+*/
+
+ljit_value ljit_inst_div(ljit_function *fun, ljit_value op1, ljit_value op2);
+
+/**
 **  @brief  Dump bytecode into the file @a f
 **  @param  f   The file where you want to dump the function @a fun
 **  @param  fun The function you want to dump

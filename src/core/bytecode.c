@@ -99,3 +99,8 @@ ljit_value ljit_inst_mul(ljit_function *fun, ljit_value op1, ljit_value op2)
 {
     return _ljit_build_operation(fun, op1, op2, MUL);
 }
+
+ljit_value ljit_inst_div(ljit_function *fun, ljit_value op1, ljit_value op2)
+{
+    return _ljit_build_operation(fun, op1, op2, DIV);
+}

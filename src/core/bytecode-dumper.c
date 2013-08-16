@@ -59,6 +59,9 @@ static void _ljit_dump_instr(FILE *f, ljit_bytecode *instr)
         case MUL:
             _ljit_dump_operation(f, instr, "mul");
             break;
+        case DIV:
+            _ljit_dump_operation(f, instr, "div");
+            break;
     }
 }
 
