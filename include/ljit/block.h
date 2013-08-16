@@ -21,23 +21,15 @@
 */
 
 /**
-**  @file   ljit.h
-**  @brief  Main include that contains all @LiteJit interface
+**  @file   block.h
+**  @brief  Block management related functions
 **  @author Baptiste Covolato <b.covolato@gmail.com>
-**  @date   15 August 2013
+**  @date   16 August 2013
 */
 
-#ifndef LJIT_H
-# define LJIT_H
+#ifndef BLOCK_H
+# define BLOCK_H
 
-# include <ljit/typedef.h>
-# include <ljit/arch.h>
-# include <ljit/instance.h>
-# include <ljit/types.h>
-# include <ljit/function.h>
-# include <ljit/bytecode.h>
-# include <ljit/bytecode-list.h>
-# include <ljit/block.h>
-# include <ljit/defs.h>
 
-#endif /* !LJIT_H */
+
+#endif /* !BLOCK_H */

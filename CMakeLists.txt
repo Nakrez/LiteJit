@@ -15,6 +15,7 @@ ADD_LIBRARY(litejit_lib SHARED
             src/core/bytecode.c
             src/core/bytecode-dumper.c
             src/core/bytecode-list.c
+            src/core/block.c
             )
 
 SET_TARGET_PROPERTIES(

@@ -165,4 +165,6 @@ typedef struct _ljit_bytecode_s ljit_bytecode;
 
 typedef struct _ljit_bytecode_list_s ljit_bytecode_list;
 
+typedef struct _ljit_block_s ljit_block;
+
 #endif /* !TYPEDEF_H */

@@ -30,6 +30,8 @@
 #ifndef DEFS_H
 # define DEFS_H
 
+# include <ljit/typedef.h>
+
 struct _ljit_instance_s
 {
     /**
@@ -172,6 +174,24 @@ struct _ljit_bytecode_list_s
     **  @brief  The size of the list
     */
     unsigned int size;
+};
+
+struct _ljit_block_s
+{
+    /**
+    **  @brief The instruction list related to the block
+    */
+    ljit_bytecode_list *instrs;
+
+    /**
+    **  @brief  The previous block
+    */
+    struct _ljit_block_s *previous;
+
+    /**
+    **  @brief  The next block
+    */
+    struct _ljit_block_s *next;
 };
 
 #endif /* !DEFS_H */
