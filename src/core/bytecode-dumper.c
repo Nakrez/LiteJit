@@ -50,6 +50,9 @@ static void _ljit_dump_instr(FILE *f, ljit_bytecode *instr)
             fprintf(f, "return ");
             _ljit_dump_value(f, instr->op1);
             break;
+        case ADD:
+            _ljit_dump_operation(f, instr, "add");
+            break;
         case MUL:
             _ljit_dump_operation(f, instr, "mul");
             break;

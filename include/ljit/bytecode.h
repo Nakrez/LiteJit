@@ -57,6 +57,18 @@ ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos);
 int ljit_inst_return(ljit_function *fun, ljit_value val);
 
 /**
+**  @brief  Return the result of addition of @a op1 and @a op2
+**  @param  fun The function where you want to the @a mul instruction
+**  @param  op1 The first operand of the addition
+**  @param  op2 The second operand of the addition
+**
+**  @return The temporary that holds the result of the addition
+**          NULL if an allocation error occured
+*/
+
+ljit_value ljit_inst_add(ljit_function *fun, ljit_value op1, ljit_value op2);
+
+/**
 **  @brief  Return the result of multiplication of @a op1 and @a op2
 **  @param  fun The function where you want to the @a mul instruction
 **  @param  op1 The first operand of the multiplication
