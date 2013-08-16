@@ -37,7 +37,7 @@ static ljit_value _ljit_build_operation(ljit_function *fun,
     }
 
     instr->ret_val = ret_val;
-    ljit_bytecode_list_add(&fun->bytecode, instr);
+    ljit_bytecode_list_add(&fun->current->instrs, instr);
 
     return ret_val;
 }
@@ -67,7 +67,7 @@ ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos)
     }
 
     instr->ret_val = ret_val;
-    ljit_bytecode_list_add(&fun->bytecode, instr);
+    ljit_bytecode_list_add(&fun->current->instrs, instr);
 
     return ret_val;
 }
@@ -80,7 +80,7 @@ int ljit_inst_return(ljit_function *fun, ljit_value val)
     if ((instr = _ljit_new_bytecode(RETURN, val, NULL)) == NULL)
         return -1;
 
-    ljit_bytecode_list_add(&fun->bytecode, instr);
+    ljit_bytecode_list_add(&fun->current->instrs, instr);
 
     return 0;
 }

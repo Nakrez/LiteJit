@@ -22,7 +22,7 @@
 
 /**
 **  @file   ljit.h
-**  @brief  Main include that contains all @LiteJit interface
+**  @brief  Main include that contains all @a LiteJit interface
 **  @author Baptiste Covolato <b.covolato@gmail.com>
 **  @date   15 August 2013
 */

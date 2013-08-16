@@ -98,9 +98,14 @@ struct _ljit_function_s
     ljit_signature *signature;
 
     /**
-    **  @brief  The bytecode representing the function
+    **  @brief  The start block of the function
     */
-    ljit_bytecode_list *bytecode;
+    ljit_block *start;
+
+    /**
+    **  @brief  The current block that is constructed
+    */
+    ljit_block *current;
 
     /**
     **  @brief  Unique index for temporary value old by the function

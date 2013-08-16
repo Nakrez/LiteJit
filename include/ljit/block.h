@@ -30,6 +30,21 @@
 #ifndef BLOCK_H
 # define BLOCK_H
 
+# include "typedef.h"
 
+/**
+**  @brief  Create a new block
+**
+**  @return The new block created or NULL if an error occured
+*/
+
+ljit_block *ljit_new_block(void);
+
+/**
+**  @brief  Delete a block
+**  @param  block   The block you want to delete
+*/
+
+void ljit_free_block(ljit_block *block);
 
 #endif /* !BLOCK_H */

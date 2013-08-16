@@ -48,6 +48,7 @@ ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos);
 
 /**
 **  @brief  Return from a function
+**  @param  fun The function that hold the return instruction
 **  @param  val The value returned by the function. Put NULL if the function
 **              does not return a value
 **  @return 0 if everything went well. -1 if an allocation error occured or a
