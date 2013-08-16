@@ -10,6 +10,11 @@ static ljit_bytecode *_ljit_new_bytecode(ljit_bytecode_type type,
     if ((instr = malloc(sizeof(ljit_bytecode))) == NULL)
         return NULL;
 
+    if (op1)
+        ++op1->count;
+    if (op2)
+        ++op2->count;
+
     instr->type = type;
     instr->op1 = op1;
     instr->op2 = op2;

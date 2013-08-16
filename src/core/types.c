@@ -13,6 +13,7 @@ ljit_value ljit_new_value(ljit_types type)
     val->is_tmp = 0;
     val->index = 0;
     val->data = NULL;
+    val->count = 1;
 
     return val;
 }
@@ -22,7 +23,9 @@ void ljit_free_value(ljit_value value)
     if (!value)
         return;
 
-    if (value->is_tmp)
+    --value->count;
+
+    if (value->count > 0)
         return;
 
     if (value->type != LJIT_LABEL)
@@ -48,6 +51,9 @@ ljit_value ljit_new_uchar_cst(ljit_uchar value)
     *val = value;
     cst->data = val;
     cst->is_cst = 1;
+
+    /* Every constant is considered as non assigned when created */
+    --cst->count;
 
     return cst;
 }

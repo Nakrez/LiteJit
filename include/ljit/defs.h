@@ -67,6 +67,11 @@ struct ljit_value_s
     unsigned short index;
 
     /**
+    **  @brief  Counter for deallocation
+    */
+    unsigned int count;
+
+    /**
     **  @brief  The data holed by the value
     */
     void *data;
@@ -121,26 +126,6 @@ struct _ljit_function_s
     **  @brief  Unique index for label
     */
     unsigned short lbl_index;
-
-    /**
-    **  @brief  The size of the temporary table
-    */
-    unsigned short tmp_table_size;
-
-    /**
-    **  @brief  The temporary table hold by the function
-    */
-    ljit_value *temporary_table;
-
-    /**
-    **  @brief  The size of the label table
-    */
-    unsigned short lbl_table_size;
-
-    /**
-    **  @brief  The label table hold by the function
-    */
-    ljit_label **lbl_table;
 };
 
 struct _ljit_bytecode_s

@@ -10,18 +10,6 @@ ljit_function *ljit_new_function(ljit_instance *instance)
 
     new_function->signature = NULL;
     new_function->instance = instance;
-    new_function->tmp_table_size = LJIT_TEMPORARY_TABLE_INIT_SIZE;
-
-    /* Create the temporary table */
-    if ((new_function->temporary_table = malloc(LJIT_TEMPORARY_TABLE_INIT_SIZE
-                                                * sizeof(ljit_value))) == NULL)
-    {
-        free(new_function);
-        return NULL;
-    }
-
-    memset(new_function->temporary_table, 0,
-           LJIT_TEMPORARY_TABLE_INIT_SIZE * sizeof(ljit_value));
 
     /*
     Create the start block of the function.
@@ -30,26 +18,10 @@ ljit_function *ljit_new_function(ljit_instance *instance)
     new_function->start_blk = ljit_new_block();
     new_function->current_blk = new_function->start_blk;
     new_function->uniq_index = 0;
-
-    new_function->lbl_table_size = LJIT_TEMPORARY_TABLE_INIT_SIZE;
-
-    if ((new_function->lbl_table = malloc(LJIT_TEMPORARY_TABLE_INIT_SIZE
-                                          * sizeof(ljit_label*))) == NULL)
-    {
-        free(new_function->temporary_table);
-        free(new_function);
-        return NULL;
-    }
-
-    memset(new_function->lbl_table, 0,
-           LJIT_TEMPORARY_TABLE_INIT_SIZE * sizeof(ljit_label*));
-
-    /* Create the label table */
     new_function->lbl_index = 0;
 
     if (!new_function->start_blk)
     {
-        free(new_function->temporary_table);
         free(new_function);
         return NULL;
     }
@@ -83,28 +55,6 @@ void ljit_free_function(ljit_function *fun)
     }
 
     ljit_free_signature(fun->signature);
-
-    /* Free the temporary table */
-    for (unsigned short i = 0; i < fun->tmp_table_size; ++i)
-    {
-        if (fun->temporary_table[i])
-        {
-            free(fun->temporary_table[i]->data);
-            free(fun->temporary_table[i]);
-        }
-    }
-
-    /* Free the label table */
-    for (unsigned short i = 0; i < fun->lbl_table_size; ++i)
-    {
-        if (fun->lbl_table[i])
-        {
-            free(fun->lbl_table[i]);
-        }
-    }
-
-    free(fun->temporary_table);
-    free(fun->lbl_table);
     free(fun);
 }
 

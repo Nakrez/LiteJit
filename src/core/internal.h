@@ -41,14 +41,6 @@
 ljit_value _ljit_new_temporary(ljit_function *fun, ljit_types type);
 
 /**
-**  @brief  Delete a previous allocated temporary value
-**  @param  fun The function that contains the temporary value
-**  @param  tmp The temporary value you want to destroy
-*/
-
-void _ljit_free_temporary(ljit_function *fun, ljit_value tmp);
-
-/**
 **  @brief  Delete a bytecode instruction
 **  @param  instr   The instruction to delete
 */
