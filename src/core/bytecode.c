@@ -48,6 +48,19 @@ ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos)
     return ret_val;
 }
 
+/* FIXME : Check return type and the value type */
+int ljit_inst_return(ljit_function *fun, ljit_value val)
+{
+    ljit_bytecode *instr = NULL;
+
+    if ((instr = _ljit_new_bytecode(RETURN, val, NULL)) == NULL)
+        return -1;
+
+    ljit_bytecode_list_add(&fun->bytecode, instr);
+
+    return 0;
+}
+
 /* FIXME : Type check */
 ljit_value ljit_inst_mul(ljit_function *fun, ljit_value op1, ljit_value op2)
 {

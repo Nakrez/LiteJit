@@ -143,6 +143,7 @@ typedef enum _ljit_bytecode_type_e
     /** 1 Operand instructions **/
 
     GET_PARAM,
+    RETURN,
 
     /** 2 Operand instructions **/
 

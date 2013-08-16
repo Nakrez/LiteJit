@@ -19,6 +19,7 @@ int main(void)
     y = ljit_inst_get_param(mul, 1);
 
     z = ljit_inst_mul(mul, x, y);
+    ljit_inst_return(mul, z);
 
     ljit_bytecode_dumper(stdout, mul);
 

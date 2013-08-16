@@ -47,6 +47,16 @@
 ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos);
 
 /**
+**  @brief  Return from a function
+**  @param  val The value returned by the function. Put NULL if the function
+**              does not return a value
+**  @return 0 if everything went well. -1 if an allocation error occured or a
+**          type error
+*/
+
+int ljit_inst_return(ljit_function *fun, ljit_value val);
+
+/**
 **  @brief  Return the result of multiplication of @a op1 and @a op2
 **  @param  fun The function where you want to the @a mul instruction
 **  @param  op1 The first operand of the multiplication

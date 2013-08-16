@@ -37,12 +37,17 @@ static void _ljit_dump_instr(FILE *f, ljit_bytecode *instr)
             fprintf(f, " = get_param ");
             _ljit_dump_value(f, instr->op1);
             break;
+        case RETURN:
+            fprintf(f, "return ");
+            _ljit_dump_value(f, instr->op1);
+            break;
         case MUL:
             _ljit_dump_value(f, instr->ret_val);
             fprintf(f, " = mul ");
             _ljit_dump_value(f, instr->op1);
             fprintf(f, " ");
             _ljit_dump_value(f, instr->op2);
+            break;
     }
 }
 
