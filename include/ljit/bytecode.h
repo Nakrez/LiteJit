@@ -35,6 +35,21 @@
 # include "typedef.h"
 
 /**
+**  @brief  Create a new @a LiteJit bytecode instruction. This function should
+**          not be called by user. It is an internal function of @a LiteJit.
+**  @param  type    The type of the instruction
+**  @param  op1     The first operand. Set NULL if no first operand
+**  @param  op2     The second operand. Set NULL if no second operand
+**
+**  @return         The new bytecode instruction or NULL if an allocation error
+**                  happened.
+*/
+
+ljit_bytecode *_ljit_new_bytecode(ljit_bytecode_type type,
+                                  ljit_value op1,
+                                  ljit_value op2);
+
+/**
 **  @brief  Return the @a pos parameter of the function
 **  @param  fun The function where you want to get the @a pos parameter
 **  @param  pos The position of the parameter

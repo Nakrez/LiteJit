@@ -13,6 +13,8 @@ int main(void)
     ljit_set_arch(instance, LJIT_ARCH_X86);
 
     mul = ljit_new_function(instance);
+    assert(mul);
+
     ljit_new_signature(mul, LJIT_INT, 2, params);
 
     x = ljit_inst_get_param(mul, 0);

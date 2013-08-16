@@ -65,5 +65,5 @@ ljit_bytecode_list_add(ljit_bytecode_list **list, ljit_bytecode *instr)
     /* Increment the size of the list */
     ++inner_list->size;
 
-    return 0;
+    return elem;
 }

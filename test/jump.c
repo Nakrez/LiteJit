@@ -1,3 +1,5 @@
+#include <assert.h>
+
 #include <ljit/ljit.h>
 
 int main()
@@ -10,6 +12,8 @@ int main()
     ljit_set_arch(instance, LJIT_ARCH_X86);
 
     fun = ljit_new_function(instance);
+    assert(fun);
+
     ljit_new_signature(fun, LJIT_INT, 0, NULL);
 
     lbl1 = ljit_new_label(fun);

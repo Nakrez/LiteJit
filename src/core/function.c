@@ -1,6 +1,27 @@
 #include <ljit/function.h>
 #include "internal.h"
 
+static int _ljit_create_first_block(ljit_function *fun)
+{
+    ljit_label *entry_lbl = NULL;
+
+    if ((fun->start_blk = ljit_new_block()) == NULL)
+        return -1;
+
+    if ((entry_lbl = ljit_new_label(fun)) == NULL)
+        return -1;
+
+    fun->current_blk = fun->start_blk;
+
+    if (ljit_bind_label(fun, entry_lbl))
+    {
+        ljit_free_label(entry_lbl);
+        return -1;
+    }
+
+    return 0;
+}
+
 ljit_function *ljit_new_function(ljit_instance *instance)
 {
     ljit_function *new_function = NULL;
@@ -10,19 +31,22 @@ ljit_function *ljit_new_function(ljit_instance *instance)
 
     new_function->signature = NULL;
     new_function->instance = instance;
+    new_function->uniq_index = 0;
+    new_function->lbl_index = 0;
 
     /*
     Create the start block of the function.
     This block is also the current one
     */
-    new_function->start_blk = ljit_new_block();
-    new_function->current_blk = new_function->start_blk;
-    new_function->uniq_index = 0;
-    new_function->lbl_index = 0;
+    if (_ljit_create_first_block(new_function))
+    {
+        ljit_free_function(new_function);
+        return NULL;
+    }
 
     if (!new_function->start_blk)
     {
-        free(new_function);
+        ljit_free_function(new_function);
         return NULL;
     }
 

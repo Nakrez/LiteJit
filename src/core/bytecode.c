@@ -1,28 +1,6 @@
 #include <ljit/bytecode.h>
 #include "internal.h"
 
-static ljit_bytecode *_ljit_new_bytecode(ljit_bytecode_type type,
-                                         ljit_value op1,
-                                         ljit_value op2)
-{
-    ljit_bytecode *instr = NULL;
-
-    if ((instr = malloc(sizeof(ljit_bytecode))) == NULL)
-        return NULL;
-
-    if (op1)
-        ++op1->count;
-    if (op2)
-        ++op2->count;
-
-    instr->type = type;
-    instr->op1 = op1;
-    instr->op2 = op2;
-    instr->ret_val = NULL;
-
-    return instr;
-}
-
 /* FIXME : Type check */
 static ljit_value _ljit_build_operation(ljit_function *fun,
                                         ljit_value op1,
@@ -53,6 +31,28 @@ static ljit_value _ljit_build_operation(ljit_function *fun,
     ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
 
     return ret_val;
+}
+
+ljit_bytecode *_ljit_new_bytecode(ljit_bytecode_type type,
+                                  ljit_value op1,
+                                  ljit_value op2)
+{
+    ljit_bytecode *instr = NULL;
+
+    if ((instr = malloc(sizeof(ljit_bytecode))) == NULL)
+        return NULL;
+
+    if (op1)
+        ++op1->count;
+    if (op2)
+        ++op2->count;
+
+    instr->type = type;
+    instr->op1 = op1;
+    instr->op2 = op2;
+    instr->ret_val = NULL;
+
+    return instr;
 }
 
 ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos)
@@ -134,10 +134,7 @@ int ljit_bind_label(ljit_function *fun, ljit_label *lbl)
     lbl->instr = ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
 
     if (!lbl->instr)
-    {
-        _ljit_free_bytecode(instr);
         return -1;
-    }
 
     return 0;
 }
