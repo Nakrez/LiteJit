@@ -30,15 +30,15 @@ ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos)
 
     if ((instr = _ljit_new_bytecode(GET_PARAM, pos_cst, NULL)) == NULL)
     {
-        ljit_free_value(fun, pos_cst);
+        ljit_free_value(pos_cst);
         return NULL;
     }
 
     if ((ret_val = _ljit_new_temporary(fun,
                                        fun->signature->params_type[pos])) == NULL)
     {
-        ljit_free_value(fun, pos_cst);
-        _ljit_free_bytecode(fun, instr);
+        ljit_free_value(pos_cst);
+        _ljit_free_bytecode(instr);
         return NULL;
     }
 

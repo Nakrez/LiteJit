@@ -46,6 +46,9 @@ void ljit_free_function(ljit_function *fun)
     if (!fun)
         return;
 
+    ljit_free_bytecode_list(fun->bytecode);
+    ljit_free_signature(fun->signature);
+
     for (unsigned short i = 0; i < fun->tmp_table_size; ++i)
     {
         if (fun->temporary_table[i])
@@ -56,8 +59,6 @@ void ljit_free_function(ljit_function *fun)
     }
 
     free(fun->temporary_table);
-    ljit_free_bytecode_list(fun, fun->bytecode);
-    ljit_free_signature(fun->signature);
     free(fun);
 }
 

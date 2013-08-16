@@ -54,6 +54,6 @@ void _ljit_free_temporary(ljit_function *fun, ljit_value tmp);
 **  @param  instr   The instruction to delete
 */
 
-void _ljit_free_bytecode(ljit_function *fun, ljit_bytecode *instr);
+void _ljit_free_bytecode(ljit_bytecode *instr);
 
 #endif /* !INTERNAL_H */

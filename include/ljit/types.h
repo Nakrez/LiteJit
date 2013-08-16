@@ -48,7 +48,7 @@ ljit_value ljit_new_value(ljit_types type);
 **  @param  value   The value you want to free
 */
 
-void ljit_free_value(ljit_function *fun, ljit_value value);
+void ljit_free_value(ljit_value value);
 
 /**
 **  @brief  Create a new 8-bit unsigned integer constant
