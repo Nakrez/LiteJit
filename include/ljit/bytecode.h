@@ -30,6 +30,8 @@
 #ifndef BYTECODE_H
 # define BYTECODE_H
 
+# include <stdio.h>
+
 # include "typedef.h"
 
 /**
@@ -43,5 +45,13 @@
 */
 
 ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos);
+
+/**
+**  @brief  Dump bytecode into the file @a f
+**  @param  f   The file where you want to dump the function @a fun
+**  @param  fun The function you want to dump
+*/
+
+void ljit_bytecode_dumper(FILE *f, ljit_function *fun);
 
 #endif /* !BYTECODE_H */

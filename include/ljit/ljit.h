@@ -32,6 +32,7 @@
 
 # include <ljit/typedef.h>
 # include <ljit/arch.h>
+# include <ljit/instance.h>
 # include <ljit/types.h>
 # include <ljit/function.h>
 # include <ljit/bytecode.h>

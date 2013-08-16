@@ -18,6 +18,8 @@ int main(void)
     x = ljit_inst_get_param(mul, 0);
     y = ljit_inst_get_param(mul, 1);
 
+    ljit_bytecode_dumper(stdout, mul);
+
     ljit_free_function(mul);
     ljit_free_instance(instance);
 
