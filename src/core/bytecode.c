@@ -18,6 +18,30 @@ static ljit_bytecode *_ljit_new_bytecode(ljit_bytecode_type type,
     return instr;
 }
 
+/* FIXME : Type check */
+static ljit_value _ljit_build_operation(ljit_function *fun,
+                                        ljit_value op1,
+                                        ljit_value op2,
+                                        ljit_bytecode_type type)
+{
+    ljit_value ret_val = NULL;
+    ljit_bytecode *instr = NULL;
+
+    if ((instr = _ljit_new_bytecode(type, op1, op2)) == NULL)
+        return NULL;
+
+    if ((ret_val = _ljit_new_temporary(fun, op1->type)) == NULL)
+    {
+        _ljit_free_bytecode(instr);
+        return NULL;
+    }
+
+    instr->ret_val = ret_val;
+    ljit_bytecode_list_add(&fun->bytecode, instr);
+
+    return ret_val;
+}
+
 ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos)
 {
     ljit_value ret_val = NULL;
@@ -61,23 +85,7 @@ int ljit_inst_return(ljit_function *fun, ljit_value val)
     return 0;
 }
 
-/* FIXME : Type check */
 ljit_value ljit_inst_mul(ljit_function *fun, ljit_value op1, ljit_value op2)
 {
-    ljit_value ret_val = NULL;
-    ljit_bytecode *instr = NULL;
-
-    if ((instr = _ljit_new_bytecode(MUL, op1, op2)) == NULL)
-        return NULL;
-
-    if ((ret_val = _ljit_new_temporary(fun, op1->type)) == NULL)
-    {
-        _ljit_free_bytecode(instr);
-        return NULL;
-    }
-
-    instr->ret_val = ret_val;
-    ljit_bytecode_list_add(&fun->bytecode, instr);
-
-    return ret_val;
+    return _ljit_build_operation(fun, op1, op2, MUL);
 }
