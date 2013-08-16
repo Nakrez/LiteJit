@@ -41,4 +41,11 @@
 
 ljit_label *ljit_new_label(ljit_function *fun);
 
+/**
+**  @brief  Free a label
+**  @param  lbl The label you want to free
+*/
+
+void ljit_free_label(ljit_label *lbl);
+
 #endif /* !LABEL_H */

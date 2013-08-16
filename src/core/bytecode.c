@@ -121,6 +121,9 @@ int ljit_inst_jump(ljit_function *fun, ljit_label *lbl)
 
     val->data = lbl;
 
+    /* Label is now referenced on more time */
+    ++lbl->count;
+
     /* Add the instruction to the instruction list of the current block */
     ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
 

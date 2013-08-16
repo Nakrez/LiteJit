@@ -225,6 +225,11 @@ struct _ljit_label_s
     **  @brief  The index of the label
     */
     unsigned int index;
+
+    /**
+    **  @brief  Reference counting for memory management
+    */
+    unsigned int count;
 };
 
 #endif /* !DEFS_H */

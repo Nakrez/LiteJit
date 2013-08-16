@@ -38,6 +38,7 @@
 # include <ljit/bytecode.h>
 # include <ljit/bytecode-list.h>
 # include <ljit/block.h>
+# include <ljit/label.h>
 # include <ljit/defs.h>
 
 #endif /* !LJIT_H */

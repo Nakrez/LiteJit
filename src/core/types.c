@@ -30,6 +30,8 @@ void ljit_free_value(ljit_value value)
 
     if (value->type != LJIT_LABEL)
         free(value->data);
+    else
+        ljit_free_label(value->data);
 
     free(value);
 }
