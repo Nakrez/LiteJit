@@ -56,10 +56,11 @@ void ljit_free_bytecode_list(ljit_bytecode_list *list);
 **  @param  list    The list where you want to add the instruction @a instr
 **  @param  instr   The instruction you want to add to the list @a list
 **
-**  @return 0 if everything went well.
-**          -1 if an allocation error occured
+**  @return The created element if everything went well.
+**          NULL if an allocation error occured
 */
 
-int ljit_bytecode_list_add(ljit_bytecode_list **list, ljit_bytecode *instr);
+struct _ljit_bytecode_list_element_s *
+ljit_bytecode_list_add(ljit_bytecode_list **list, ljit_bytecode *instr);
 
 #endif /* !BYTECODE_LIST_H */

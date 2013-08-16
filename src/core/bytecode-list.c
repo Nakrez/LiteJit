@@ -38,13 +38,14 @@ void ljit_free_bytecode_list(ljit_bytecode_list *list)
     free(list);
 }
 
-int ljit_bytecode_list_add(ljit_bytecode_list **list, ljit_bytecode *instr)
+struct _ljit_bytecode_list_element_s *
+ljit_bytecode_list_add(ljit_bytecode_list **list, ljit_bytecode *instr)
 {
     ljit_bytecode_list *inner_list = *list;
     struct _ljit_bytecode_list_element_s *elem = NULL;
 
     if ((elem = malloc(sizeof(struct _ljit_bytecode_list_element_s))) == NULL)
-        return -1;
+        return NULL;
 
     elem->instr = instr;
     elem->next = NULL;

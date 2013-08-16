@@ -131,9 +131,13 @@ int ljit_bind_label(ljit_function *fun, ljit_label *lbl)
     --value->count;
 
     /* Add the instruction to the instruction list of the current block */
-    ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
+    lbl->instr = ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
 
-    /* FIXME : bind the label to the new instruction location */
+    if (!lbl->instr)
+    {
+        _ljit_free_bytecode(instr);
+        return -1;
+    }
 
     return 0;
 }
