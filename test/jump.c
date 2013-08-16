@@ -3,10 +3,9 @@
 int main()
 {
     ljit_function *fun = NULL;
+    ljit_label *lbl1 = NULL;
     ljit_instance *instance = ljit_new_instance();
     ljit_value zero = ljit_new_uchar_cst(0);
-
-    ljit_label *lbl1 = NULL;
 
     ljit_set_arch(instance, LJIT_ARCH_X86);
 

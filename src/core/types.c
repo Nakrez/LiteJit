@@ -26,7 +26,11 @@ void ljit_free_value(ljit_value value)
     --value->count;
 
     if (value->count > 0)
+    {
+        if (value->type == LJIT_LABEL)
+            ljit_free_label(value->data);
         return;
+    }
 
     if (value->type != LJIT_LABEL)
         free(value->data);
@@ -55,7 +59,7 @@ ljit_value ljit_new_uchar_cst(ljit_uchar value)
     cst->is_cst = 1;
 
     /* Every constant is considered as non assigned when created */
-    --cst->count;
+    cst->count = 0;
 
     return cst;
 }
