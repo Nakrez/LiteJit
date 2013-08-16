@@ -206,7 +206,6 @@ struct _ljit_block_s
     /**
     ** @brief   The label that target this block
     */
-
     ljit_label *label;
 
     /**
@@ -228,9 +227,9 @@ struct _ljit_block_s
 struct _ljit_label_s
 {
     /**
-    **  @brief  The block that the label refers to
+    **  @brief  The instruction where the label pointed
     */
-    ljit_block *block;
+    struct _ljit_bytecode_list_element_s *instr;
 
     /**
     **  @brief  The next label that belong to the same block
