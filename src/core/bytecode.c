@@ -124,6 +124,12 @@ int ljit_bind_label(ljit_function *fun, ljit_label *lbl)
     ++lbl->count;
     value->data = lbl;
 
+    /*
+    Decrement count because ljit_new_bytecode does an unecessery +1 in this
+    case.
+     */
+    --value->count;
+
     /* Add the instruction to the instruction list of the current block */
     ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
 
@@ -150,6 +156,12 @@ int ljit_inst_jump(ljit_function *fun, ljit_label *lbl)
 
     /* Label is now referenced on more time */
     ++lbl->count;
+
+    /*
+    Decrement count because ljit_new_bytecode does an unecessery +1 in this
+    case.
+     */
+    --val->count;
 
     /* Add the instruction to the instruction list of the current block */
     ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
