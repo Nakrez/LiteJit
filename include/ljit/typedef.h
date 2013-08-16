@@ -171,4 +171,10 @@ typedef struct _ljit_bytecode_list_s ljit_bytecode_list;
 
 typedef struct _ljit_block_s ljit_block;
 
+/**
+**  @brief  The label type definition
+*/
+
+typedef struct _ljit_label_s ljit_label;
+
 #endif /* !TYPEDEF_H */

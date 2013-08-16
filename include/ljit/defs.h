@@ -204,4 +204,22 @@ struct _ljit_block_s
     struct _ljit_block_s *next;
 };
 
+struct _ljit_label_s
+{
+    /**
+    **  @brief  The block that the label refers to
+    */
+    ljit_block *block;
+
+    /**
+    **  @brief  The next label that belong to the same block
+    */
+    struct _ljit_label_s *next_lbl;
+
+    /**
+    **  @brief  The index of the label
+    */
+    unsigned int index;
+};
+
 #endif /* !DEFS_H */
