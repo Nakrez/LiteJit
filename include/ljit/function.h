@@ -36,6 +36,11 @@
 # include "typedef.h"
 
 /**
+**  @brief  The initiale size of the temporary table
+*/
+
+# define LJIT_TEMPORARY_TABLE_INIT_SIZE 8
+/**
 **  @brief  Create a new function definition
 **  @return The new function created if everything went well, NULL otherwise
 */

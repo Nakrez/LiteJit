@@ -27,17 +27,25 @@ static ljit_value _ljit_build_operation(ljit_function *fun,
     ljit_value ret_val = NULL;
     ljit_bytecode *instr = NULL;
 
+    /* Build the instruction with the 2 operands */
     if ((instr = _ljit_new_bytecode(type, op1, op2)) == NULL)
         return NULL;
 
+    /* Allocate new temporary that hold the return value */
     if ((ret_val = _ljit_new_temporary(fun, op1->type)) == NULL)
     {
         _ljit_free_bytecode(instr);
         return NULL;
     }
 
+    /* Set the return temporary as return value of the instruction */
     instr->ret_val = ret_val;
-    ljit_bytecode_list_add(&fun->current->instrs, instr);
+
+    /*
+    Add the created instruction to the current constructed block of the
+    function
+    */
+    ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
 
     return ret_val;
 }
@@ -52,12 +60,14 @@ ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos)
     if ((pos_cst = ljit_new_uchar_cst(pos)) == NULL)
         return NULL;
 
+    /* Allocate the instruction */
     if ((instr = _ljit_new_bytecode(GET_PARAM, pos_cst, NULL)) == NULL)
     {
         ljit_free_value(pos_cst);
         return NULL;
     }
 
+    /* Create the new temporary that holds the result of the instruction */
     if ((ret_val = _ljit_new_temporary(fun,
                                        fun->signature->params_type[pos])) == NULL)
     {
@@ -66,8 +76,11 @@ ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos)
         return NULL;
     }
 
+    /* Set the return temporary as result of the instruction */
     instr->ret_val = ret_val;
-    ljit_bytecode_list_add(&fun->current->instrs, instr);
+
+    /* Add this instruction to the instruction list of the current block */
+    ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
 
     return ret_val;
 }
@@ -77,10 +90,12 @@ int ljit_inst_return(ljit_function *fun, ljit_value val)
 {
     ljit_bytecode *instr = NULL;
 
+    /* Create the instruction */
     if ((instr = _ljit_new_bytecode(RETURN, val, NULL)) == NULL)
         return -1;
 
-    ljit_bytecode_list_add(&fun->current->instrs, instr);
+    /* Add the instruction to the instruction list of the current block */
+    ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
 
     return 0;
 }

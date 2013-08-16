@@ -100,12 +100,17 @@ struct _ljit_function_s
     /**
     **  @brief  The start block of the function
     */
-    ljit_block *start;
+    ljit_block *start_blk;
+
+    /**
+    **  @brief  The last block of the function
+    */
+    ljit_block *last_blk;
 
     /**
     **  @brief  The current block that is constructed
     */
-    ljit_block *current;
+    ljit_block *current_blk;
 
     /**
     **  @brief  Unique index for temporary value old by the function

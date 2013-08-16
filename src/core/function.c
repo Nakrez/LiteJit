@@ -10,20 +10,28 @@ ljit_function *ljit_new_function(ljit_instance *instance)
 
     new_function->signature = NULL;
     new_function->instance = instance;
-    new_function->tmp_table_size = 8;
+    new_function->tmp_table_size = LJIT_TEMPORARY_TABLE_INIT_SIZE;
 
-    if ((new_function->temporary_table = malloc(8 * sizeof(ljit_value))) == NULL)
+    /* Create the temporary table */
+    if ((new_function->temporary_table = malloc(LJIT_TEMPORARY_TABLE_INIT_SIZE
+                                                * sizeof(ljit_value))) == NULL)
     {
         free(new_function);
         return NULL;
     }
 
-    memset(new_function->temporary_table, 0, 8 * sizeof(ljit_value));
-    new_function->start = ljit_new_block();
-    new_function->current = new_function->start;
+    memset(new_function->temporary_table, 0,
+           LJIT_TEMPORARY_TABLE_INIT_SIZE * sizeof(ljit_value));
+
+    /*
+    Create the start block of the function.
+    This block is also the current one
+    */
+    new_function->start_blk = ljit_new_block();
+    new_function->current_blk = new_function->start_blk;
     new_function->uniq_index = 0;
 
-    if (!new_function->start)
+    if (!new_function->start_blk)
     {
         free(new_function->temporary_table);
         free(new_function);
@@ -47,7 +55,8 @@ void ljit_free_function(ljit_function *fun)
     if (!fun)
         return;
 
-    ljit_block *b = fun->start;
+    /* Free all block contained by the function */
+    ljit_block *b = fun->start_blk;
     ljit_block *tmp = NULL;
 
     while (b)
@@ -59,6 +68,7 @@ void ljit_free_function(ljit_function *fun)
 
     ljit_free_signature(fun->signature);
 
+    /* Free the temporary table */
     for (unsigned short i = 0; i < fun->tmp_table_size; ++i)
     {
         if (fun->temporary_table[i])

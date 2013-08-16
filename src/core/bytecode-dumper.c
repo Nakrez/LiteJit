@@ -82,19 +82,26 @@ static void _ljit_dump_instr(FILE *f, ljit_bytecode *instr)
 
 void ljit_bytecode_dumper(FILE *f, ljit_function *fun)
 {
-    ljit_block *b = fun->start;
+    ljit_block *b = fun->start_blk;
 
+    /* Display all block contained by the function */
     while (b)
     {
         struct _ljit_bytecode_list_element_s *instr = b->instrs->head;
 
+        /* Display all the instructions of the block */
         while (instr)
         {
+            /* Display the current instruction */
             _ljit_dump_instr(f, instr->instr);
+
+            /* Skip to the next instruction */
             instr = instr->next;
+
             fprintf(f, "\n");
         }
 
+        /* Skip to the next block */
         b = b->next;
     }
 }
