@@ -42,7 +42,7 @@ static void _ljit_dump_instr(FILE *f, ljit_bytecode *instr)
 
 void ljit_bytecode_dumper(FILE *f, ljit_function *fun)
 {
-    struct ljit_bytecode_list_element_s *instr = fun->bytecode->head;
+    struct _ljit_bytecode_list_element_s *instr = fun->bytecode->head;
 
     while (instr)
     {

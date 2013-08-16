@@ -139,4 +139,39 @@ struct _ljit_bytecode_s
     ljit_value  ret_val;
 };
 
+/**
+**  @brief  Bytecode list element
+*/
+
+struct _ljit_bytecode_list_element_s
+{
+    /**
+    **  @brief  The content of the element
+    */
+    ljit_bytecode *instr;
+
+    /**
+    **  @brief  The next element of the list
+    */
+    struct _ljit_bytecode_list_element_s *next;
+};
+
+struct _ljit_bytecode_list_s
+{
+    /**
+    **  @brief  The head of the list
+    */
+    struct _ljit_bytecode_list_element_s *head;
+
+    /**
+    **  @brief  The tail of the list
+    */
+    struct _ljit_bytecode_list_element_s *tail;
+
+    /**
+    **  @brief  The size of the list
+    */
+    unsigned int size;
+};
+
 #endif /* !DEFS_H */

@@ -142,14 +142,10 @@ typedef enum _ljit_bytecode_type_e
 
     /** 1 Operand instructions **/
 
+    GET_PARAM
+
     /** 2 Operand instructions **/
 
-    /** Special instructions **/
-
-    /**
-    **  @brief  Get the xth parameter
-    */
-    GET_PARAM
 } ljit_bytecode_type;
 
 /**
@@ -159,42 +155,9 @@ typedef enum _ljit_bytecode_type_e
 typedef struct _ljit_bytecode_s ljit_bytecode;
 
 /**
-**  @brief  Bytecode list element
-*/
-
-struct ljit_bytecode_list_element_s
-{
-    /**
-    **  @brief  The content of the element
-    */
-    ljit_bytecode *instr;
-
-    /**
-    **  @brief  The next element of the list
-    */
-    struct ljit_bytecode_list_element_s *next;
-};
-
-/**
 **  @brief  Bytecode list container
 */
 
-typedef struct
-{
-    /**
-    **  @brief  The head of the list
-    */
-    struct ljit_bytecode_list_element_s *head;
-
-    /**
-    **  @brief  The tail of the list
-    */
-    struct ljit_bytecode_list_element_s *tail;
-
-    /**
-    **  @brief  The size of the list
-    */
-    unsigned int size;
-} ljit_bytecode_list;
+typedef struct _ljit_bytecode_list_s ljit_bytecode_list;
 
 #endif /* !TYPEDEF_H */
