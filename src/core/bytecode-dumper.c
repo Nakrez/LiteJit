@@ -16,6 +16,18 @@ static void _ljit_dump_value(FILE *f, ljit_value val)
     {
         case LJIT_VOID:
             break;
+        case LJIT_CHAR:
+            fprintf(f, "%i", *((char*)val->data));
+            break;
+        case LJIT_SHORT:
+            fprintf(f, "%i", *((short*)val->data));
+            break;
+        case LJIT_INT:
+            fprintf(f, "%i", *((int*)val->data));
+            break;
+        case LJIT_LONG:
+            fprintf(f, "%li", *((long*)val->data));
+            break;
         case LJIT_UCHAR:
             fprintf(f, "%u", *((unsigned char*)val->data));
             break;
@@ -24,6 +36,9 @@ static void _ljit_dump_value(FILE *f, ljit_value val)
             break;
         case LJIT_UINT:
             fprintf(f, "%u", *((unsigned int*)val->data));
+            break;
+        case LJIT_ULONG:
+            fprintf(f, "%lu", *((unsigned long*)val->data));
             break;
     }
 }
