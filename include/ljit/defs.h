@@ -118,6 +118,11 @@ struct _ljit_function_s
     unsigned short uniq_index;
 
     /**
+    **  @brief  Unique index for label
+    */
+    unsigned short lbl_index;
+
+    /**
     **  @brief  The size of the temporary table
     */
     unsigned short tmp_table_size;
@@ -126,6 +131,16 @@ struct _ljit_function_s
     **  @brief  The temporary table hold by the function
     */
     ljit_value *temporary_table;
+
+    /**
+    **  @brief  The size of the label table
+    */
+    unsigned short lbl_table_size;
+
+    /**
+    **  @brief  The label table hold by the function
+    */
+    ljit_label **lbl_table;
 };
 
 struct _ljit_bytecode_s
@@ -189,7 +204,13 @@ struct _ljit_bytecode_list_s
 struct _ljit_block_s
 {
     /**
-    **  @brief The instruction list related to the block
+    ** @brief   The label that target this block
+    */
+
+    ljit_label *label;
+
+    /**
+    **  @brief  The instruction list related to the block
     */
     ljit_bytecode_list *instrs;
 

@@ -31,6 +31,22 @@ ljit_function *ljit_new_function(ljit_instance *instance)
     new_function->current_blk = new_function->start_blk;
     new_function->uniq_index = 0;
 
+    new_function->lbl_table_size = LJIT_TEMPORARY_TABLE_INIT_SIZE;
+
+    if ((new_function->lbl_table = malloc(LJIT_TEMPORARY_TABLE_INIT_SIZE
+                                          * sizeof(ljit_label*))) == NULL)
+    {
+        free(new_function->temporary_table);
+        free(new_function);
+        return NULL;
+    }
+
+    memset(new_function->lbl_table, 0,
+           LJIT_TEMPORARY_TABLE_INIT_SIZE * sizeof(ljit_label*));
+
+    /* Create the label table */
+    new_function->lbl_index = 0;
+
     if (!new_function->start_blk)
     {
         free(new_function->temporary_table);
@@ -78,7 +94,17 @@ void ljit_free_function(ljit_function *fun)
         }
     }
 
+    /* Free the label table */
+    for (unsigned short i = 0; i < fun->lbl_table_size; ++i)
+    {
+        if (fun->lbl_table[i])
+        {
+            free(fun->lbl_table[i]);
+        }
+    }
+
     free(fun->temporary_table);
+    free(fun->lbl_table);
     free(fun);
 }
 
