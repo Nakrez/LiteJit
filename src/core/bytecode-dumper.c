@@ -68,6 +68,10 @@ static void _ljit_dump_instr(FILE *f, ljit_bytecode *instr)
             fprintf(f, "return ");
             _ljit_dump_value(f, instr->op1);
             break;
+        case LABEL:
+            _ljit_dump_value(f, instr->op1);
+            fprintf(f, ":");
+            return;
         case JUMP:
             fprintf(f, "jmp ");
             _ljit_dump_value(f, instr->op1);

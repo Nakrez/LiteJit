@@ -105,6 +105,33 @@ int ljit_inst_return(ljit_function *fun, ljit_value val)
     return 0;
 }
 
+int ljit_bind_label(ljit_function *fun, ljit_label *lbl)
+{
+    ljit_bytecode *instr = NULL;
+    ljit_value value = NULL;
+
+    if ((value = ljit_new_value(LJIT_LABEL)) == NULL)
+        return -1;
+
+    if ((instr = _ljit_new_bytecode(LABEL, value, NULL)) == NULL)
+    {
+        ljit_free_value(value);
+        return -1;
+    }
+
+    /* FIXME : Create new block if this close a basic block */
+
+    ++lbl->count;
+    value->data = lbl;
+
+    /* Add the instruction to the instruction list of the current block */
+    ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
+
+    /* FIXME : bind the label to the new instruction location */
+
+    return 0;
+}
+
 int ljit_inst_jump(ljit_function *fun, ljit_label *lbl)
 {
     ljit_bytecode *instr = NULL;

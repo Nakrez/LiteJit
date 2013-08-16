@@ -149,6 +149,7 @@ typedef enum _ljit_bytecode_type_e
 
     GET_PARAM,
     RETURN,
+    LABEL,
     JUMP,
 
     /** 2 Operand instructions **/

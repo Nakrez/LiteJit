@@ -58,6 +58,16 @@ ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos);
 int ljit_inst_return(ljit_function *fun, ljit_value val);
 
 /**
+**  @brief  Bind a label
+**  @param  fun The function that hold the label
+**  @param  lbl The label you want to bind
+**
+**  @return 0 if verything went well. -1 if an allocation error happened
+*/
+
+int ljit_bind_label(ljit_function *fun, ljit_label *lbl);
+
+/**
 **  @brief  Create an unconditional jump to a label
 **  @param  fun The function that holds the jump
 **  @param  lbl The label where you want to jump

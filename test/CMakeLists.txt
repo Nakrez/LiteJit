@@ -18,3 +18,14 @@ target_link_libraries(basic_function_test litejit_lib)
 
 ADD_TEST(ctest_build_basic_function "${CMAKE_COMMAND}" --build ${CMAKE_BINARY_DIR} --target basic_function_test)
 ADD_TEST(ctest_run_basic_function basic_function_test)
+
+## JUMP/LABEL test
+
+add_executable(jump_test
+               EXCLUDE_FROM_ALL
+               jump.c)
+
+target_link_libraries(jump_test litejit_lib)
+
+ADD_TEST(ctest_build_jump "${CMAKE_COMMAND}" --build ${CMAKE_BINARY_DIR} --target jump_test)
+ADD_TEST(ctest_run_jump jump_test)
