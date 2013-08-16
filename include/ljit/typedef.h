@@ -148,6 +148,7 @@ typedef enum _ljit_bytecode_type_e
     /** 2 Operand instructions **/
 
     ADD,
+    SUB,
     MUL
 } ljit_bytecode_type;
 

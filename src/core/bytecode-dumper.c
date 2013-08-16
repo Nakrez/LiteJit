@@ -53,6 +53,9 @@ static void _ljit_dump_instr(FILE *f, ljit_bytecode *instr)
         case ADD:
             _ljit_dump_operation(f, instr, "add");
             break;
+        case SUB:
+            _ljit_dump_operation(f, instr, "sub");
+            break;
         case MUL:
             _ljit_dump_operation(f, instr, "mul");
             break;

@@ -50,7 +50,6 @@ void _ljit_free_temporary(ljit_function *fun, ljit_value tmp);
 
 /**
 **  @brief  Delete a bytecode instruction
-**  @param  fun     The function that contain the instruction
 **  @param  instr   The instruction to delete
 */
 

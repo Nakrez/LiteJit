@@ -90,6 +90,11 @@ ljit_value ljit_inst_add(ljit_function *fun, ljit_value op1, ljit_value op2)
     return _ljit_build_operation(fun, op1, op2, ADD);
 }
 
+ljit_value ljit_inst_sub(ljit_function *fun, ljit_value op1, ljit_value op2)
+{
+    return _ljit_build_operation(fun, op1, op2, SUB);
+}
+
 ljit_value ljit_inst_mul(ljit_function *fun, ljit_value op1, ljit_value op2)
 {
     return _ljit_build_operation(fun, op1, op2, MUL);
