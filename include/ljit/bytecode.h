@@ -47,6 +47,18 @@
 ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos);
 
 /**
+**  @brief  Return the result of multiplication of @a op1 and @a op2
+**  @param  fun The function where you want to the @a mul instruction
+**  @param  op1 The first operand of the multiplication
+**  @param  op2 The second operand of the multiplication
+**
+**  @return The temporary that holds the result of the multiplication.
+**          NULL if an allocation error occured
+*/
+
+ljit_value ljit_inst_mul(ljit_function *fun, ljit_value op1, ljit_value op2);
+
+/**
 **  @brief  Dump bytecode into the file @a f
 **  @param  f   The file where you want to dump the function @a fun
 **  @param  fun The function you want to dump

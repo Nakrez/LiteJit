@@ -47,3 +47,24 @@ ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos)
 
     return ret_val;
 }
+
+/* FIXME : Type check */
+ljit_value ljit_inst_mul(ljit_function *fun, ljit_value op1, ljit_value op2)
+{
+    ljit_value ret_val = NULL;
+    ljit_bytecode *instr = NULL;
+
+    if ((instr = _ljit_new_bytecode(MUL, op1, op2)) == NULL)
+        return NULL;
+
+    if ((ret_val = _ljit_new_temporary(fun, op1->type)) == NULL)
+    {
+        _ljit_free_bytecode(instr);
+        return NULL;
+    }
+
+    instr->ret_val = ret_val;
+    ljit_bytecode_list_add(&fun->bytecode, instr);
+
+    return ret_val;
+}

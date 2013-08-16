@@ -142,10 +142,11 @@ typedef enum _ljit_bytecode_type_e
 
     /** 1 Operand instructions **/
 
-    GET_PARAM
+    GET_PARAM,
 
     /** 2 Operand instructions **/
 
+    MUL
 } ljit_bytecode_type;
 
 /**

@@ -7,7 +7,7 @@ int main(void)
     ljit_instance *instance = NULL;
     ljit_function *mul = NULL;
     ljit_types params[2] = {LJIT_INT, LJIT_INT};
-    ljit_value x, y;
+    ljit_value x, y, z;
 
     instance = ljit_new_instance();
     ljit_set_arch(instance, LJIT_ARCH_X86);
@@ -17,6 +17,8 @@ int main(void)
 
     x = ljit_inst_get_param(mul, 0);
     y = ljit_inst_get_param(mul, 1);
+
+    z = ljit_inst_mul(mul, x, y);
 
     ljit_bytecode_dumper(stdout, mul);
 
