@@ -25,7 +25,9 @@ void ljit_free_value(ljit_value value)
     if (value->is_tmp)
         return;
 
-    free(value->data);
+    if (value->type != LJIT_LABEL)
+        free(value->data);
+
     free(value);
 }
 

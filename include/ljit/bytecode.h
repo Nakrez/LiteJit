@@ -58,6 +58,16 @@ ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos);
 int ljit_inst_return(ljit_function *fun, ljit_value val);
 
 /**
+**  @brief  Create an unconditional jump to a label
+**  @param  fun The function that holds the jump
+**  @param  lbl The label where you want to jump
+**
+**  @return 0 if everything went well, -1 if an allocation error happened
+*/
+
+int ljit_inst_jump(ljit_function *fun, ljit_label *lbl);
+
+/**
 **  @brief  Return the result of addition of @a op1 and @a op2
 **  @param  fun The function where you want to the @a add instruction
 **  @param  op1 The first operand of the addition

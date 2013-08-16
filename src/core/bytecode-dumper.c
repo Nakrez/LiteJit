@@ -14,6 +14,9 @@ static void _ljit_dump_value(FILE *f, ljit_value val)
 
     switch (val->type)
     {
+        case LJIT_LABEL:
+            fprintf(f, "l%u", ((ljit_label*)(val->data))->index);
+            break;
         case LJIT_VOID:
             break;
         case LJIT_CHAR:
@@ -63,6 +66,10 @@ static void _ljit_dump_instr(FILE *f, ljit_bytecode *instr)
             break;
         case RETURN:
             fprintf(f, "return ");
+            _ljit_dump_value(f, instr->op1);
+            break;
+        case JUMP:
+            fprintf(f, "jmp ");
             _ljit_dump_value(f, instr->op1);
             break;
         case ADD:

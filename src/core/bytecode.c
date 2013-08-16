@@ -100,6 +100,28 @@ int ljit_inst_return(ljit_function *fun, ljit_value val)
     return 0;
 }
 
+int ljit_inst_jump(ljit_function *fun, ljit_label *lbl)
+{
+    ljit_bytecode *instr = NULL;
+    ljit_value val = NULL;
+
+    if ((val = ljit_new_value(LJIT_LABEL)) == NULL)
+        return -1;
+
+    if ((instr = _ljit_new_bytecode(JUMP, val, NULL)) == NULL)
+    {
+        ljit_free_value(val);
+        return -1;
+    }
+
+    val->data = lbl;
+
+    /* Add the instruction to the instruction list of the current block */
+    ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
+
+    return 0;
+}
+
 ljit_value ljit_inst_add(ljit_function *fun, ljit_value op1, ljit_value op2)
 {
     return _ljit_build_operation(fun, op1, op2, ADD);

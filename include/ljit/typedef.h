@@ -56,6 +56,11 @@ typedef struct _ljit_function_s ljit_function;
 typedef enum _ljit_types_e
 {
     /**
+    **  @brief  Label
+    */
+    LJIT_LABEL,
+
+    /**
     **  @brief  Void type with C meaning. Usable only as return type of a
     **          function.
     */
@@ -144,6 +149,7 @@ typedef enum _ljit_bytecode_type_e
 
     GET_PARAM,
     RETURN,
+    JUMP,
 
     /** 2 Operand instructions **/
 
