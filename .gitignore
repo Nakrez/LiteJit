@@ -1,0 +1,8 @@
+*.o
+*.so
+*.so.*
+CMakeFiles
+doc/html
+*_test
+Testing
+CTestTestfile.cmake
