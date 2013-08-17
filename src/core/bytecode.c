@@ -119,7 +119,16 @@ int ljit_bind_label(ljit_function *fun, ljit_label *lbl)
         return -1;
     }
 
-    /* FIXME : Create new block if this close a basic block */
+    /*
+    FIXME : Create new block if this close a basic block or add this to
+            the label list that point to the current basic block
+    */
+
+    if (_ljit_create_block_if_needed(fun, lbl) < 0)
+    {
+        ljit_free_value(value);
+        return -1;
+    }
 
     ++lbl->count;
     value->data = lbl;

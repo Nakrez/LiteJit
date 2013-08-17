@@ -111,7 +111,6 @@ void ljit_bytecode_dumper(FILE *f, ljit_function *fun)
     while (b)
     {
         struct _ljit_bytecode_list_element_s *instr = b->instrs->head;
-        printf(";******\n");
 
         /* Display all the instructions of the block */
         while (instr)

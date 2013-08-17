@@ -12,6 +12,7 @@ static int _ljit_create_first_block(ljit_function *fun)
         return -1;
 
     fun->current_blk = fun->start_blk;
+    fun->last_blk = fun->start_blk;
 
     if (ljit_bind_label(fun, entry_lbl))
     {

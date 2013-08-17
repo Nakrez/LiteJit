@@ -28,3 +28,49 @@ void ljit_free_block(ljit_block *block)
 
     free(block);
 }
+
+int _ljit_create_block_if_needed(ljit_function *fun, ljit_label *lbl)
+{
+    ljit_bytecode_type itype = 0;
+    ljit_block *new_block = NULL;
+
+    /* If there is no instruction on the current block nothing to do */
+    if (!fun->current_blk->instrs->tail)
+        return 0;
+
+    itype = fun->current_blk->instrs->tail->instr->type;
+
+    /*
+    If the last instruction in the current block is not an instruction that
+    terminates a basic block then nothing to do
+    */
+
+    if ((itype < JUMP || itype > JUMP_IF_NOT) && itype != RETURN)
+    {
+        /*
+        FIXME : Add the label to the label list that points on the current
+                block
+        */
+        return 0;
+    }
+
+    /*
+    If the last instruction was a conditional jump add an unconditional jump to
+    lbl
+    */
+
+    if (itype == JUMP_IF || itype == JUMP_IF_NOT)
+    {
+        if (ljit_inst_jump(fun, lbl))
+            return -1;
+    }
+
+    if ((new_block = ljit_new_block()) == NULL)
+        return -1;
+
+    fun->last_blk->next = new_block;
+    fun->last_blk = new_block;
+    fun->current_blk = new_block;
+
+    return 1;
+}
