@@ -76,6 +76,18 @@ static void _ljit_dump_instr(FILE *f, ljit_bytecode *instr)
             fprintf(f, "jmp ");
             _ljit_dump_value(f, instr->op1);
             break;
+        case JUMP_IF:
+            fprintf(f, "jmp_if ");
+            _ljit_dump_value(f, instr->op1);
+            fprintf(f, " ");
+            _ljit_dump_value(f, instr->op2);
+            break;
+        case JUMP_IF_NOT:
+            fprintf(f, "jmp_if_not ");
+            _ljit_dump_value(f, instr->op1);
+            fprintf(f, " ");
+            _ljit_dump_value(f, instr->op2);
+            break;
         case ADD:
             _ljit_dump_operation(f, instr, "add");
             break;

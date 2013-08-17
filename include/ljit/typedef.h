@@ -154,6 +154,8 @@ typedef enum _ljit_bytecode_type_e
 
     /** 2 Operand instructions **/
 
+    JUMP_IF,
+    JUMP_IF_NOT,
     ADD,
     SUB,
     MUL,

@@ -93,6 +93,26 @@ int ljit_bind_label(ljit_function *fun, ljit_label *lbl);
 int ljit_inst_jump(ljit_function *fun, ljit_label *lbl);
 
 /**
+**  @brief  Create a conditional jump. If @a val is not zero jump to @a lbl
+**  @param  val The value you want to compare with 0.
+**  @param  lbl The destination label if @a val is not 0.
+**
+**  @return 0 if everything went well, -1 if an error happened
+*/
+
+int ljit_inst_jump_if(ljit_function *fun, ljit_value val, ljit_label *lbl);
+
+/**
+**  @brief  Create a conditional jump. If @a val is zero jump to @a lbl
+**  @param  val The value you want to compare with 0.
+**  @param  lbl The destination label if @a val is 0.
+**
+**  @return 0 if everything went well, -1 if an error happened
+*/
+
+int ljit_inst_jump_if_not(ljit_function *fun, ljit_value val, ljit_label *lbl);
+
+/**
 **  @brief  Return the result of addition of @a op1 and @a op2
 **  @param  fun The function where you want to the @a add instruction
 **  @param  op1 The first operand of the addition

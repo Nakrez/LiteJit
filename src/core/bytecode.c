@@ -170,6 +170,68 @@ int ljit_inst_jump(ljit_function *fun, ljit_label *lbl)
     return 0;
 }
 
+int ljit_inst_jump_if(ljit_function *fun, ljit_value val, ljit_label *lbl)
+{
+    ljit_bytecode *instr = NULL;
+    ljit_value val_lbl = NULL;
+
+    if ((val_lbl = ljit_new_value(LJIT_LABEL)) == NULL)
+        return -1;
+
+    if ((instr = _ljit_new_bytecode(JUMP_IF, val, val_lbl)) == NULL)
+    {
+        ljit_free_value(val_lbl);
+        return -1;
+    }
+
+    val_lbl->data = lbl;
+
+    /* Label is now referenced on more time */
+    ++lbl->count;
+
+    /*
+    Decrement count because ljit_new_bytecode does an unecessery +1 in this
+    case.
+     */
+    --val_lbl->count;
+
+    /* Add the instruction to the instruction list of the current block */
+    ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
+
+    return 0;
+}
+
+int ljit_inst_jump_if_not(ljit_function *fun, ljit_value val, ljit_label *lbl)
+{
+    ljit_bytecode *instr = NULL;
+    ljit_value val_lbl = NULL;
+
+    if ((val_lbl = ljit_new_value(LJIT_LABEL)) == NULL)
+        return -1;
+
+    if ((instr = _ljit_new_bytecode(JUMP_IF_NOT, val, val_lbl)) == NULL)
+    {
+        ljit_free_value(val_lbl);
+        return -1;
+    }
+
+    val_lbl->data = lbl;
+
+    /* Label is now referenced on more time */
+    ++lbl->count;
+
+    /*
+    Decrement count because ljit_new_bytecode does an unecessery +1 in this
+    case.
+     */
+    --val_lbl->count;
+
+    /* Add the instruction to the instruction list of the current block */
+    ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
+
+    return 0;
+}
+
 ljit_value ljit_inst_add(ljit_function *fun, ljit_value op1, ljit_value op2)
 {
     return _ljit_build_operation(fun, op1, op2, ADD);
