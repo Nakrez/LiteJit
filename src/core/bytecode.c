@@ -16,10 +16,7 @@ static ljit_value _ljit_build_operation(ljit_function *fun,
 
     /* Allocate new temporary that hold the return value */
     if ((ret_val = _ljit_new_temporary(fun, op1->type)) == NULL)
-    {
-        _ljit_free_bytecode(instr);
-        return NULL;
-    }
+        goto error;
 
     /* Set the return temporary as return value of the instruction */
     instr->ret_val = ret_val;
@@ -28,9 +25,15 @@ static ljit_value _ljit_build_operation(ljit_function *fun,
     Add the created instruction to the current constructed block of the
     function
     */
-    ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
+    if (_ljit_create_block_if_needed(fun, NULL) < 0 ||
+        !ljit_bytecode_list_add(&fun->current_blk->instrs, instr))
+        goto error;
 
     return ret_val;
+
+error:
+    _ljit_free_bytecode(instr);
+    return NULL;
 }
 
 ljit_bytecode *_ljit_new_bytecode(ljit_bytecode_type type,
@@ -75,19 +78,22 @@ ljit_value ljit_inst_get_param(ljit_function *fun, ljit_uchar pos)
     /* Create the new temporary that holds the result of the instruction */
     if ((ret_val = _ljit_new_temporary(fun,
                                        fun->signature->params_type[pos])) == NULL)
-    {
-        ljit_free_value(pos_cst);
-        _ljit_free_bytecode(instr);
-        return NULL;
-    }
+        goto error;
 
     /* Set the return temporary as result of the instruction */
     instr->ret_val = ret_val;
 
     /* Add this instruction to the instruction list of the current block */
-    ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
+    if (_ljit_create_block_if_needed(fun, NULL) < 0 ||
+        !ljit_bytecode_list_add(&fun->current_blk->instrs, instr))
+        goto error;
 
     return ret_val;
+
+error:
+    ljit_free_value(pos_cst);
+    _ljit_free_bytecode(instr);
+    return NULL;
 }
 
 /* FIXME : Check return type and the value type */
@@ -100,7 +106,9 @@ int ljit_inst_return(ljit_function *fun, ljit_value val)
         return -1;
 
     /* Add the instruction to the instruction list of the current block */
-    ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
+    if (_ljit_create_block_if_needed(fun, NULL) < 0 ||
+        !ljit_bytecode_list_add(&fun->current_blk->instrs, instr))
+        return -1;
 
     return 0;
 }
@@ -111,24 +119,10 @@ int ljit_bind_label(ljit_function *fun, ljit_label *lbl)
     ljit_value value = NULL;
 
     if ((value = ljit_new_value(LJIT_LABEL)) == NULL)
-        return -1;
+        goto error;
 
     if ((instr = _ljit_new_bytecode(LABEL, value, NULL)) == NULL)
-    {
-        ljit_free_value(value);
-        return -1;
-    }
-
-    /*
-    FIXME : Create new block if this close a basic block or add this to
-            the label list that point to the current basic block
-    */
-
-    if (_ljit_create_block_if_needed(fun, lbl) < 0)
-    {
-        ljit_free_value(value);
-        return -1;
-    }
+        goto error;
 
     ++lbl->count;
     value->data = lbl;
@@ -138,14 +132,20 @@ int ljit_bind_label(ljit_function *fun, ljit_label *lbl)
     case.
      */
     --value->count;
+    if (_ljit_create_block_if_needed(fun, lbl) < 0)
+        goto error;
 
     /* Add the instruction to the instruction list of the current block */
     lbl->instr = ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
 
     if (!lbl->instr)
-        return -1;
+        goto error;
 
     return 0;
+
+error:
+    ljit_free_value(value);
+    return -1;
 }
 
 int ljit_inst_jump(ljit_function *fun, ljit_label *lbl)
@@ -157,10 +157,7 @@ int ljit_inst_jump(ljit_function *fun, ljit_label *lbl)
         return -1;
 
     if ((instr = _ljit_new_bytecode(JUMP, val, NULL)) == NULL)
-    {
-        ljit_free_value(val);
-        return -1;
-    }
+        goto error;
 
     val->data = lbl;
 
@@ -174,9 +171,14 @@ int ljit_inst_jump(ljit_function *fun, ljit_label *lbl)
     --val->count;
 
     /* Add the instruction to the instruction list of the current block */
-    ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
+    if (!ljit_bytecode_list_add(&fun->current_blk->instrs, instr))
+        goto error;
 
     return 0;
+
+error:
+    ljit_free_value(val);
+    return -1;
 }
 
 int ljit_inst_jump_if(ljit_function *fun, ljit_value val, ljit_label *lbl)
@@ -188,10 +190,7 @@ int ljit_inst_jump_if(ljit_function *fun, ljit_value val, ljit_label *lbl)
         return -1;
 
     if ((instr = _ljit_new_bytecode(JUMP_IF, val, val_lbl)) == NULL)
-    {
-        ljit_free_value(val_lbl);
-        return -1;
-    }
+        goto error;
 
     val_lbl->data = lbl;
 
@@ -205,9 +204,14 @@ int ljit_inst_jump_if(ljit_function *fun, ljit_value val, ljit_label *lbl)
     --val_lbl->count;
 
     /* Add the instruction to the instruction list of the current block */
-    ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
+    if (!ljit_bytecode_list_add(&fun->current_blk->instrs, instr))
+        goto error;
 
     return 0;
+
+error:
+    ljit_free_value(val_lbl);
+    return -1;
 }
 
 int ljit_inst_jump_if_not(ljit_function *fun, ljit_value val, ljit_label *lbl)
@@ -219,10 +223,7 @@ int ljit_inst_jump_if_not(ljit_function *fun, ljit_value val, ljit_label *lbl)
         return -1;
 
     if ((instr = _ljit_new_bytecode(JUMP_IF_NOT, val, val_lbl)) == NULL)
-    {
-        ljit_free_value(val_lbl);
-        return -1;
-    }
+        goto error;
 
     val_lbl->data = lbl;
 
@@ -236,9 +237,14 @@ int ljit_inst_jump_if_not(ljit_function *fun, ljit_value val, ljit_label *lbl)
     --val_lbl->count;
 
     /* Add the instruction to the instruction list of the current block */
-    ljit_bytecode_list_add(&fun->current_blk->instrs, instr);
+    if (!ljit_bytecode_list_add(&fun->current_blk->instrs, instr))
+        goto error;
 
     return 0;
+
+error:
+    ljit_free_value(val_lbl);
+    return -1;
 }
 
 ljit_value ljit_inst_add(ljit_function *fun, ljit_value op1, ljit_value op2)

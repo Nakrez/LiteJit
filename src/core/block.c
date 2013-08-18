@@ -47,10 +47,14 @@ int _ljit_create_block_if_needed(ljit_function *fun, ljit_label *lbl)
 
     if ((itype < JUMP || itype > JUMP_IF_NOT) && itype != RETURN)
     {
-        /*
-        FIXME : Add the label to the label list that points on the current
-                block
-        */
+        if (lbl)
+        {
+            /*
+            FIXME : Add the label to the label list that points on the current
+            block
+            */
+        }
+
         return 0;
     }
 
@@ -63,6 +67,15 @@ int _ljit_create_block_if_needed(ljit_function *fun, ljit_label *lbl)
     {
         if (ljit_inst_jump(fun, lbl))
             return -1;
+    }
+
+    /* If label does not exist create one and bind it */
+    if (!lbl)
+    {
+        if ((lbl = ljit_new_label(fun)) == NULL)
+            return -1;
+
+        return ljit_bind_label(fun, lbl);
     }
 
     if ((new_block = ljit_new_block()) == NULL)
