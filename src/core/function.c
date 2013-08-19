@@ -131,5 +131,13 @@ int ljit_function_compile(ljit_function *fun)
     if (_ljit_regalloc(fun))
         return -1;
 
-    return 0;
+    switch (fun->instance->target_arch)
+    {
+        case LJIT_ARCH_NONE:
+            return -1;
+        case LJIT_ARCH_X86:
+            return x86_compile(fun);
+        case LJIT_ARCH_X64:
+            return 0;
+    }
 }
