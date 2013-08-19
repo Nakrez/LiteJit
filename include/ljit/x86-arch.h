@@ -21,25 +21,17 @@
 */
 
 /**
-**  @file   ljit.h
-**  @brief  Main include that contains all @a LiteJit interface
+**  @file   x86-arch.h
+**  @brief  All x86 architecture related functions
 **  @author Baptiste Covolato <b.covolato@gmail.com>
-**  @date   15 August 2013
+**  @date   19 August 2013
 */
 
-#ifndef LJIT_H
-# define LJIT_H
+#ifndef X86_ARCH_H
+# define X86_ARCH_H
 
-# include <ljit/typedef.h>
-# include <ljit/arch.h>
-# include <ljit/instance.h>
-# include <ljit/types.h>
-# include <ljit/function.h>
-# include <ljit/bytecode.h>
-# include <ljit/bytecode-list.h>
-# include <ljit/block.h>
-# include <ljit/label.h>
-# include <ljit/defs.h>
-# include <ljit/x86-arch.h>
+# define LJIT_X86_USABLE_REGS 4
 
-#endif /* !LJIT_H */
+void setup_x86_platform(ljit_instance *instance);
+
+#endif /* !X86_ARCH_H */

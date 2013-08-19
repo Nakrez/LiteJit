@@ -20,6 +20,7 @@ ADD_LIBRARY(litejit_lib SHARED
             src/core/block.c
             src/core/label.c
             src/core/regalloc.c
+            src/core/x86-arch.c
             )
 
 add_dependencies(litejit_lib codegen)

@@ -32,6 +32,7 @@ void ljit_set_arch(ljit_instance *instance, ljit_arch_type arch)
             case LJIT_ARCH_NONE:
                 break;
             case LJIT_ARCH_X86:
+                setup_x86_platform(instance);
                 break;
             case LJIT_ARCH_X64:
                 break;
