@@ -32,7 +32,19 @@
 
 # define LJIT_X86_USABLE_REGS 4
 
+/**
+**  @brief  Setup a @a ljit_instance with x86 properties
+**  @param  instance    The instance you want to set as x86 instance
+*/
+
 void setup_x86_platform(ljit_instance *instance);
+
+/**
+**  @brief  Compile @a LiteJit bytecode to x86 native code
+**  @param  fun The function you want to compile
+**
+**  @return 0 if everything went well, -1 otherwise
+*/
 
 int x86_compile(ljit_function *fun);
 
