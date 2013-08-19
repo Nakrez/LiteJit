@@ -1,4 +1,4 @@
-SET(alias "/" "/test/")
+SET(alias "/" "/test/" "/tool/")
 
 FOREACH(name ${alias})
 EXEC_PROGRAM(
@@ -23,3 +23,5 @@ EXEC_PROGRAM(
     "@CMAKE_COMMAND@" ARGS "-E remove_directory @CMAKE_CURRENT_SOURCE_DIR@/doc/html")
 EXEC_PROGRAM(
     "@CMAKE_COMMAND@" ARGS "-E remove @CMAKE_CURRENT_SOURCE_DIR@/cmake/*.cmake")
+EXEC_PROGRAM(
+    "@CMAKE_COMMAND@" ARGS "-E remove @CMAKE_CURRENT_SOURCE_DIR@/tool/codegen-parser.h")

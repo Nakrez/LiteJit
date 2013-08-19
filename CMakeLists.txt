@@ -7,6 +7,8 @@ set(CMAKE_C_FLAGS_DEBUG "-Wall -Wextra -std=c99 -I${CMAKE_CURRENT_SOURCE_DIR}/in
 set(CMAKE_C_FLAGS_RELEASE "-Wall -Wextra -std=c99 -I${CMAKE_CURRENT_SOURCE_DIR}/include -O2 -s -DNDEBUG")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS_DEBUG}")
 
+add_subdirectory(tool)
+
 ADD_LIBRARY(litejit_lib SHARED
             src/core/internal.c
             src/core/instance.c
@@ -18,6 +20,8 @@ ADD_LIBRARY(litejit_lib SHARED
             src/core/block.c
             src/core/label.c
             )
+
+add_dependencies(litejit_lib codegen)
 
 SET_TARGET_PROPERTIES(
     litejit_lib
