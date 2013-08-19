@@ -1,4 +1,5 @@
 #include <ljit/function.h>
+#include "regalloc.h"
 #include "internal.h"
 
 static int _ljit_create_first_block(ljit_function *fun)
@@ -114,6 +115,21 @@ int ljit_new_signature(ljit_function *fun,
     sig->ret_type = ret_type;
 
     fun->signature = sig;
+
+    return 0;
+}
+
+int ljit_function_compile(ljit_function *fun)
+{
+    if (!fun->instance || fun->instance->target_arch == LJIT_ARCH_NONE)
+        return -1;
+
+    /*
+    First compute register allocation according to the
+    platform specifications
+    */
+    if (_ljit_regalloc(fun))
+        return -1;
 
     return 0;
 }

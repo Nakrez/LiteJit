@@ -38,6 +38,11 @@ struct _ljit_instance_s
     **  The configured target architecture
     */
     ljit_arch_type target_arch;
+
+    /**
+    **  The number of usable register available on the plateform
+    */
+    unsigned int usable_regs;
 };
 
 /**
