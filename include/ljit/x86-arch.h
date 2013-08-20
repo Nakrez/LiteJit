@@ -30,6 +30,8 @@
 #ifndef X86_ARCH_H
 # define X86_ARCH_H
 
+# include "typedef.h"
+
 # define LJIT_X86_USABLE_REGS 4
 
 /**
@@ -37,7 +39,7 @@
 **  @param  instance    The instance you want to set as x86 instance
 */
 
-void setup_x86_platform(ljit_instance *instance);
+void ljit_setup_platform(ljit_instance *instance);
 
 /**
 **  @brief  Compile @a LiteJit bytecode to x86 native code
@@ -46,6 +48,6 @@ void setup_x86_platform(ljit_instance *instance);
 **  @return 0 if everything went well, -1 otherwise
 */
 
-int x86_compile_instr(ljit_function *fun);
+int ljit_compile_instr(ljit_function *fun);
 
 #endif /* !X86_ARCH_H */

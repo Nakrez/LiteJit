@@ -8,7 +8,7 @@ ljit_instance *ljit_new_instance(void)
         return NULL;
 
     new_instance->usable_regs = 0;
-    ljit_set_arch(new_instance, LJIT_RUNNING_ARCH);
+    ljit_setup_platform(new_instance);
 
     return new_instance;
 }
@@ -16,25 +16,4 @@ ljit_instance *ljit_new_instance(void)
 void ljit_free_instance(ljit_instance *instance)
 {
     free(instance);
-}
-
-void ljit_set_arch(ljit_instance *instance, ljit_arch_type arch)
-{
-    if (instance)
-    {
-        instance->target_arch = arch;
-
-        /* Initialize platform parameters according to the new platform */
-
-        switch (arch)
-        {
-            case LJIT_ARCH_NONE:
-                break;
-            case LJIT_ARCH_X86:
-                setup_x86_platform(instance);
-                break;
-            case LJIT_ARCH_X64:
-                break;
-        }
-    }
 }

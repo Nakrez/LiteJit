@@ -1,15 +1,16 @@
 #include <ljit/ljit.h>
 #include "internal.h"
 
-void setup_x86_platform(ljit_instance *instance)
+void ljit_setup_platform(ljit_instance *instance)
 {
     if (instance)
     {
+        instance->target_arch = LJIT_ARCH_X86;
         instance->usable_regs = LJIT_X86_USABLE_REGS;
     }
 }
 
-int x86_compile_instr(ljit_function *fun)
+int ljit_compile_instr(ljit_function *fun)
 {
     return 0;
 }

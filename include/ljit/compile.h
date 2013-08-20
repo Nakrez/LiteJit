@@ -21,25 +21,21 @@
 */
 
 /**
-**  @file   ljit.h
-**  @brief  Main include that contains all @a LiteJit interface
+**  @file   compile.h
+**  @brief  Compilation to native code
 **  @author Baptiste Covolato <b.covolato@gmail.com>
-**  @date   15 August 2013
+**  @date   20 August 2013
 */
 
-#ifndef LJIT_H
-# define LJIT_H
+#ifndef COMPILE_H
+# define COMPILE_H
 
-# include <ljit/typedef.h>
-# include <ljit/arch.h>
-# include <ljit/instance.h>
-# include <ljit/types.h>
-# include <ljit/function.h>
-# include <ljit/bytecode.h>
-# include <ljit/bytecode-list.h>
-# include <ljit/block.h>
-# include <ljit/label.h>
-# include <ljit/compile.h>
-# include <ljit/defs.h>
+/**
+**  @brief  Compile the function into machine code
+**  @param  fun The function you want to compile into machine code
+**
+**  @return 0 if everything went well, -1 otherwise
+*/
+int ljit_function_compile(ljit_function *fun);
 
-#endif /* !LJIT_H */
+#endif /* !COMPILE_H */

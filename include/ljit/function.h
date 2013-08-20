@@ -67,13 +67,4 @@ int ljit_new_signature(ljit_function *fun,
                        int param_number,
                        ljit_types *param_types);
 
-
-/**
-**  @brief  Compile the function into machine code
-**  @param  fun The function you want to compile into machine code
-**
-**  @return 0 if everything went well, -1 otherwise
-*/
-int ljit_function_compile(ljit_function *fun);
-
 #endif /* !FUNCTION_H */
