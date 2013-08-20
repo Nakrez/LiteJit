@@ -33,7 +33,7 @@ char *read_code_block(void);
 %%
 
 "const"         { return CONST; }
-[A-Z][A-Z_]*    { return INSTRUCTION; }
+[A-Z][A-Z_]*    { yylval.str = yytext; return INSTRUCTION; }
 ->              { return ARROW; }
 "["             { return L_BRACKET; }
 "]"             { return R_BRACKET; }
