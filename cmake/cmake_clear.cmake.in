@@ -25,3 +25,5 @@ EXEC_PROGRAM(
     "@CMAKE_COMMAND@" ARGS "-E remove @CMAKE_CURRENT_SOURCE_DIR@/cmake/*.cmake")
 EXEC_PROGRAM(
     "@CMAKE_COMMAND@" ARGS "-E remove @CMAKE_CURRENT_SOURCE_DIR@/tool/codegen-parser.h")
+EXEC_PROGRAM(
+    "@CMAKE_COMMAND@" ARGS "-E remove @CMAKE_CURRENT_SOURCE_DIR@/tool/codegen-parser.output")
