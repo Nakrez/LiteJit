@@ -9,7 +9,7 @@ void setup_x86_platform(ljit_instance *instance)
     }
 }
 
-int x86_compile(ljit_function *fun)
+int x86_compile_instr(ljit_function *fun)
 {
     return 0;
 }

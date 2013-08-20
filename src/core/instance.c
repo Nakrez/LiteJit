@@ -1,4 +1,3 @@
-#include <ljit/instance.h>
 #include "internal.h"
 
 ljit_instance *ljit_new_instance(void)
@@ -8,8 +7,8 @@ ljit_instance *ljit_new_instance(void)
     if ((new_instance = malloc(sizeof(ljit_instance))) == NULL)
         return NULL;
 
-    new_instance->target_arch = LJIT_ARCH_NONE;
     new_instance->usable_regs = 0;
+    ljit_set_arch(new_instance, LJIT_RUNNING_ARCH);
 
     return new_instance;
 }

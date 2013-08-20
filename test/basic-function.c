@@ -10,7 +10,6 @@ int main(void)
     ljit_value x, y, z;
 
     instance = ljit_new_instance();
-    ljit_set_arch(instance, LJIT_ARCH_X86);
 
     mul = ljit_new_function(instance);
     assert(mul);

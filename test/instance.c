@@ -10,10 +10,6 @@ int main(void)
 
     assert(test);
 
-    ljit_set_arch(test, LJIT_ARCH_X86);
-
-    assert(test->target_arch == LJIT_ARCH_X86);
-
     ljit_free_instance(test);
 
     return 0;

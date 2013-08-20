@@ -11,8 +11,6 @@ int main()
     ljit_value zero = ljit_new_uchar_cst(0);
     ljit_value one = ljit_new_uchar_cst(1);
 
-    ljit_set_arch(instance, LJIT_ARCH_X86);
-
     fun = ljit_new_function(instance);
     assert(fun);
 

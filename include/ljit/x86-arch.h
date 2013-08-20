@@ -46,6 +46,6 @@ void setup_x86_platform(ljit_instance *instance);
 **  @return 0 if everything went well, -1 otherwise
 */
 
-int x86_compile(ljit_function *fun);
+int x86_compile_instr(ljit_function *fun);
 
 #endif /* !X86_ARCH_H */

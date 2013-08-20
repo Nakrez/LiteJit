@@ -52,4 +52,15 @@ typedef enum ljit_arch_type_e
     LJIT_ARCH_X64
 } ljit_arch_type;
 
+/* Automatic architecture detection */
+
+# ifdef __GNUC__ /* GCC compiler */
+#   ifdef __i386__
+#    define LJIT_RUNNING_ARCH LJIT_ARCH_X86
+#   endif /* __i386__ */
+#   ifdef __x86_64__
+#    define LJIT_RUNNING_ARCH LJIT_ARCH_X64
+#   endif /* __x86_64__ */
+# endif /* !GCC */
+
 #endif /* !ARCH_H */
