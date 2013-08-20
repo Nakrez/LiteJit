@@ -42,12 +42,12 @@
 void ljit_setup_platform(ljit_instance *instance);
 
 /**
-**  @brief  Compile @a LiteJit bytecode to x86 native code
-**  @param  fun The function you want to compile
+**  @brief  Compile @a LiteJit bytecode instruction to x86 instruction
+**  @param  instr   The instruction you want to compile
 **
 **  @return 0 if everything went well, -1 otherwise
 */
 
-int ljit_compile_instr(ljit_function *fun);
+int ljit_compile_instr(ljit_bytecode *instr);
 
 #endif /* !X86_ARCH_H */
