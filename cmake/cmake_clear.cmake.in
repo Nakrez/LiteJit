@@ -16,6 +16,8 @@ ENDFOREACH(name)
 EXEC_PROGRAM(
     "@CMAKE_COMMAND@" ARGS "-E remove @CMAKE_CURRENT_SOURCE_DIR@/install_manifest.txt")
 EXEC_PROGRAM(
+    "@CMAKE_COMMAND@" ARGS "-E remove @CMAKE_CURRENT_SOURCE_DIR@/src/code/*.inc")
+EXEC_PROGRAM(
     "@CMAKE_COMMAND@" ARGS "-E remove @CMAKE_CURRENT_SOURCE_DIR@/*core*")
 EXEC_PROGRAM(
     "@CMAKE_COMMAND@" ARGS "-E remove_directory @CMAKE_CURRENT_SOURCE_DIR@/Testing")

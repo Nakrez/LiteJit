@@ -9,6 +9,15 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS_DEBUG}")
 
 add_subdirectory(tool)
 
+SET(src_x86 "${CMAKE_CURRENT_SOURCE_DIR}/src/core/x86-code.inc.in")
+SET(dst_x86 "${CMAKE_CURRENT_SOURCE_DIR}/src/core/x86-code.inc")
+
+add_custom_command(OUTPUT "${dst_x86}"
+                   DEPENDS "${src_x86}" codegen
+                   COMMAND
+                   "./tool/codegen" ${src_x86} ${dst_x86}
+                   )
+
 ADD_LIBRARY(litejit_lib SHARED
             src/core/internal.c
             src/core/instance.c
@@ -24,7 +33,8 @@ ADD_LIBRARY(litejit_lib SHARED
             src/core/arch.c
             )
 
-add_dependencies(litejit_lib codegen)
+add_custom_target(x86_code DEPENDS "${dst_x86}")
+add_dependencies(litejit_lib x86_code)
 
 SET_TARGET_PROPERTIES(
     litejit_lib

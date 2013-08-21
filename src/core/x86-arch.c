@@ -14,6 +14,7 @@ int ljit_compile_instr(ljit_bytecode *instr)
 {
     switch (instr->type)
     {
+        #include "x86-code.inc"
     }
 
     return 0;
