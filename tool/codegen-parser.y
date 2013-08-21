@@ -20,6 +20,7 @@
     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
     IN THE SOFTWARE.
 */
+
 int error = 0;
 
 %}
@@ -41,6 +42,9 @@ int error = 0;
 void yyrestart(FILE *f);
 void yyerror(const char *str);
 int yylex();
+void flex_free(void);
+
+extern FILE *yyin;
 
 typedef struct instr_list_s instr_list;
 typedef struct instr_s instr;
@@ -198,7 +202,6 @@ instr_list: instr { $$ = $1; }
 
 int main(int argc, char *argv[])
 {
-    FILE *input = NULL;
     FILE *output = NULL;
 
     if (argc != 3)
@@ -207,21 +210,21 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    input = fopen(argv[1], "r");
+    yyin = fopen(argv[1], "r");
 
-    if (!input)
+    if (!yyin)
     {
         fprintf(stderr, "Cant open input file : %s\n", argv[1]);
         return 2;
     }
 
-    yyrestart(input);
     yyparse();
+    flex_free();
 
     if (error)
     {
         cgen_free_instr(code);
-        fclose(input);
+        fclose(yyin);
         return 4;
     }
     else
@@ -231,7 +234,7 @@ int main(int argc, char *argv[])
         if (!output)
         {
             fprintf(stderr, "Cant open output file : %s\n", argv[2]);
-            fclose(input);
+            fclose(yyin);
             return 3;
         }
     }
@@ -240,7 +243,7 @@ int main(int argc, char *argv[])
     cgen_free_instr(code);
 
     fclose(output);
-    fclose(input);
+    fclose(yyin);
 
     return 0;
 }

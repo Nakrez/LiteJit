@@ -55,6 +55,8 @@ char *read_code_block(void)
     {
         c = input();
 
+        if (c == EOF)
+            yyerror("Read block error");
         if (c == '{')
             ++count;
         if (c == '}')
@@ -76,4 +78,9 @@ char *read_code_block(void)
     buf[pos] = 0;
 
     return buf;
+}
+
+void flex_free(void)
+{
+    yy_delete_buffer(YY_CURRENT_BUFFER);
 }
