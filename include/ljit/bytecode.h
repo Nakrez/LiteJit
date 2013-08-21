@@ -94,6 +94,7 @@ int ljit_inst_jump(ljit_function *fun, ljit_label *lbl);
 
 /**
 **  @brief  Create a conditional jump. If @a val is not zero jump to @a lbl
+**  @param  fun The function where you want to the @a add instruction
 **  @param  val The value you want to compare with 0.
 **  @param  lbl The destination label if @a val is not 0.
 **
@@ -104,6 +105,7 @@ int ljit_inst_jump_if(ljit_function *fun, ljit_value val, ljit_label *lbl);
 
 /**
 **  @brief  Create a conditional jump. If @a val is zero jump to @a lbl
+**  @param  fun The function where you want to the @a add instruction
 **  @param  val The value you want to compare with 0.
 **  @param  lbl The destination label if @a val is 0.
 **
