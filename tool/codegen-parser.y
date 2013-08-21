@@ -21,6 +21,7 @@
     IN THE SOFTWARE.
 */
 int error = 0;
+
 %}
 
 %require "2.4"
@@ -40,7 +41,6 @@ int error = 0;
 void yyrestart(FILE *f);
 void yyerror(const char *str);
 int yylex();
-
 
 typedef struct instr_list_s instr_list;
 typedef struct instr_s instr;
@@ -93,6 +93,15 @@ void cgen_free_block(block *b);
 
 instr *cgen_new_instr(char *name, block *b);
 void cgen_free_instr(instr *b);
+
+void cgen_print_instr(FILE *f, instr *i);
+void cgen_print_block(FILE *f, block *b);
+void cgen_print_param_list(FILE *f, param_list *l);
+}
+
+%code
+{
+instr *code = NULL;
 }
 
 %union
@@ -125,7 +134,7 @@ void cgen_free_instr(instr *b);
 %%
 
 codegen:
-       | instr_list
+       | instr_list { code = $1; }
        ;
 
 args: "const" { $$ = PARAM_CONST; }
@@ -211,6 +220,7 @@ int main(int argc, char *argv[])
 
     if (error)
     {
+        cgen_free_instr(code);
         fclose(input);
         return 4;
     }
@@ -225,6 +235,9 @@ int main(int argc, char *argv[])
             return 3;
         }
     }
+
+    cgen_print_instr(output, code);
+    cgen_free_instr(code);
 
     fclose(output);
     fclose(input);
@@ -307,4 +320,56 @@ void cgen_free_instr(instr *i)
     cgen_free_block(i->blk);
     cgen_free_instr(i->next);
     free(i);
+}
+
+void cgen_print_instr(FILE *f, instr *i)
+{
+    instr *tmp = i;
+
+    while (tmp)
+    {
+        fprintf(f, "case %s:\n", tmp->instr_name);
+        cgen_print_block(f, tmp->blk);
+
+        tmp = tmp->next;
+    }
+}
+
+void cgen_print_block(FILE *f, block *b)
+{
+    block *tmp = b;
+
+    while (tmp)
+    {
+        cgen_print_param_list(f, tmp->params);
+        fprintf(f, "{%s}\n", tmp->code);
+
+        tmp = tmp->next;
+    }
+}
+
+void cgen_print_param_list(FILE *f, param_list *l)
+{
+    param_list *tmp = l;
+    int count = 1;
+
+    fprintf(f, "if (");
+
+    while (tmp)
+    {
+        if (count > 1)
+            fprintf(f, " && ");
+
+        switch (tmp->type)
+        {
+            case PARAM_CONST:
+                fprintf(f, "instr->op%i->is_cst", count);
+                break;
+        }
+
+        ++count;
+        tmp = tmp->next;
+    }
+
+    fprintf(f, ")\n");
 }

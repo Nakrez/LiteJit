@@ -33,7 +33,7 @@ char *read_code_block(void);
 %%
 
 "const"         { return CONST; }
-[A-Z][A-Z_]*    { yylval.str = yytext; return INSTRUCTION; }
+[A-Z][A-Z_]*    { yylval.str = strdup(yytext); return INSTRUCTION; }
 ->              { return ARROW; }
 "["             { return L_BRACKET; }
 "]"             { return R_BRACKET; }
@@ -45,7 +45,7 @@ char *read_code_block(void);
 
 char *read_code_block(void)
 {
-    int count = 0;
+    int count = 1;
     char c;
     int pos = 0;
     int max_size = 32;
