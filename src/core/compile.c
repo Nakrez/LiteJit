@@ -35,6 +35,9 @@ int ljit_function_compile(ljit_function *fun)
 
     fun->code = cg->start;
 
+    /* Generates the prologue of the function */
+    ljit_gen_prolog(cg);
+
     /* Compile every basic block */
     block = fun->start_blk;
 

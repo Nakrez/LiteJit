@@ -19,3 +19,17 @@ int ljit_compile_instr(ljit_codegen *cg, ljit_bytecode *instr)
 
     return 0;
 }
+
+void ljit_gen_prolog(ljit_codegen *cg)
+{
+    unsigned char *code = cg->current;
+
+    // push ebp
+    ++code = 0x55;
+
+    // mov ebp, esp
+    ++code = 0x89;
+    ++code = 0xE5;
+
+    cg->current = code;
+}

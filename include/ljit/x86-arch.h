@@ -51,4 +51,12 @@ void ljit_setup_platform(ljit_instance *instance);
 
 int ljit_compile_instr(ljit_codegen *cg, ljit_bytecode *instr);
 
+/**
+**  @brief  Generate the prologue for a x86 function
+**
+**  @param  cg      The code generated informations
+*/
+
+void ljit_gen_prolog(ljit_codegen *cg);
+
 #endif /* !X86_ARCH_H */
