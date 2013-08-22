@@ -3,13 +3,13 @@
 #include "internal.h"
 #include "regalloc.h"
 
-static void _ljit_compile_block(ljit_block *block)
+static void _ljit_compile_block(ljit_codegen *cg, ljit_block *block)
 {
     struct _ljit_bytecode_list_element_s *instr = block->instrs->head;
 
     while (instr)
     {
-        ljit_compile_instr(instr->instr);
+        ljit_compile_instr(cg, instr->instr);
         instr = instr->next;
     }
 }
@@ -40,7 +40,7 @@ int ljit_function_compile(ljit_function *fun)
 
     while (block)
     {
-        _ljit_compile_block(block);
+        _ljit_compile_block(cg, block);
         block = block->next;
     }
 

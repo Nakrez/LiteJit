@@ -43,11 +43,12 @@ void ljit_setup_platform(ljit_instance *instance);
 
 /**
 **  @brief  Compile @a LiteJit bytecode instruction to x86 instruction
+**  @param  cg      The code generated informations
 **  @param  instr   The instruction you want to compile
 **
 **  @return 0 if everything went well, -1 otherwise
 */
 
-int ljit_compile_instr(ljit_bytecode *instr);
+int ljit_compile_instr(ljit_codegen *cg, ljit_bytecode *instr);
 
 #endif /* !X86_ARCH_H */

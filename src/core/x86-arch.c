@@ -10,7 +10,7 @@ void ljit_setup_platform(ljit_instance *instance)
     }
 }
 
-int ljit_compile_instr(ljit_bytecode *instr)
+int ljit_compile_instr(ljit_codegen *cg, ljit_bytecode *instr)
 {
     switch (instr->type)
     {
