@@ -1,4 +1,5 @@
 #include <ljit/function.h>
+#include <sys/mman.h>
 #include "internal.h"
 
 static int _ljit_create_first_block(ljit_function *fun)
@@ -34,6 +35,7 @@ ljit_function *ljit_new_function(ljit_instance *instance)
     new_function->instance = instance;
     new_function->uniq_index = 0;
     new_function->lbl_index = 0;
+    new_function->code = NULL;
 
     /*
     Create the start block of the function.
@@ -80,6 +82,10 @@ void ljit_free_function(ljit_function *fun)
     }
 
     ljit_free_signature(fun->signature);
+
+    if (fun->code)
+        munmap(fun->code, 4096);
+
     free(fun);
 }
 

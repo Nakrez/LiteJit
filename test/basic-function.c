@@ -24,6 +24,8 @@ int main(void)
 
     ljit_bytecode_dumper(stdout, mul);
 
+    ljit_function_compile(mul);
+
     ljit_free_function(mul);
     ljit_free_instance(instance);
 

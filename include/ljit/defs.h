@@ -131,6 +131,11 @@ struct _ljit_function_s
     **  @brief  Unique index for label
     */
     unsigned short lbl_index;
+
+    /**
+    **  @brief  The generated code for the function
+    */
+    void *code;
 };
 
 struct _ljit_bytecode_s

@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+#include <sys/mman.h>
 #include "internal.h"
 #include "regalloc.h"
 
@@ -26,8 +28,16 @@ int ljit_function_compile(ljit_function *fun)
     if (_ljit_regalloc(fun))
         return -1;
 
-    /* Compile every basic block */
+    /* Allocate some space for the generated code */
+    /* FIXME : Review allocation process */
+    if ((fun->code = mmap(NULL, 4096, PROT_EXEC | PROT_READ | PROT_WRITE,
+                          MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)) == (void *)-1)
+    {
+        fun->code = NULL;
+        return -1;
+    }
 
+    /* Compile every basic block */
     block = fun->start_blk;
 
     while (block)
