@@ -21,26 +21,18 @@
 */
 
 /**
-**  @file   ljit.h
-**  @brief  Main include that contains all @a LiteJit interface
+**  @file   codegen.h
+**  @brief  Related function to the codegen structure
 **  @author Baptiste Covolato <b.covolato@gmail.com>
-**  @date   15 August 2013
+**  @date   22 August 2013
 */
 
-#ifndef LJIT_H
-# define LJIT_H
+#ifndef CODEGEN_H
+# define CODEGEN_H
 
-# include <ljit/typedef.h>
-# include <ljit/arch.h>
-# include <ljit/instance.h>
-# include <ljit/types.h>
-# include <ljit/function.h>
-# include <ljit/bytecode.h>
-# include <ljit/bytecode-list.h>
-# include <ljit/block.h>
-# include <ljit/label.h>
-# include <ljit/compile.h>
-# include <ljit/codegen.h>
-# include <ljit/defs.h>
+# include "defs.h"
 
-#endif /* !LJIT_H */
+ljit_codegen *ljit_new_codegen(void);
+void ljit_free_codegen(ljit_codegen *cg);
+
+#endif /* !CODEGEN_H */

@@ -28,6 +28,7 @@ ADD_LIBRARY(litejit_lib SHARED
             src/core/bytecode-list.c
             src/core/block.c
             src/core/label.c
+            src/core/codegen.c
             src/core/regalloc.c
             src/core/compile.c
             src/core/arch.c

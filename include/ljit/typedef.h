@@ -186,4 +186,10 @@ typedef struct _ljit_block_s ljit_block;
 
 typedef struct _ljit_label_s ljit_label;
 
+/**
+**  @brief  The generated code structure
+*/
+
+typedef struct _ljit_codegen ljit_codegen;
+
 #endif /* !TYPEDEF_H */

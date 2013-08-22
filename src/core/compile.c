@@ -17,6 +17,7 @@ static void _ljit_compile_block(ljit_block *block)
 int ljit_function_compile(ljit_function *fun)
 {
     ljit_block *block = NULL;
+    ljit_codegen *cg = NULL;
 
     if (!fun->instance || fun->instance->target_arch == LJIT_ARCH_NONE)
         return -1;
@@ -29,13 +30,10 @@ int ljit_function_compile(ljit_function *fun)
         return -1;
 
     /* Allocate some space for the generated code */
-    /* FIXME : Review allocation process */
-    if ((fun->code = mmap(NULL, 4096, PROT_EXEC | PROT_READ | PROT_WRITE,
-                          MAP_PRIVATE | MAP_ANONYMOUS, -1, 0)) == (void *)-1)
-    {
-        fun->code = NULL;
+    if ((cg = ljit_new_codegen()) == NULL)
         return -1;
-    }
+
+    fun->code = cg->start;
 
     /* Compile every basic block */
     block = fun->start_blk;

@@ -242,4 +242,17 @@ struct _ljit_label_s
     unsigned int count;
 };
 
+struct _ljit_codegen
+{
+    /**
+    **  The start point of the generated function
+    */
+    void *start;
+
+    /**
+    **  The current point of code building
+    */
+    void *current;
+};
+
 #endif /* !DEFS_H */
