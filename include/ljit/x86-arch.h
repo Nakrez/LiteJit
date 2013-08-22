@@ -34,6 +34,24 @@
 
 # define LJIT_X86_USABLE_REGS 4
 
+typedef enum
+{
+    X86_EAX,
+    X86_ECX,
+    X86_EDX,
+    X86_EBX,
+    X86_ESP,
+    X86_EBP,
+    X86_ESI,
+    X86_EDI
+} ljit_x86_register;
+
+#define ljit_x86_push_reg(code, reg) \
+    *(code++) = 0x50 + reg;
+
+#define ljit_x86_pop_reg(code, reg) \
+    *(code++) = 0x58 + reg;
+
 /**
 **  @brief  Setup a @a ljit_instance with x86 properties
 **  @param  instance    The instance you want to set as x86 instance
