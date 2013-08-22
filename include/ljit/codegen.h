@@ -32,7 +32,20 @@
 
 # include "defs.h"
 
+/**
+**  @brief  Create a new codegen instance
+**
+**  @return The new codegen structure allocated, or NULL if something went
+**          wrong.
+*/
+
 ljit_codegen *ljit_new_codegen(void);
+
+/**
+**  @brief  Free a previous allocated codegen structure
+**  @param  cg  The structure you want to free
+*/
+
 void ljit_free_codegen(ljit_codegen *cg);
 
 #endif /* !CODEGEN_H */

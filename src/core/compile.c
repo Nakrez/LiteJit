@@ -44,5 +44,7 @@ int ljit_function_compile(ljit_function *fun)
         block = block->next;
     }
 
+    ljit_free_codegen(cg);
+
     return 0;
 }
