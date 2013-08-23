@@ -63,3 +63,28 @@ ljit_value ljit_new_uchar_cst(ljit_uchar value)
 
     return cst;
 }
+
+unsigned int ljit_type_get_size(ljit_types type)
+{
+    switch (type)
+    {
+        case LJIT_CHAR:
+            return sizeof(ljit_char);
+        case LJIT_UCHAR:
+            return sizeof(ljit_uchar);
+        case LJIT_SHORT:
+            return sizeof(ljit_short);
+        case LJIT_USHORT:
+            return sizeof(ljit_ushort);
+        case LJIT_INT:
+            return sizeof(ljit_int);
+        case LJIT_UINT:
+            return sizeof(ljit_uint);
+        case LJIT_LONG:
+            return sizeof(ljit_long);
+        case LJIT_ULONG:
+            return sizeof(ljit_ulong);
+        default:
+            return 0;
+    }
+}

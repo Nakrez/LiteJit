@@ -59,4 +59,13 @@ void ljit_free_value(ljit_value value);
 
 ljit_value ljit_new_uchar_cst(ljit_uchar value);
 
+/**
+**  @brief  Get the size of a @a LiteJit type
+**  param   type    The type you want to know the size
+**
+**  return  The size of the type @a type
+*/
+
+unsigned int ljit_type_get_size(ljit_types type);
+
 #endif /* !TYPES_H */
