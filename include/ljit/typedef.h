@@ -126,6 +126,18 @@ typedef char ljit_char;
 typedef unsigned char ljit_uchar;
 
 /**
+**  @brief  16-bit integer value
+*/
+
+typedef short ljit_short;
+
+/**
+**  @brief  16-bit unsigned integer value
+*/
+
+typedef unsigned short ljit_ushort;
+
+/**
 **  @brief  32-bit signed integer value
 */
 
@@ -136,6 +148,18 @@ typedef int ljit_int;
 */
 
 typedef unsigned int ljit_uint;
+
+/**
+**  @brief  64-bit integer value
+*/
+
+typedef long ljit_long;
+
+/**
+** @brief   64-bit unsigned integer value
+*/
+
+typedef unsigned long ljit_ulong;
 
 /**
 **  @brief  All bytecode instruction
