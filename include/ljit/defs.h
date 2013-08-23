@@ -90,6 +90,11 @@ struct _ljit_signature_s
     ljit_types ret_type;
 
     /**
+    **  @brief  The number of parameters
+    */
+    unsigned int param_num;
+
+    /**
     **  @brief  An array containing the type of each parameter
     */
     ljit_types *params_type;

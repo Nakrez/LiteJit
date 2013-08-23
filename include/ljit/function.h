@@ -67,4 +67,14 @@ int ljit_new_signature(ljit_function *fun,
                        int param_number,
                        ljit_types *param_types);
 
+/**
+**  @brief  Get the size of all parameters of a function's signature
+**  @param  fun The function you want to know the size of the parameters
+**
+**  @return The size of all parameters. 0 if no signature is attached to the
+**          function.
+*/
+
+unsigned int ljit_signature_size(ljit_function *fun);
+
 #endif /* !FUNCTION_H */

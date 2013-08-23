@@ -117,9 +117,20 @@ int ljit_new_signature(ljit_function *fun,
     else
         sig->params_type = NULL;
 
+    sig->param_num = param_number;
     sig->ret_type = ret_type;
 
     fun->signature = sig;
 
     return 0;
+}
+
+unsigned int ljit_signature_size(ljit_function *fun)
+{
+    unsigned int sig_size = 0;
+
+    for (unsigned int i = 0; i < fun->signature->param_num; ++i)
+        sig_size += ljit_type_get_size(fun->signature->params_type[i]);
+
+    return sig_size;
 }
