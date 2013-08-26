@@ -1,4 +1,4 @@
-add_definitions(-I../include -g -ggdb -O0)
+add_definitions(-m32 -I../include -g -ggdb -O0)
 ## Instance test
 add_executable(instance_test
                EXCLUDE_FROM_ALL

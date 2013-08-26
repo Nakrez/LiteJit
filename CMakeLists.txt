@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 project(LiteJit C ASM)
 
-set(CMAKE_C_FLAGS_DEBUG "-Wall -Wextra -std=c99 -I${CMAKE_CURRENT_SOURCE_DIR}/include -O0 -g -ggdb -DLJIT_DEBUG")
+set(CMAKE_C_FLAGS_DEBUG "-m32 -Wall -Wextra -std=c99 -I${CMAKE_CURRENT_SOURCE_DIR}/include -O0 -g -ggdb -DLJIT_DEBUG")
 
 set(CMAKE_C_FLAGS_RELEASE "-Wall -Wextra -std=c99 -I${CMAKE_CURRENT_SOURCE_DIR}/include -O2 -s -DNDEBUG")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS_DEBUG}")
@@ -33,6 +33,8 @@ ADD_LIBRARY(litejit_lib SHARED
             src/core/compile.c
             src/core/arch.c
             src/core/apply.c
+
+            src/elf/elf.c
             )
 
 add_custom_target(x86_code DEPENDS "${dst_x86}")

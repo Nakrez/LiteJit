@@ -8,6 +8,9 @@ int main(void)
     ljit_function *mul = NULL;
     ljit_types params[2] = {LJIT_INT, LJIT_INT};
     ljit_value x, y, z;
+    int param1 = 5, param2 = 8;
+    int mul_ret = 0;
+    void *mul_params[2] = {&param1, &param2};
 
     instance = ljit_new_instance();
 
@@ -25,6 +28,12 @@ int main(void)
     ljit_bytecode_dumper(stdout, mul);
 
     ljit_function_compile(mul);
+    printf("Code address = %p\n", mul->code);
+
+    ljit_call_function(mul, mul_params, &mul_ret);
+
+    printf("Result %i\n", mul_ret);
+    assert(mul_ret == 40);
 
     ljit_free_function(mul);
     ljit_free_instance(instance);
