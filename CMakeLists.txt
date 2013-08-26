@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(LiteJit C)
+project(LiteJit C ASM)
 
 set(CMAKE_C_FLAGS_DEBUG "-Wall -Wextra -std=c99 -I${CMAKE_CURRENT_SOURCE_DIR}/include -O0 -g -ggdb -DLJIT_DEBUG")
 
@@ -32,10 +32,12 @@ ADD_LIBRARY(litejit_lib SHARED
             src/core/regalloc.c
             src/core/compile.c
             src/core/arch.c
+            src/core/apply.c
             )
 
 add_custom_target(x86_code DEPENDS "${dst_x86}")
 add_dependencies(litejit_lib x86_code)
+TARGET_LINK_LIBRARIES(litejit_lib ffi)
 
 SET_TARGET_PROPERTIES(
     litejit_lib

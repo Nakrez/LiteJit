@@ -1,4 +1,4 @@
-add_definitions(-I../include)
+add_definitions(-I../include -g -ggdb -O0)
 ## Instance test
 add_executable(instance_test
                EXCLUDE_FROM_ALL
@@ -8,6 +8,16 @@ target_link_libraries(instance_test litejit_lib)
 
 ADD_TEST(ctest_build_instance "${CMAKE_COMMAND}" --build ${CMAKE_BINARY_DIR} --target instance_test)
 ADD_TEST(ctest_run_instance instance_test)
+
+## ljit_call_function test
+add_executable(ljit_call_test
+               EXCLUDE_FROM_ALL
+               ljit-call-function.c)
+
+target_link_libraries(ljit_call_test litejit_lib)
+
+ADD_TEST(ctest_build_ljit_call "${CMAKE_COMMAND}" --build ${CMAKE_BINARY_DIR} --target ljit_call_test)
+ADD_TEST(ctest_run_ljit_call ljit_call_test)
 
 ## Basic Function test
 add_executable(basic_function_test

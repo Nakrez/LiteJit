@@ -21,27 +21,24 @@
 */
 
 /**
-**  @file   ljit.h
-**  @brief  Main include that contains all @a LiteJit interface
+**  @file   apply.h
+**  @brief  Call function from address without C prototype
 **  @author Baptiste Covolato <b.covolato@gmail.com>
-**  @date   15 August 2013
+**  @date   24 August 2013
 */
 
-#ifndef LJIT_H
-# define LJIT_H
+#ifndef APPLY_H
+# define APPLY_H
 
-# include <ljit/typedef.h>
-# include <ljit/arch.h>
-# include <ljit/instance.h>
-# include <ljit/types.h>
-# include <ljit/function.h>
-# include <ljit/bytecode.h>
-# include <ljit/bytecode-list.h>
-# include <ljit/block.h>
-# include <ljit/label.h>
-# include <ljit/compile.h>
-# include <ljit/codegen.h>
-# include <ljit/apply.h>
-# include <ljit/defs.h>
+/**
+**  @brief  Call a function compile by @a LiteJit
+**  @param  fun     The function you want to call
+**  @param  param   The parameters you want to pass to this function. Leave
+**                  NULL if no parameter
+**  @param  ret_val The place where the return value will be stored. Set NULL
+**                  if you don't want the return value
+*/
 
-#endif /* !LJIT_H */
+void ljit_call_function(ljit_function *fun, void **params, void *ret_val);
+
+#endif /* !APPLY_H */

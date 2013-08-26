@@ -1,5 +1,6 @@
 #include <ljit/function.h>
 #include <sys/mman.h>
+#include <alloca.h>
 #include "internal.h"
 
 static int _ljit_create_first_block(ljit_function *fun)
@@ -89,6 +90,31 @@ void ljit_free_function(ljit_function *fun)
     free(fun);
 }
 
+ffi_type *ljit_type_to_ffi(ljit_types t)
+{
+    switch (t)
+    {
+        case LJIT_INT:
+            return &ffi_type_sint;
+        default:
+            return 0;
+    }
+}
+
+ffi_status ljit_create_ffi(ffi_cif *cif, int param_number, ljit_types ljit_ret,
+                           ljit_types *ljit_param)
+{
+    ffi_type *ffi_ret = NULL;
+    ffi_type **ffi_params = malloc(sizeof(ffi_type*) * param_number);
+
+    ffi_ret = ljit_type_to_ffi(ljit_ret);
+
+    for (int i = 0; i < param_number; ++i)
+        ffi_params[i] = ljit_type_to_ffi(ljit_param[i]);
+
+    return ffi_prep_cif(cif, FFI_DEFAULT_ABI, param_number, ffi_ret, ffi_params);
+}
+
 /** TODO : Check if one of the parameter as type VOID **/
 int ljit_new_signature(ljit_function *fun,
                        ljit_types ret_type,
@@ -96,6 +122,7 @@ int ljit_new_signature(ljit_function *fun,
                        ljit_types *param_types)
 {
     ljit_signature *sig = NULL;
+    ffi_status status;
 
     if (!fun)
         return -2;
@@ -119,6 +146,14 @@ int ljit_new_signature(ljit_function *fun,
 
     sig->param_num = param_number;
     sig->ret_type = ret_type;
+
+    status = ljit_create_ffi(&sig->cif, param_number, ret_type, param_types);
+
+    if (status != FFI_OK)
+    {
+        ljit_free_signature(sig);
+        return -1;
+    }
 
     fun->signature = sig;
 

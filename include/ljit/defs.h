@@ -30,6 +30,8 @@
 #ifndef DEFS_H
 # define DEFS_H
 
+# include <ffi.h>
+
 # include <ljit/typedef.h>
 
 struct _ljit_instance_s
@@ -98,6 +100,11 @@ struct _ljit_signature_s
     **  @brief  An array containing the type of each parameter
     */
     ljit_types *params_type;
+
+    /**
+    **  @brief  Interface of the function to @a libffi
+    */
+    ffi_cif cif;
 };
 
 struct _ljit_function_s
