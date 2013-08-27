@@ -55,6 +55,17 @@ static void _ljit_free_elf_header(ljit_elf_header *header)
     free(header);
 }
 
+static void _ljit_free_elf_section(ljit_elf_section *section)
+{
+    if (!section)
+        return;
+
+    _ljit_free_elf_section(section->next);
+    free(section->header);
+    free(section->data);
+    free(section);
+}
+
 ljit_elf *ljit_new_elf(void)
 {
     ljit_elf *elf = NULL;
@@ -76,8 +87,14 @@ void ljit_free_elf(ljit_elf *elf)
     if (!elf)
         return;
 
+    _ljit_free_elf_section(elf->section);
     _ljit_free_elf_header(elf->header);
     free(elf);
+}
+
+int ljit_elf_add_section(ljit_elf *elf, const char *name)
+{
+    return 0;
 }
 
 int ljit_write_elf(ljit_elf *elf, const char *file)
@@ -90,10 +107,6 @@ int ljit_write_elf(ljit_elf *elf, const char *file)
 
     /* Write the elf header */
     write(disk_elf, elf->header, sizeof(ljit_elf_header));
-
-    /* Write the program header table */
-    for (unsigned int i = 0; i < elf->header->e_phnum; ++i)
-        write(disk_elf, elf->prog_header, sizeof(ljit_program_header));
 
     close(disk_elf);
 

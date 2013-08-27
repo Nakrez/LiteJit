@@ -49,11 +49,24 @@ typedef Elf32_Ehdr ljit_elf_header;
 typedef Elf32_Phdr ljit_program_header;
 typedef Elf32_Shdr ljit_section_header;
 
+typedef struct _ljit_elf_section_s
+{
+    ljit_section_header *header;
+
+    void *data;
+
+    unsigned int data_size;
+
+    struct _ljit_elf_section_s *next;
+} ljit_elf_section;
+
 typedef struct
 {
     ljit_elf_header *header;
-    ljit_program_header *prog_header;
-    ljit_section_header *sect_header;
+    ljit_program_header **prog_header;
+    ljit_elf_section *section;
+
+    unsigned int shstrtab_max_size;
 } ljit_elf;
 
 /**
@@ -70,6 +83,14 @@ ljit_elf *ljit_new_elf(void);
 */
 
 void ljit_free_elf(ljit_elf *elf);
+
+/**
+**  @brief  Add a section into the elf @a elf
+**  @param  elf     The elf where you want to add the section
+**  @param  name    The name of the section you want to add
+*/
+
+int ljit_elf_add_section(ljit_elf *elf, const char *name);
 
 /**
 **  @brief  Write an ELF on the disk
