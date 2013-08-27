@@ -31,6 +31,12 @@
 # define ELF_H
 
 # include <stdlib.h>
+# include <string.h>
+
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/stat.h>
+
 # include <elf.h>
 
 # include <ljit/typedef.h>
@@ -40,10 +46,14 @@
 /* TODO : set elf structure according to the architecture compiled */
 
 typedef Elf32_Ehdr ljit_elf_header;
+typedef Elf32_Phdr ljit_program_header;
+typedef Elf32_Shdr ljit_section_header;
 
 typedef struct
 {
     ljit_elf_header *header;
+    ljit_program_header *prog_header;
+    ljit_section_header *sect_header;
 } ljit_elf;
 
 /**
@@ -51,13 +61,25 @@ typedef struct
 **
 **  @return The new elf created, or NULL if something went wrong
 */
+
 ljit_elf *ljit_new_elf(void);
 
 /**
 **  @brief  Free an elf
 **  @param  elf The elf you want to free
 */
+
 void ljit_free_elf(ljit_elf *elf);
+
+/**
+**  @brief  Write an ELF on the disk
+**  @param  elf     The elf you want to write
+**  @param  file    The file were you want to write the elf
+**
+**  @return 0 if everything went well, -1 if an error happened with the file.
+*/
+
+int ljit_write_elf(ljit_elf *elf, const char *file);
 
 # ifdef LJIT_DEBUG
 void ljit_write_elf_function(ljit_function *fun, const char *path);

@@ -39,3 +39,14 @@ target_link_libraries(jump_test litejit_lib)
 
 ADD_TEST(ctest_build_jump "${CMAKE_COMMAND}" --build ${CMAKE_BINARY_DIR} --target jump_test)
 ADD_TEST(ctest_run_jump jump_test)
+
+## elf test
+
+add_executable(elf_test
+               EXCLUDE_FROM_ALL
+               elf.c)
+
+target_link_libraries(elf_test litejit_lib)
+
+ADD_TEST(ctest_build_elf "${CMAKE_COMMAND}" --build ${CMAKE_BINARY_DIR} --target elf_test)
+ADD_TEST(ctest_run_elf elf_test)
