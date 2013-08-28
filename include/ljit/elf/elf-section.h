@@ -34,7 +34,19 @@
 
 # include <stdlib.h>
 
+/**
+**  @brief  Create a new ELF section
+**
+**  @return The new section created, NULL otherwise
+*/
+
 ljit_elf_section *_ljit_new_elf_section(void);
+
+/**
+**  @brief  Free an ELF section
+**  @param  section The section you want to free
+*/
+
 void _ljit_free_elf_section(ljit_elf_section *section);
 
 /**

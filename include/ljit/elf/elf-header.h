@@ -35,7 +35,19 @@
 
 # include <ljit/elf/elf-defs.h>
 
+/**
+**  @brief  Allocate and initialize new ELF header
+**
+**  @return The new header if everything went well, NULL otherwise
+*/
+
 ljit_elf_header *_ljit_new_elf_header(void);
+
+/**
+**  @brief  Free an ELF header
+**  @param  header  The header you want to free
+*/
+
 void _ljit_free_elf_header(ljit_elf_header *header);
 
 #endif /* !ELF_HEADER_H */

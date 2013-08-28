@@ -34,28 +34,74 @@
 
 /* TODO : set elf structure according to the architecture compiled */
 
+/**
+**  @brief  Represent an ELF header
+*/
 typedef Elf32_Ehdr ljit_elf_header;
+
+/**
+**  @brief  Represent a program header
+*/
+
 typedef Elf32_Phdr ljit_program_header;
+
+/**
+**  @brief  Represent a section header
+*/
+
 typedef Elf32_Shdr ljit_section_header;
+
+/**
+**  @brief  List of ELF section
+*/
 
 typedef struct _ljit_elf_section_s
 {
+    /**
+    **  @brief  The header of the section
+    */
     ljit_section_header *header;
 
+    /**
+    **  @brief  The data that contains the section
+    */
     void *data;
 
+    /**
+    **  @brief  The size of the data held by the section
+    */
     unsigned int data_size;
 
+    /**
+    **  @brief  The next section
+    */
     struct _ljit_elf_section_s *next;
 } ljit_elf_section;
 
+/**
+**  @brief  The structure that represent the ELF itself
+*/
+
 typedef struct
 {
+    /**
+    **  @brief  The header of the elf
+    */
     ljit_elf_header *header;
+
+    /** UPDATED SOON **/
     ljit_program_header **prog_header;
+
+    /**
+    **  @brief  The sections contained in the ELF
+    */
     ljit_elf_section *section;
 
+    /**
+    **  @brief  The special section @a shstrtab
+    */
     ljit_elf_section *shstrtab;
+
     unsigned int shstrtab_max_size;
 } ljit_elf;
 
