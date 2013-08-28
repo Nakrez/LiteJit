@@ -1,5 +1,28 @@
 #include <ljit/elf/elf-section.h>
 
+int _ljit_shstrtab_add_string(ljit_elf *elf, const char *str)
+{
+    /* Calculate the future size of the shstrtab buffer */
+    unsigned int new_size = elf->shstrtab->header->sh_size + strlen(str) + 1;
+
+    /* Reallocate shstrtab buffer if to small */
+    while (elf->shstrtab_max_size < new_size)
+    {
+        elf->shstrtab_max_size *= 2;
+        if ((elf->shstrtab->data = realloc(elf->shstrtab->data,
+                                           elf->shstrtab_max_size)) == NULL)
+            return -1;
+    }
+
+    /* Copy the new string into the shstrtab buffer */
+    strcpy(((char *)elf->shstrtab->data) + new_size, str);
+
+    /* Update the header size field of the section */
+    elf->shstrtab->header->sh_size = new_size;
+
+    return 0;
+}
+
 int _ljit_shstrtab_section(ljit_elf *elf)
 {
     char *buf = NULL;
