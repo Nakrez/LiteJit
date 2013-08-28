@@ -21,27 +21,42 @@
 */
 
 /**
-**  @file   ljit.h
-**  @brief  Main include that contains all @a LiteJit interface
+**  @file   elf-defs.h
+**  @brief  Type definition of all elf structure used by @a LiteJit
 **  @author Baptiste Covolato <b.covolato@gmail.com>
-**  @date   15 August 2013
+**  @date   28 August 2013
 */
 
-#ifndef LJIT_H
-# define LJIT_H
+#ifndef ELF_DEFS_H
+# define ELF_DEFS_H
 
-# include <ljit/core/typedef.h>
-# include <ljit/core/arch.h>
-# include <ljit/core/instance.h>
-# include <ljit/core/types.h>
-# include <ljit/core/function.h>
-# include <ljit/core/bytecode.h>
-# include <ljit/core/bytecode-list.h>
-# include <ljit/core/block.h>
-# include <ljit/core/label.h>
-# include <ljit/core/compile.h>
-# include <ljit/core/codegen.h>
-# include <ljit/core/apply.h>
-# include <ljit/core/defs.h>
+# include <elf.h>
 
-#endif /* !LJIT_H */
+/* TODO : set elf structure according to the architecture compiled */
+
+typedef Elf32_Ehdr ljit_elf_header;
+typedef Elf32_Phdr ljit_program_header;
+typedef Elf32_Shdr ljit_section_header;
+
+typedef struct _ljit_elf_section_s
+{
+    ljit_section_header *header;
+
+    void *data;
+
+    unsigned int data_size;
+
+    struct _ljit_elf_section_s *next;
+} ljit_elf_section;
+
+typedef struct
+{
+    ljit_elf_header *header;
+    ljit_program_header **prog_header;
+    ljit_elf_section *section;
+
+    ljit_elf_section *shstrtab;
+    unsigned int shstrtab_max_size;
+} ljit_elf;
+
+#endif /* !ELF_DEFS_H */

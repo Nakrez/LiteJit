@@ -1,4 +1,3 @@
-#include <ljit/bytecode.h>
 #include "internal.h"
 
 static void _ljit_dump_value(FILE *f, ljit_value val)

@@ -32,7 +32,7 @@
 
 # include <ffi.h>
 
-# include <ljit/typedef.h>
+# include <ljit/core/typedef.h>
 
 struct _ljit_instance_s
 {

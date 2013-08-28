@@ -30,44 +30,10 @@
 #ifndef ELF_H
 # define ELF_H
 
-# include <stdlib.h>
-# include <string.h>
-
-# include <unistd.h>
-# include <fcntl.h>
-# include <sys/stat.h>
-
-# include <elf.h>
-
-# include <ljit/typedef.h>
-# include <ljit/arch.h>
-# include <ljit/defs.h>
-
-/* TODO : set elf structure according to the architecture compiled */
-
-typedef Elf32_Ehdr ljit_elf_header;
-typedef Elf32_Phdr ljit_program_header;
-typedef Elf32_Shdr ljit_section_header;
-
-typedef struct _ljit_elf_section_s
-{
-    ljit_section_header *header;
-
-    void *data;
-
-    unsigned int data_size;
-
-    struct _ljit_elf_section_s *next;
-} ljit_elf_section;
-
-typedef struct
-{
-    ljit_elf_header *header;
-    ljit_program_header **prog_header;
-    ljit_elf_section *section;
-
-    unsigned int shstrtab_max_size;
-} ljit_elf;
+# include <ljit/elf/elf-defs.h>
+# include <ljit/elf/elf-header.h>
+# include <ljit/elf/elf-section.h>
+# include <ljit/elf/elf-write.h>
 
 /**
 **  @brief  Create a new elf structure
@@ -84,26 +50,5 @@ ljit_elf *ljit_new_elf(void);
 
 void ljit_free_elf(ljit_elf *elf);
 
-/**
-**  @brief  Add a section into the elf @a elf
-**  @param  elf     The elf where you want to add the section
-**  @param  name    The name of the section you want to add
-*/
-
-int ljit_elf_add_section(ljit_elf *elf, const char *name);
-
-/**
-**  @brief  Write an ELF on the disk
-**  @param  elf     The elf you want to write
-**  @param  file    The file were you want to write the elf
-**
-**  @return 0 if everything went well, -1 if an error happened with the file.
-*/
-
-int ljit_write_elf(ljit_elf *elf, const char *file);
-
-# ifdef LJIT_DEBUG
-void ljit_write_elf_function(ljit_function *fun, const char *path);
-# endif /* LJIT_DEBUG */
 
 #endif /* !ELF_H */

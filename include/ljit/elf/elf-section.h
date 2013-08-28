@@ -21,27 +21,28 @@
 */
 
 /**
-**  @file   ljit.h
-**  @brief  Main include that contains all @a LiteJit interface
+**  @file   elf-section.h
+**  @brief  Section management of ELF binary
 **  @author Baptiste Covolato <b.covolato@gmail.com>
-**  @date   15 August 2013
+**  @date   28 August 2013
 */
 
-#ifndef LJIT_H
-# define LJIT_H
+#ifndef ELF_SECTION_H
+# define ELF_SECTION_H
 
-# include <ljit/core/typedef.h>
-# include <ljit/core/arch.h>
-# include <ljit/core/instance.h>
-# include <ljit/core/types.h>
-# include <ljit/core/function.h>
-# include <ljit/core/bytecode.h>
-# include <ljit/core/bytecode-list.h>
-# include <ljit/core/block.h>
-# include <ljit/core/label.h>
-# include <ljit/core/compile.h>
-# include <ljit/core/codegen.h>
-# include <ljit/core/apply.h>
-# include <ljit/core/defs.h>
+# include <ljit/elf.h>
 
-#endif /* !LJIT_H */
+# include <stdlib.h>
+
+ljit_elf_section *_ljit_new_elf_section(void);
+void _ljit_free_elf_section(ljit_elf_section *section);
+
+/**
+**  @brief  Add a section into the elf @a elf
+**  @param  elf     The elf where you want to add the section
+**  @param  name    The name of the section you want to add
+*/
+
+int ljit_elf_add_section(ljit_elf *elf, const char *name);
+
+#endif /* !ELF_SECTION_H */

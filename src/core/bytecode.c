@@ -1,4 +1,3 @@
-#include <ljit/bytecode.h>
 #include "internal.h"
 
 /* FIXME : Type check */

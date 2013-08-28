@@ -21,27 +21,31 @@
 */
 
 /**
-**  @file   ljit.h
-**  @brief  Main include that contains all @a LiteJit interface
+**  @file   label.h
+**  @brief  Label management related functions
 **  @author Baptiste Covolato <b.covolato@gmail.com>
-**  @date   15 August 2013
+**  @date   16 August 2013
 */
 
-#ifndef LJIT_H
-# define LJIT_H
+#ifndef LABEL_H
+# define LABEL_H
 
 # include <ljit/core/typedef.h>
-# include <ljit/core/arch.h>
-# include <ljit/core/instance.h>
-# include <ljit/core/types.h>
-# include <ljit/core/function.h>
-# include <ljit/core/bytecode.h>
-# include <ljit/core/bytecode-list.h>
-# include <ljit/core/block.h>
-# include <ljit/core/label.h>
-# include <ljit/core/compile.h>
-# include <ljit/core/codegen.h>
-# include <ljit/core/apply.h>
-# include <ljit/core/defs.h>
 
-#endif /* !LJIT_H */
+/**
+**  @brief  Create a new label
+**  @param  fun The function that hold the label
+**
+**  @return The new label created, or NULL if an error occured
+*/
+
+ljit_label *ljit_new_label(ljit_function *fun);
+
+/**
+**  @brief  Free a label
+**  @param  lbl The label you want to free
+*/
+
+void ljit_free_label(ljit_label *lbl);
+
+#endif /* !LABEL_H */

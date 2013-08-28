@@ -21,27 +21,29 @@
 */
 
 /**
-**  @file   ljit.h
-**  @brief  Main include that contains all @a LiteJit interface
+**  @file   elf-write.h
+**  @brief  Write the ELF into the disk
 **  @author Baptiste Covolato <b.covolato@gmail.com>
-**  @date   15 August 2013
+**  @date   28 August 2013
 */
 
-#ifndef LJIT_H
-# define LJIT_H
+#ifndef ELF_WRITE_H
+# define ELF_WRITE_H
 
-# include <ljit/core/typedef.h>
-# include <ljit/core/arch.h>
-# include <ljit/core/instance.h>
-# include <ljit/core/types.h>
-# include <ljit/core/function.h>
-# include <ljit/core/bytecode.h>
-# include <ljit/core/bytecode-list.h>
-# include <ljit/core/block.h>
-# include <ljit/core/label.h>
-# include <ljit/core/compile.h>
-# include <ljit/core/codegen.h>
-# include <ljit/core/apply.h>
-# include <ljit/core/defs.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/stat.h>
 
-#endif /* !LJIT_H */
+# include <ljit/elf/elf-defs.h>
+
+/**
+**  @brief  Write an ELF on the disk
+**  @param  elf     The elf you want to write
+**  @param  file    The file were you want to write the elf
+**
+**  @return 0 if everything went well, -1 if an error happened with the file.
+*/
+
+int ljit_write_elf(ljit_elf *elf, const char *file);
+
+#endif /* !ELF_WRITE_H */

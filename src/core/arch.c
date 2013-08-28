@@ -1,4 +1,4 @@
-#include <ljit/arch.h>
+#include <ljit/core/arch.h>
 
 #if LJIT_RUNNING_ARCH == LJIT_ARCH_X86
 # include "x86-arch.c"

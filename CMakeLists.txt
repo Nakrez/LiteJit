@@ -35,6 +35,9 @@ ADD_LIBRARY(litejit_lib SHARED
             src/core/apply.c
 
             src/elf/elf.c
+            src/elf/header.c
+            src/elf/section.c
+            src/elf/write.c
             )
 
 add_custom_target(x86_code DEPENDS "${dst_x86}")

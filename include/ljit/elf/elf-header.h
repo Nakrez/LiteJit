@@ -21,31 +21,21 @@
 */
 
 /**
-**  @file   label.h
-**  @brief  Label management related functions
+**  @file   elf-header.h
+**  @brief  Handle ELF header
 **  @author Baptiste Covolato <b.covolato@gmail.com>
-**  @date   16 August 2013
+**  @date   28 August 2013
 */
 
-#ifndef LABEL_H
-# define LABEL_H
+#ifndef ELF_HEADER_H
+# define ELF_HEADER_H
 
-# include <ljit/typedef.h>
+# include <stdlib.h>
+# include <string.h>
 
-/**
-**  @brief  Create a new label
-**  @param  fun The function that hold the label
-**
-**  @return The new label created, or NULL if an error occured
-*/
+# include <ljit/elf/elf-defs.h>
 
-ljit_label *ljit_new_label(ljit_function *fun);
+ljit_elf_header *_ljit_new_elf_header(void);
+void _ljit_free_elf_header(ljit_elf_header *header);
 
-/**
-**  @brief  Free a label
-**  @param  lbl The label you want to free
-*/
-
-void ljit_free_label(ljit_label *lbl);
-
-#endif /* !LABEL_H */
+#endif /* !ELF_HEADER_H */

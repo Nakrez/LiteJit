@@ -1,6 +1,8 @@
-#include <ljit/function.h>
+#include <ljit/core/function.h>
+
 #include <sys/mman.h>
 #include <alloca.h>
+
 #include "internal.h"
 
 static int _ljit_create_first_block(ljit_function *fun)

@@ -1,4 +1,3 @@
-#include <ljit/bytecode-list.h>
 #include "internal.h"
 
 ljit_bytecode_list *ljit_new_bytecode_list(void)
