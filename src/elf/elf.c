@@ -13,6 +13,13 @@ ljit_elf *ljit_new_elf(void)
         return NULL;
     }
 
+    /* Add shstrtab section */
+    if (_ljit_shstrtab_section(elf))
+    {
+        free(elf);
+        return NULL;
+    }
+
     return elf;
 }
 

@@ -10,12 +10,16 @@ static void _ljit_write_elf_sections(ljit_elf *elf, int fd)
     while (tmp)
     {
         write(fd, tmp->header, sizeof(ljit_section_header));
+        write(fd, tmp->data, tmp->header->sh_size);
         tmp = tmp->next;
     }
 }
 
 static void _ljit_update_elf(ljit_elf *elf)
 {
+    /* Current offset */
+    unsigned int offset = sizeof(ljit_elf_header);
+
     /* TODO calculate this */
     elf->header->e_shoff = sizeof(ljit_elf_header);
 
@@ -24,7 +28,19 @@ static void _ljit_update_elf(ljit_elf *elf)
 
     while (sec_tmp)
     {
+        offset += sizeof(ljit_section_header);
+
+        /* If the section is shstrtab put index in ELF header */
+        if (sec_tmp->header->sh_name == 1)
+            elf->header->e_shstrndx = elf->header->e_shnum;
+
         ++elf->header->e_shnum;
+
+        /* Update section header infos */
+        sec_tmp->header->sh_offset = offset;
+
+        offset += sec_tmp->header->sh_size;
+
         sec_tmp = sec_tmp->next;
     }
 }

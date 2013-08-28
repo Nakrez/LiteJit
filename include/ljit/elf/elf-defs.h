@@ -68,11 +68,6 @@ typedef struct _ljit_elf_section_s
     void *data;
 
     /**
-    **  @brief  The size of the data held by the section
-    */
-    unsigned int data_size;
-
-    /**
     **  @brief  The next section
     */
     struct _ljit_elf_section_s *next;

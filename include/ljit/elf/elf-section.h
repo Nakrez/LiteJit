@@ -34,6 +34,8 @@
 
 # include <stdlib.h>
 
+int _ljit_shstrtab_section(ljit_elf *elf);
+
 /**
 **  @brief  Create a new ELF section
 **
