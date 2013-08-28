@@ -35,6 +35,7 @@
 # include <sys/stat.h>
 
 # include <ljit/elf/elf-defs.h>
+# include <ljit/elf/elf-section.h>
 
 /**
 **  @brief  Write an ELF on the disk

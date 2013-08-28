@@ -72,6 +72,9 @@ int ljit_elf_add_section(ljit_elf *elf, const char *name)
     if ((new_sec = _ljit_new_elf_section()) == NULL)
         return -1;
 
+    if (!name)
+        new_sec->header->sh_name = 0;
+
     new_sec->next = elf->section;
     elf->section = new_sec;
 
