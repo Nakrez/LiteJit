@@ -34,6 +34,11 @@
 
 # include <stdlib.h>
 
+/**
+**  @brief  Add the shstrtab section on the ELF
+**  @param  elf The ELF where you want to add the shstrtab section
+*/
+
 int _ljit_shstrtab_section(ljit_elf *elf);
 
 /**

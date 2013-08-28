@@ -36,8 +36,9 @@ static void _ljit_update_elf(ljit_elf *elf)
 
         ++elf->header->e_shnum;
 
-        /* Update section header infos */
-        sec_tmp->header->sh_offset = offset;
+        /* If the section is not NULL then update offset */
+        if (sec_tmp->header->sh_name != 0)
+            sec_tmp->header->sh_offset = offset;
 
         offset += sec_tmp->header->sh_size;
 
