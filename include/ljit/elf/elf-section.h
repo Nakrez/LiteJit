@@ -39,7 +39,7 @@
 **  @param  elf The elf that contains the shstrtab where you want to add string
 **  @param  str The string you want to add in the shstrtab section
 **
-**  @return 0 if everything went well, -1 if an allocation error occured
+**  @return The index of the string, -1 if an allocation error occured
 */
 
 int _ljit_shstrtab_add_string(ljit_elf *elf, const char *str);

@@ -4,6 +4,7 @@ int _ljit_shstrtab_add_string(ljit_elf *elf, const char *str)
 {
     /* Calculate the future size of the shstrtab buffer */
     unsigned int new_size = elf->shstrtab->header->sh_size + strlen(str) + 1;
+    int offset = elf->shstrtab->header->sh_size;
 
     /* Reallocate shstrtab buffer if to small */
     while (elf->shstrtab_max_size < new_size)
@@ -15,12 +16,12 @@ int _ljit_shstrtab_add_string(ljit_elf *elf, const char *str)
     }
 
     /* Copy the new string into the shstrtab buffer */
-    strcpy(((char *)elf->shstrtab->data) + new_size, str);
+    strcpy(((char *)elf->shstrtab->data) + offset, str);
 
     /* Update the header size field of the section */
     elf->shstrtab->header->sh_size = new_size;
 
-    return 0;
+    return offset;
 }
 
 int _ljit_shstrtab_section(ljit_elf *elf)
