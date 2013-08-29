@@ -89,7 +89,8 @@ void _ljit_free_elf_section(ljit_elf_section *section)
     free(section);
 }
 
-int ljit_elf_add_section(ljit_elf *elf, const char *name)
+int ljit_elf_add_section(ljit_elf *elf, const char *name, unsigned int type,
+                         unsigned int align, void *buf, unsigned int buf_size)
 {
     ljit_elf_section *new_sec = NULL;
 
@@ -100,7 +101,12 @@ int ljit_elf_add_section(ljit_elf *elf, const char *name)
         new_sec->header->sh_name = 0;
     else
     {
-        
+        /* TODO: check failure */
+        new_sec->header->sh_name = _ljit_shstrtab_add_string(elf, name);
+        new_sec->header->sh_type = type;
+        new_sec->header->sh_size = buf_size;
+        new_sec->header->sh_addralign = align;
+        new_sec->data = buf;
     }
 
     new_sec->next = elf->section;

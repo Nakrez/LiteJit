@@ -72,6 +72,7 @@ void _ljit_free_elf_section(ljit_elf_section *section);
 **  @param  name    The name of the section you want to add
 */
 
-int ljit_elf_add_section(ljit_elf *elf, const char *name);
+int ljit_elf_add_section(ljit_elf *elf, const char *name, unsigned int type,
+                         unsigned int align, void *buf, unsigned int buf_size);
 
 #endif /* !ELF_SECTION_H */
