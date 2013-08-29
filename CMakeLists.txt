@@ -18,7 +18,7 @@ add_custom_command(OUTPUT "${dst_x86}"
                    "./tool/codegen" ${src_x86} ${dst_x86}
                    )
 
-ADD_LIBRARY(litejit_lib SHARED
+set(ljit_src
             src/core/internal.c
             src/core/instance.c
             src/core/function.c
@@ -39,7 +39,12 @@ ADD_LIBRARY(litejit_lib SHARED
             src/elf/section.c
             src/elf/write.c
             )
+## Add debug files if debug mode is set
+if (${CMAKE_C_FLAGS} MATCHES ${CMAKE_C_FLAGS_DEBUG})
+    set(ljit_src ${ljit_src} src/elf/debug.c)
+endif()
 
+ADD_LIBRARY(litejit_lib SHARED ${ljit_src})
 add_custom_target(x86_code DEPENDS "${dst_x86}")
 add_dependencies(litejit_lib x86_code)
 TARGET_LINK_LIBRARIES(litejit_lib ffi)

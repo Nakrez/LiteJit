@@ -21,38 +21,15 @@
 */
 
 /**
-**  @file   elf.h
-**  @brief  Provide elf support to export/import code into ELF format
+**  @file   elf-debug.h
+**  @brief  Debug functions for ELF
 **  @author Baptiste Covolato <b.covolato@gmail.com>
-**  @date   26 August 2013
+**  @date   29 August 2013
 */
 
-#ifndef ELF_H
-# define ELF_H
-
-# include <ljit/elf/elf-defs.h>
-# include <ljit/elf/elf-header.h>
-# include <ljit/elf/elf-section.h>
-# include <ljit/elf/elf-write.h>
-
-# ifdef LJIT_DEBUG
-#  include <ljit/elf/elf-debug.h>
-# endif /* LJIT_DEBUG */
-
-/**
-**  @brief  Create a new elf structure
-**
-**  @return The new elf created, or NULL if something went wrong
-*/
-
-ljit_elf *ljit_new_elf(void);
-
-/**
-**  @brief  Free an elf
-**  @param  elf The elf you want to free
-*/
-
-void ljit_free_elf(ljit_elf *elf);
+#ifndef ELF_DEBUG_H
+# define ELF_DEBUG_H
 
 
-#endif /* !ELF_H */
+
+#endif /* !ELF_DEBUG_H */
