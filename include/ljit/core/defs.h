@@ -33,6 +33,7 @@
 # include <ffi.h>
 
 # include <ljit/core/typedef.h>
+# include <ljit/core/arch.h>
 
 struct _ljit_instance_s
 {
@@ -148,6 +149,11 @@ struct _ljit_function_s
     **  @brief  The generated code for the function
     */
     void *code;
+
+    /**
+    **  @brief  The size of the code
+    */
+    unsigned int size_code;
 };
 
 struct _ljit_bytecode_s

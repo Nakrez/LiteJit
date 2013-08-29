@@ -47,6 +47,8 @@ int ljit_function_compile(ljit_function *fun)
         block = block->next;
     }
 
+    fun->size_code = cg->current - cg->start;
+
     ljit_free_codegen(cg);
 
     return 0;

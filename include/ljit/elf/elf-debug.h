@@ -30,6 +30,18 @@
 #ifndef ELF_DEBUG_H
 # define ELF_DEBUG_H
 
+# include <ljit/core/typedef.h>
+# include <ljit/core/defs.h>
+# include <ljit/elf.h>
 
+/**
+**  @brief  Create an ELF that contains the function @a fun
+**  @param  fun     The function you want to add to the elf
+**  @param  file    The name of the ELF you want to create
+**
+**  @return 0 if everything went well, -1 otherwise
+*/
+
+int ljit_elf_debug_function(ljit_function *fun, const char *file);
 
 #endif /* !ELF_DEBUG_H */

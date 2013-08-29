@@ -1,6 +1,7 @@
 #include <assert.h>
 
 #include <ljit/ljit.h>
+#include <ljit/elf.h>
 
 int main(void)
 {
@@ -28,12 +29,16 @@ int main(void)
     ljit_bytecode_dumper(stdout, mul);
 
     ljit_function_compile(mul);
+
+    ljit_elf_debug_function(mul, "./elf_basic_fun");
+
     printf("Code address = %p\n", mul->code);
 
     ljit_call_function(mul, mul_params, &mul_ret);
 
     printf("Result %i\n", mul_ret);
     assert(mul_ret == 40);
+
 
     ljit_free_function(mul);
     ljit_free_instance(instance);
