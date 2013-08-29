@@ -90,7 +90,8 @@ void _ljit_free_elf_section(ljit_elf_section *section)
 }
 
 int ljit_elf_add_section(ljit_elf *elf, const char *name, unsigned int type,
-                         unsigned int align, void *buf, unsigned int buf_size)
+                         unsigned int flags, unsigned int align, void *buf,
+                         unsigned int buf_size)
 {
     ljit_elf_section *new_sec = NULL;
 
@@ -104,6 +105,7 @@ int ljit_elf_add_section(ljit_elf *elf, const char *name, unsigned int type,
         /* TODO: check failure */
         new_sec->header->sh_name = _ljit_shstrtab_add_string(elf, name);
         new_sec->header->sh_type = type;
+        new_sec->header->sh_flags = flags;
         new_sec->header->sh_size = buf_size;
         new_sec->header->sh_addralign = align;
         new_sec->data = buf;

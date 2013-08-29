@@ -22,7 +22,8 @@ int main(void)
 
     assert((elf = ljit_new_elf()) != NULL);
 
-    ljit_elf_add_section(elf, ".text", SHT_PROGBITS, 16, elf_text(), 16);
+    ljit_elf_add_section(elf, ".text", SHT_PROGBITS, SHF_ALLOC | SHF_EXECINSTR,
+                         16, elf_text(), 16);
 
     assert(ljit_write_elf(elf, "test_elf") == 0);
 

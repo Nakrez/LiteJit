@@ -62,7 +62,7 @@ int ljit_write_elf(ljit_elf *elf, const char *file)
                                S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) == -1)
         return -1;
 
-    ljit_elf_add_section(elf, NULL, 0, 0, NULL, 0);
+    ljit_elf_add_section(elf, NULL, 0, 0, 0, NULL, 0);
     _ljit_update_elf(elf);
 
     /* Write the elf header */
