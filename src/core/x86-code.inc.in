@@ -3,3 +3,9 @@ GET_PARAM->
 {
 
 }
+
+MUL->
+[reg]
+{
+
+}
