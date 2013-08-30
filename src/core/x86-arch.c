@@ -32,8 +32,7 @@ void ljit_gen_prolog(ljit_codegen *cg)
     ljit_x86_push_reg(code, X86_EBP);
 
     // mov %esp, %ebp
-    *(code++) = 0x89;
-    *(code++) = 0xE5;
+    ljit_x86_mov_reg_reg(code, X86_EBP, X86_ESP);
 
     cg->current = code;
 }

@@ -46,18 +46,28 @@ typedef enum
     X86_EDI = 7
 } ljit_x86_register;
 
-#define ljit_x86_push_reg(code, reg) \
+#define ljit_x86_push_reg(code, reg)                        \
     *(code++) = 0x50 + reg;
 
-#define ljit_x86_pop_reg(code, reg) \
+#define ljit_x86_pop_reg(code, reg)                         \
     *(code++) = 0x58 + reg;
 
-#define ljit_x86_ret(code) \
+#define ljit_x86_ret(code)                                  \
     *(code++) = 0xC3;
 
-#define ljit_x86_mov_reg_reg(code, dest, src) \
-    *(code++) = 0x89; \
+#define ljit_x86_mov_reg_reg(code, dest, src)               \
+    *(code++) = 0x89;                                       \
     *(code++) = (0x3 << 6) | (src << 3) | dest;
+
+/* TODO : disp 32bits */
+#define ljit_x86_mov_reg_disp(code, dest, src, disp)        \
+    *(code++) = 0x8B;                                       \
+    if (disp < 128 && disp > -127)                          \
+    {                                                       \
+        *(code++) = 0x01 << 6 | dest << 3 | src;            \
+        *(code++) = disp;                                   \
+    }
+
 /**
 **  @brief  Setup a @a ljit_instance with x86 properties
 **  @param  instance    The instance you want to set as x86 instance
