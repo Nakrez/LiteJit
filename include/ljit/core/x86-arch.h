@@ -36,14 +36,14 @@
 
 typedef enum
 {
-    X86_EAX,
-    X86_ECX,
-    X86_EDX,
-    X86_EBX,
-    X86_ESP,
-    X86_EBP,
-    X86_ESI,
-    X86_EDI
+    X86_EAX = 0,
+    X86_ECX = 1,
+    X86_EDX = 2,
+    X86_EBX = 3,
+    X86_ESP = 4,
+    X86_EBP = 5,
+    X86_ESI = 6,
+    X86_EDI = 7
 } ljit_x86_register;
 
 #define ljit_x86_push_reg(code, reg) \
@@ -51,6 +51,9 @@ typedef enum
 
 #define ljit_x86_pop_reg(code, reg) \
     *(code++) = 0x58 + reg;
+
+#define ljit_x86_ret(code) \
+    *(code++) = 0xC3;
 
 /**
 **  @brief  Setup a @a ljit_instance with x86 properties
