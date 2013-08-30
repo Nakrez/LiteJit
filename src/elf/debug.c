@@ -12,6 +12,7 @@ int ljit_elf_debug_function(ljit_function *fun, const char *file)
     if ((code = malloc(fun->size_code)) == NULL)
         return -1;
 
+    memcpy(code, fun->code, fun->size_code);
 
     ljit_elf_add_section(elf, ".text", SHT_PROGBITS, SHF_ALLOC | SHF_EXECINSTR,
                          16, code, fun->size_code);
