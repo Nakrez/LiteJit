@@ -33,6 +33,7 @@ char *read_code_block(void);
 %%
 
 "const"         { return CONST; }
+"reg"           { return REG; }
 [A-Z][A-Z_]*    { yylval.str = strdup(yytext); return INSTRUCTION; }
 ->              { return ARROW; }
 "["             { return L_BRACKET; }

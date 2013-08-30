@@ -54,6 +54,7 @@ typedef struct param_list_s param_list;
 typedef enum
 {
     PARAM_CONST,
+    PARAM_REG,
 } param_type;
 
 struct param_list_s
@@ -123,6 +124,7 @@ instr *code = NULL;
 %token          R_BRACKET       "]"
 %token          COMA            ","
 %token          CONST           "const"
+%token          REG             "reg"
 
 %token<str>     INSTRUCTION     "instruction"
 %token<str>     CODE_BLOCK      "code"
@@ -142,6 +144,7 @@ codegen:
        ;
 
 args: "const" { $$ = PARAM_CONST; }
+    | "reg"   { $$ = PARAM_REG; }
     ;
 
 args_list: args { $$ = cgen_new_param_list($1); }
@@ -367,6 +370,9 @@ void cgen_print_param_list(FILE *f, param_list *l)
         {
             case PARAM_CONST:
                 fprintf(f, "instr->op%i->is_cst", count);
+                break;
+            case PARAM_REG:
+                fprintf(f, "instr->op%i->is_tmp", count);
                 break;
         }
 
