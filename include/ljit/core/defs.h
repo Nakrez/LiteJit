@@ -271,6 +271,11 @@ struct _ljit_codegen
     **  The current point of code building
     */
     void *current;
+
+    /**
+    **  The function the codegen is attached to
+    */
+    ljit_function *fun;
 };
 
 #endif /* !DEFS_H */

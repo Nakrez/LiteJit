@@ -39,7 +39,7 @@
 **          wrong.
 */
 
-ljit_codegen *ljit_new_codegen(void);
+ljit_codegen *ljit_new_codegen(ljit_function *fun);
 
 /**
 **  @brief  Free a previous allocated codegen structure

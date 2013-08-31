@@ -2,7 +2,7 @@
 #include <sys/mman.h>
 #include <ljit/ljit.h>
 
-ljit_codegen *ljit_new_codegen(void)
+ljit_codegen *ljit_new_codegen(ljit_function *fun)
 {
     ljit_codegen *cg = NULL;
 
@@ -17,6 +17,9 @@ ljit_codegen *ljit_new_codegen(void)
         return NULL;
     }
 
+    cg->fun = fun;
+
+    fun->code = cg->start;
     cg->current = cg->start;
 
     return cg;

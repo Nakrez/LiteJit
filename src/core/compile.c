@@ -30,10 +30,8 @@ int ljit_function_compile(ljit_function *fun)
         return -1;
 
     /* Allocate some space for the generated code */
-    if ((cg = ljit_new_codegen()) == NULL)
+    if ((cg = ljit_new_codegen(fun)) == NULL)
         return -1;
-
-    fun->code = cg->start;
 
     /* Generates the prologue of the function */
     ljit_gen_prolog(cg);

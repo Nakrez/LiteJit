@@ -176,16 +176,11 @@ int ljit_parameter_offset(ljit_function *fun, unsigned int param)
 {
     int offset = 0;
 
-    if (fun->signature->param_num >= param)
+    if (fun->signature->param_num <= param)
         return -1;
 
-    for (int i = fun->signature->param_num - 1; i >= 0; --i)
-    {
-        if (i < (int)param)
-            break;
-
+    for (unsigned int i = 0; i < param + 1; ++i)
         offset += ljit_type_get_size(fun->signature->params_type[i]);
-    }
 
     return offset;
 }
