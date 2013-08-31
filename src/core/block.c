@@ -87,3 +87,18 @@ int _ljit_create_block_if_needed(ljit_function *fun, ljit_label *lbl)
 
     return 1;
 }
+
+ljit_block *ljit_get_block_from_label(ljit_function *fun, ljit_label *l)
+{
+    ljit_block *b = fun->start_blk;
+
+    while (b)
+    {
+        if (b->label == l)
+            return b;
+
+        b = b->next;
+    }
+
+    return NULL;
+}

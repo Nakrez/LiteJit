@@ -33,6 +33,19 @@
 # include "typedef.h"
 
 /**
+**  @brief  Create a new basic block if there is a possibility. If there is no
+**          possibility to create a new basic block, @a lbl is added to the
+**          label list that points on the current block
+**  @param  fun     The function that hold the basic block
+**  @param  lbl     The label that starts the new block
+**
+**  @return 1 if a new block was created, 0 if nothing happened, -1 if an
+**          allocation error happened
+*/
+
+int _ljit_create_block_if_needed(ljit_function *fun, ljit_label *lbl);
+
+/**
 **  @brief  Create a new block
 **
 **  @return The new block created or NULL if an error occured
@@ -48,16 +61,13 @@ ljit_block *ljit_new_block(void);
 void ljit_free_block(ljit_block *block);
 
 /**
-**  @brief  Create a new basic block if there is a possibility. If there is no
-**          possibility to create a new basic block, @a lbl is added to the
-**          label list that points on the current block
-**  @param  fun     The function that hold the basic block
-**  @param  lbl     The label that starts the new block
+**  @brief  Get a block that match a label
+**  @param  fun The function where you want to find a block
+**  @param  l   The label that starts the block you want to find
 **
-**  @return 1 if a new block was created, 0 if nothing happened, -1 if an
-**          allocation error happened
+**  @return The block that starts with the label @a l, NULL if not found
 */
 
-int _ljit_create_block_if_needed(ljit_function *fun, ljit_label *lbl);
+ljit_block *ljit_get_block_from_label(ljit_function *fun, ljit_label *l);
 
 #endif /* !BLOCK_H */
