@@ -50,3 +50,13 @@ target_link_libraries(elf_test litejit_lib)
 
 ADD_TEST(ctest_build_elf "${CMAKE_COMMAND}" --build ${CMAKE_BINARY_DIR} --target elf_test)
 ADD_TEST(ctest_run_elf elf_test)
+
+## basic regalloc
+add_executable(basic_regalloc_test
+               EXCLUDE_FROM_ALL
+               basic-regalloc.c)
+
+target_link_libraries(basic_regalloc_test litejit_lib)
+
+ADD_TEST(ctest_build_basic_regalloc "${CMAKE_COMMAND}" --build ${CMAKE_BINARY_DIR} --target basic_regalloc_test)
+ADD_TEST(ctest_run_basic_regalloc basic_regalloc_test)

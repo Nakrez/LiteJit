@@ -30,7 +30,7 @@ int main(void)
 
     ljit_function_compile(mul);
 
-    ljit_elf_debug_function(mul, "./elf_basic_fun");
+    /* ljit_elf_debug_function(mul, "./elf_basic_fun"); */
 
     printf("Code address = %p\n", mul->code);
 
