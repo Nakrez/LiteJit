@@ -1,7 +1,8 @@
 GET_PARAM->
 [const]
 {
-
+    int offset = ljit_parameter_offset(cg->fun, *(ljit_uchar*)instr->op1->data);
+    ljit_x86_mov_reg_disp(code, instr->ret_val->index, X86_EBP, offset, 4);
 }
 
 MUL->
