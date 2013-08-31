@@ -77,4 +77,15 @@ int ljit_new_signature(ljit_function *fun,
 
 unsigned int ljit_signature_size(ljit_function *fun);
 
+/**
+**  @brief  Give the offset in relation to the stack base register
+**  @param  fun     The function that contains the parameter
+**  @param  param   The number of the parameter
+**
+**  @return The offset if everything went well, -1 if the parameter does not
+**          exists
+*/
+
+int ljit_parameter_offset(ljit_function *fun, unsigned int param);
+
 #endif /* !FUNCTION_H */

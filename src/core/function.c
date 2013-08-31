@@ -171,3 +171,21 @@ unsigned int ljit_signature_size(ljit_function *fun)
 
     return sig_size;
 }
+
+int ljit_parameter_offset(ljit_function *fun, unsigned int param)
+{
+    int offset = 0;
+
+    if (fun->signature->param_num >= param)
+        return -1;
+
+    for (int i = fun->signature->param_num - 1; i >= 0; --i)
+    {
+        if (i < (int)param)
+            break;
+
+        offset += ljit_type_get_size(fun->signature->params_type[i]);
+    }
+
+    return offset;
+}
