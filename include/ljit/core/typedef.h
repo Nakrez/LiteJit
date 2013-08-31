@@ -216,4 +216,10 @@ typedef struct _ljit_label_s ljit_label;
 
 typedef struct _ljit_codegen ljit_codegen;
 
+/**
+**  @brief  The edge of the flow graph
+*/
+
+typedef struct _ljit_edge ljit_edge;
+
 #endif /* !TYPEDEF_H */

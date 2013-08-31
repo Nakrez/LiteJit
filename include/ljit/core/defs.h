@@ -278,4 +278,22 @@ struct _ljit_codegen
     ljit_function *fun;
 };
 
+struct _ljit_edge
+{
+    /**
+    **  Unique identifier
+    */
+    unsigned int id;
+
+    /**
+    **  The block it contains
+    */
+    ljit_block *block;
+
+    /**
+    **  The next edge
+    */
+    ljit_edge *next;
+};
+
 #endif /* !DEFS_H */
