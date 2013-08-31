@@ -78,6 +78,11 @@ typedef enum
         *(code++) = disp;                                   \
     }
 
+#define ljit_x86_mul_reg_reg(code, dest, src)               \
+    *(code++) = 0x0F;                                       \
+    *(code++) = 0xAF;                                       \
+    *(code++) = (0x3 << 6) | (dest << 3) | src;
+
 /**
 **  @brief  Setup a @a ljit_instance with x86 properties
 **  @param  instance    The instance you want to set as x86 instance
