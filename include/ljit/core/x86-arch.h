@@ -60,8 +60,18 @@ typedef enum
     *(code++) = (0x3 << 6) | (src << 3) | dest;
 
 /* TODO : disp 32bits */
-#define ljit_x86_mov_reg_disp(code, dest, src, disp)        \
-    *(code++) = 0x8B;                                       \
+#define ljit_x86_mov_reg_disp(code, dest, src, disp, size)  \
+    switch (size)                                           \
+    {                                                       \
+        case 1:                                             \
+            *(code++) = 0x8A;                               \
+            break;                                          \
+        case 2: /* TODO */                                  \
+            break;                                          \
+        case 4:                                             \
+            *(code++) = 0x8B;                               \
+            break;                                          \
+    }                                                       \
     if (disp < 128 && disp > -127)                          \
     {                                                       \
         *(code++) = 0x01 << 6 | dest << 3 | src;            \
