@@ -41,6 +41,7 @@ char *read_code_block(void);
 ","             { return COMA; }
 "{"             { yylval.str = read_code_block(); return CODE_BLOCK; }
 "\n"
+" "
 .               { yyerror("Scan error\n"); }
 %%
 
@@ -58,9 +59,9 @@ char *read_code_block(void)
 
         if (c == EOF)
             yyerror("Read block error");
-        if (c == '{')
+        else if (c == '{')
             ++count;
-        if (c == '}')
+        else if (c == '}')
         {
             --count;
             if (count <= 0)

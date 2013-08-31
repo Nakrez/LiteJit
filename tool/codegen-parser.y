@@ -336,6 +336,7 @@ void cgen_print_instr(FILE *f, instr *i)
     {
         fprintf(f, "case %s:\n", tmp->instr_name);
         cgen_print_block(f, tmp->blk);
+        fprintf(f, "break;\n");
 
         tmp = tmp->next;
     }
