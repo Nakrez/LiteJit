@@ -33,6 +33,7 @@ set(ljit_src
             src/core/compile.c
             src/core/arch.c
             src/core/apply.c
+            src/core/flow-graph.c
 
             src/elf/elf.c
             src/elf/header.c
