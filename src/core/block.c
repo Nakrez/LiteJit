@@ -1,4 +1,5 @@
 #include "internal.h"
+#include "flow-graph.h"
 
 ljit_block *ljit_new_block(void)
 {
@@ -9,6 +10,7 @@ ljit_block *ljit_new_block(void)
 
     block->next = NULL;
     block->previous = NULL;
+    block->edges = NULL;
 
     if ((block->instrs = ljit_new_bytecode_list()) == NULL)
     {
@@ -25,6 +27,7 @@ void ljit_free_block(ljit_block *block)
         return;
 
     ljit_free_bytecode_list(block->instrs);
+    _ljit_free_edge(block->edges);
 
     free(block);
 }

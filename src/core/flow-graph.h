@@ -33,6 +33,22 @@
 # include "internal.h"
 
 /**
+**  @brief  Create a new edge
+**  @param  block   The block you want the edge pointed on
+**
+**  @return The new edge, NULL if something went wrong
+*/
+
+ljit_edge *_ljit_new_edge(ljit_block *block);
+
+/**
+**  @brief  Destroy an edge
+**  @param  edge    The edge you want to destroy
+*/
+
+void _ljit_free_edge(ljit_edge *edge);
+
+/**
 **  @brief  Build flow graph of a function
 **  @param  fun The function of which you want to build the flow graph
 **

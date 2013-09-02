@@ -235,6 +235,11 @@ struct _ljit_block_s
     **  @brief  The next block
     */
     struct _ljit_block_s *next;
+
+    /**
+    **  @brief  The edges connected to this block
+    */
+    ljit_edge *edges;
 };
 
 struct _ljit_label_s
