@@ -163,6 +163,14 @@ ljit_value ljit_inst_mul(ljit_function *fun, ljit_value op1, ljit_value op2);
 ljit_value ljit_inst_div(ljit_function *fun, ljit_value op1, ljit_value op2);
 
 /**
+**  @brief  Dump an instruction into a \a FILE
+**  @param  f       The file where you want to dump the instruction
+**  @param  instr   The instruction you want to dump
+*/
+
+void _ljit_dump_instr(FILE *f, ljit_bytecode *instr);
+
+/**
 **  @brief  Dump bytecode into the file @a f
 **  @param  f   The file where you want to dump the function @a fun
 **  @param  fun The function you want to dump

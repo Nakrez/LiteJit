@@ -48,11 +48,12 @@ int _ljit_create_block_if_needed(ljit_function *fun, ljit_label *lbl);
 /**
 **  @brief  Create a new block
 **  @param  fun The function the block is in
+**  @param  l   The label associated with the new block
 **
 **  @return The new block created or NULL if an error occured
 */
 
-ljit_block *ljit_new_block(ljit_function *fun);
+ljit_block *ljit_new_block(ljit_function *fun, ljit_label *l);
 
 /**
 **  @brief  Delete a block

@@ -9,10 +9,10 @@ static int _ljit_create_first_block(ljit_function *fun)
 {
     ljit_label *entry_lbl = NULL;
 
-    if ((fun->start_blk = ljit_new_block(fun)) == NULL)
+    if ((entry_lbl = ljit_new_label(fun)) == NULL)
         return -1;
 
-    if ((entry_lbl = ljit_new_label(fun)) == NULL)
+    if ((fun->start_blk = ljit_new_block(fun, entry_lbl)) == NULL)
         return -1;
 
     fun->current_blk = fun->start_blk;
