@@ -58,11 +58,13 @@ int _ljit_build_flow_graph(ljit_function *fun)
             switch (tmp_instr->instr->type)
             {
                 case JUMP:
-                    _ljit_add_edge(fun, tmp, tmp_instr->instr->op1->data);
+                    if (_ljit_add_edge(fun, tmp, tmp_instr->instr->op1->data))
+                        return -1;
                     break;
                 case JUMP_IF:
                 case JUMP_IF_NOT:
-                    _ljit_add_edge(fun, tmp, tmp_instr->instr->op2->data);
+                    if (_ljit_add_edge(fun, tmp, tmp_instr->instr->op2->data))
+                        return -1;
                     break;
                 default:
                     break;
@@ -78,8 +80,75 @@ int _ljit_build_flow_graph(ljit_function *fun)
 }
 
 #ifdef LJIT_DEBUG
+static void _ljit_dot_write_label(FILE *f, ljit_block *b)
+{
+    struct _ljit_bytecode_list_element_s *tmp;
+
+    /* Run all block to generate it corresponding label */
+    while (b)
+    {
+        tmp = b->instrs->head;
+
+        /* Generate the name of the label */
+        fprintf(f, "label%u [label = \"", b->id);
+
+        /* Dump all instructions that are in the block */
+        while (tmp)
+        {
+            _ljit_dump_instr(f, tmp->instr);
+            fprintf(f, "\\n");
+            tmp = tmp->next;
+        }
+
+        fprintf(f, "\"];\n");
+        b = b->next;
+    }
+}
+
+static void _ljit_dot_write_edges(FILE *f, ljit_function *fun)
+{
+    ljit_block *blocks = fun->start_blk;
+    ljit_edge *edges = NULL;
+
+    /* Run every block to write all edges */
+    while (blocks)
+    {
+        edges = blocks->edges;
+
+        /* Link the block with all edges */
+        while (edges)
+        {
+            fprintf(f, "label%u -> label%u;\n", blocks->id, edges->block->id);
+            edges = edges->next;
+        }
+
+        blocks = blocks->next;
+    }
+}
+
 int _ljit_dot_flow_graph(ljit_function *fun, const char *name)
 {
+    FILE *f = NULL;
+
+    if ((f = fopen(name, "w")) == NULL)
+        return -1;
+
+    fprintf(f, "digraph flow_graph {\n");
+
+    /* Write all node content */
+    _ljit_dot_write_label(f, fun->start_blk);
+
+    fprintf(f, "\n");
+
+    /* Write the flow graph edges */
+    _ljit_dot_write_edges(f, fun);
+
+    fprintf(f, "}");
+
+    fprintf(f, "\n");
+
+    fclose(f);
+
     return 0;
 }
 #endif /* LJIT_DEBUG */

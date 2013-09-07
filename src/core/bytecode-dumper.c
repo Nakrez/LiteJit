@@ -54,7 +54,7 @@ static void _ljit_dump_operation(FILE *f, ljit_bytecode *instr, char *name)
     _ljit_dump_value(f, instr->op2);
 }
 
-static void _ljit_dump_instr(FILE *f, ljit_bytecode *instr)
+void _ljit_dump_instr(FILE *f, ljit_bytecode *instr)
 {
     switch (instr->type)
     {

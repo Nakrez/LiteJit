@@ -31,6 +31,7 @@
 # define REGALLOC_H
 
 # include "internal.h"
+# include "flow-graph.h"
 
 /**
 **  @brief  Compute the register allocation
