@@ -146,6 +146,11 @@ struct _ljit_function_s
     unsigned short lbl_index;
 
     /**
+    **  @brief  Unique index for blocks
+    */
+    unsigned short block_id;
+
+    /**
     **  @brief  The generated code for the function
     */
     void *code;
@@ -235,6 +240,11 @@ struct _ljit_block_s
     **  @brief  The next block
     */
     struct _ljit_block_s *next;
+
+    /**
+    **  @brief  Unique identifier of the block in the function
+    */
+    unsigned short id;
 
     /**
     **  @brief  The edges connected to this block

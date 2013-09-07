@@ -1,7 +1,7 @@
 #include "internal.h"
 #include "flow-graph.h"
 
-ljit_block *ljit_new_block(void)
+ljit_block *ljit_new_block(ljit_function *fun)
 {
     ljit_block *block = NULL;
 
@@ -11,6 +11,7 @@ ljit_block *ljit_new_block(void)
     block->next = NULL;
     block->previous = NULL;
     block->edges = NULL;
+    block->id = fun->block_id++;
 
     if ((block->instrs = ljit_new_bytecode_list()) == NULL)
     {
@@ -81,7 +82,7 @@ int _ljit_create_block_if_needed(ljit_function *fun, ljit_label *lbl)
         return ljit_bind_label(fun, lbl);
     }
 
-    if ((new_block = ljit_new_block()) == NULL)
+    if ((new_block = ljit_new_block(fun)) == NULL)
         return -1;
 
     fun->last_blk->next = new_block;

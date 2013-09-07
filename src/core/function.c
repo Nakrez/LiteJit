@@ -9,7 +9,7 @@ static int _ljit_create_first_block(ljit_function *fun)
 {
     ljit_label *entry_lbl = NULL;
 
-    if ((fun->start_blk = ljit_new_block()) == NULL)
+    if ((fun->start_blk = ljit_new_block(fun)) == NULL)
         return -1;
 
     if ((entry_lbl = ljit_new_label(fun)) == NULL)
@@ -38,6 +38,7 @@ ljit_function *ljit_new_function(ljit_instance *instance)
     new_function->instance = instance;
     new_function->uniq_index = 0;
     new_function->lbl_index = 0;
+    new_function->block_id = 0;
     new_function->code = NULL;
 
     /*
