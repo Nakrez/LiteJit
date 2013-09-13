@@ -32,6 +32,28 @@
 
 # include "internal.h"
 
+typedef struct _ljit_flow_graph_s ljit_flow_graph;
+
+struct _ljit_flow_graph_s
+{
+    /**
+    **  @brief  The instruction contained in the node of the flow graph.
+    **          This field MUST NOT be free since it is held by a ljit_function
+    */
+    ljit_bytecode *instr;
+
+    /**
+    **  @brief  The next node in the flow graph.
+    */
+    ljit_flow_graph *first_next;
+
+    /**
+    **  @brief  The flow graph only can only contain 2 sucessors since
+    **          no instruction can jump on three different destination
+    */
+    ljit_flow_graph *second_next;
+};
+
 /**
 **  @brief  Create a new edge
 **  @param  block   The block you want the edge pointed on
