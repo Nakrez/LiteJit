@@ -245,11 +245,6 @@ struct _ljit_block_s
     **  @brief  Unique identifier of the block in the function
     */
     unsigned short id;
-
-    /**
-    **  @brief  The edges connected to this block
-    */
-    ljit_edge *edges;
 };
 
 struct _ljit_label_s
@@ -291,24 +286,6 @@ struct _ljit_codegen
     **  The function the codegen is attached to
     */
     ljit_function *fun;
-};
-
-struct _ljit_edge
-{
-    /**
-    **  Unique identifier
-    */
-    unsigned int id;
-
-    /**
-    **  The block it contains
-    */
-    ljit_block *block;
-
-    /**
-    **  The next edge
-    */
-    ljit_edge *next;
 };
 
 #endif /* !DEFS_H */

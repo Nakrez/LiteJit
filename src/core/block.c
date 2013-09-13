@@ -10,7 +10,6 @@ ljit_block *ljit_new_block(ljit_function *fun, ljit_label *l)
 
     block->next = NULL;
     block->previous = NULL;
-    block->edges = NULL;
     block->id = fun->block_id++;
     block->label = l;
 
@@ -29,7 +28,6 @@ void ljit_free_block(ljit_block *block)
         return;
 
     ljit_free_bytecode_list(block->instrs);
-    _ljit_free_edge(block->edges);
 
     free(block);
 }
