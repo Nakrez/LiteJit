@@ -105,3 +105,18 @@ ljit_block *ljit_get_block_from_label(ljit_function *fun, ljit_label *l)
 
     return NULL;
 }
+
+ljit_block *ljit_get_block_from_label_num(ljit_function *fun, unsigned int n)
+{
+    ljit_block *b = fun->start_blk;
+
+    while (b)
+    {
+        if (b->label->index == n)
+            return b;
+
+        b = b->next;
+    }
+
+    return NULL;
+}

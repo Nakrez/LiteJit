@@ -72,4 +72,14 @@ void ljit_free_block(ljit_block *block);
 
 ljit_block *ljit_get_block_from_label(ljit_function *fun, ljit_label *l);
 
+/**
+**  @brief  Get a block that match a label number
+**  @param  fun The function where you want to find a block
+**  @param  n   The number of the label
+**
+**  @return The block that starts with the label number @a n, NULL if not found
+*/
+
+ljit_block *ljit_get_block_from_label_num(ljit_function *fun, unsigned int n);
+
 #endif /* !BLOCK_H */
