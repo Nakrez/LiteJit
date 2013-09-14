@@ -20,27 +20,29 @@ static int _ljit_add_edge(ljit_function *fun,
     /* return 0; */
 }
 
-/* ljit_edge *_ljit_new_edge(ljit_block *block) */
-/* { */
-/*     ljit_edge *edge; */
-/*  */
-/*     if ((edge = malloc(sizeof(ljit_edge))) == NULL) */
-/*         return NULL; */
-/*  */
-/*     edge->block = block; */
-/*     edge->next = NULL; */
-/*  */
-/*     return edge; */
-/* } */
+ljit_flow_graph *_ljit_new_flow_graph(ljit_bytecode *instr)
+{
+    ljit_flow_graph *fg = NULL;
 
-/* void _ljit_free_edge(ljit_edge *edge) */
-/* { */
-/*     if (!edge) */
-/*         return; */
-/*  */
-/*     _ljit_free_edge(edge->next); */
-/*     free(edge); */
-/* } */
+    if ((fg = malloc(sizeof(ljit_flow_graph))) == NULL)
+        return NULL;
+
+    fg->instr = instr;
+    fg->first_next = NULL;
+    fg->second_next = NULL;
+
+    return fg;
+}
+
+void _ljit_free_flow_graph(ljit_flow_graph *fg)
+{
+    if (!fg)
+        return;
+
+    _ljit_free_flow_graph(fg->first_next);
+    _ljit_free_flow_graph(fg->second_next);
+    free(fg);
+}
 
 int _ljit_build_flow_graph(ljit_function *fun)
 {

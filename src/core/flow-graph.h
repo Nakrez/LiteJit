@@ -55,20 +55,20 @@ struct _ljit_flow_graph_s
 };
 
 /**
-**  @brief  Create a new edge
-**  @param  block   The block you want the edge pointed on
+**  @brief  Create a new flow graph node
+**  @param  instr   The instruction held by the flow graph
 **
-**  @return The new edge, NULL if something went wrong
+**  @return The new node, NULL if something went wrong
 */
 
-// ljit_edge *_ljit_new_edge(ljit_block *block);
+ljit_flow_graph *_ljit_new_flow_graph(ljit_bytecode *instr);
 
 /**
-**  @brief  Destroy an edge
-**  @param  edge    The edge you want to destroy
+**  @brief  Destroy a flow graph
+**  @param  fg  The flow graph you want to destroy
 */
 
-// void _ljit_free_edge(ljit_edge *edge);
+void _ljit_free_flow_graph(ljit_flow_graph *fg);
 
 /**
 **  @brief  Build flow graph of a function
