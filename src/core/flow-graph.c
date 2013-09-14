@@ -1,16 +1,13 @@
 #include "flow-graph.h"
 
 #define _LJIT_LABEL_FG_INIT(size)                       \
-    _ljit_label_fg_node(1, 0, 0, size, NULL, NULL)
+    _ljit_label_fg_node(1, 0, size, NULL, NULL)
 
 #define _LJIT_LABEL_FG_FREE()                           \
-    _ljit_label_fg_node(0, 1, 0, 0, NULL, NULL)
+    _ljit_label_fg_node(0, 1, 0, NULL, NULL)
 
 #define _LJIT_LABEL_FG_GET(label, fun)                  \
-    _ljit_label_fg_node(0, 0, 0, 0, label, fun)
-
-#define _LJIT_LABEL_FG_GET_INDEX(index, fun)                  \
-    _ljit_label_fg_node(0, 0, 1, index, NULL, fun)
+    _ljit_label_fg_node(0, 0, 0, label, fun)
 
 static int _ljit_fg_index()
 {
@@ -23,7 +20,6 @@ static int _ljit_fg_index()
 
 static ljit_flow_graph *_ljit_label_fg_node(unsigned int init,
                                             unsigned int destroy,
-                                            unsigned int set,
                                             unsigned int number_tmp,
                                             ljit_label *l,
                                             ljit_function *fun)
@@ -44,22 +40,12 @@ static ljit_flow_graph *_ljit_label_fg_node(unsigned int init,
     }
     else
     {
-        unsigned int label_num = 0;
-        ljit_block *b = NULL;
-
-        if (set)
-        {
-            label_num = number_tmp;
-            b = ljit_get_block_from_label_num(fun, label_num);
-        }
-        else
-        {
-            label_num = l->index;
-            b = ljit_get_block_from_label(fun, l);
-        }
+        unsigned int label_num = l->index;
 
         if (!fg[label_num])
         {
+            ljit_block *b = ljit_get_block_from_label(fun, l);
+
             if (!b)
                 return NULL;
 
@@ -91,9 +77,10 @@ ljit_flow_graph *_ljit_new_flow_graph(ljit_bytecode *instr)
 
 void _ljit_free_flow_graph(ljit_flow_graph *fg)
 {
-    if (!fg)
+    if (!fg || fg->marked)
         return;
 
+    fg->marked = 1;
     _ljit_free_flow_graph(fg->first_next);
     _ljit_free_flow_graph(fg->second_next);
     free(fg);
@@ -120,8 +107,8 @@ _ljit_recurse_build_fg(ljit_block *blk,
     {
         case JUMP:
             {
-                ljit_block *b = ljit_get_block_from_label(fun,
-                                                          (ljit_label*)tmp_instr->instr->op1);
+                ljit_label *l = tmp_instr->instr->op1->data;
+                ljit_block *b = ljit_get_block_from_label(fun, l);
 
                 if ((fg = _ljit_new_flow_graph(tmp_instr->instr)) == NULL)
                     goto error;
@@ -137,8 +124,9 @@ _ljit_recurse_build_fg(ljit_block *blk,
         case JUMP_IF:
         case JUMP_IF_NOT:
             {
-                ljit_block *b = ljit_get_block_from_label(fun,
-                                                          (ljit_label*)tmp_instr->instr->op2);
+                ljit_label *l = tmp_instr->instr->op2->data;
+                ljit_block *b = ljit_get_block_from_label(fun, l);
+
                 if ((fg = _ljit_new_flow_graph(tmp_instr->instr)) == NULL)
                     goto error;
 
@@ -148,16 +136,19 @@ _ljit_recurse_build_fg(ljit_block *blk,
             }
             break;
         case LABEL:
-            fg = _LJIT_LABEL_FG_GET_INDEX(*(ljit_int*)tmp_instr->instr->op1,
-                                         fun);
-            if (fg->marked)
-                return fg;
+            {
+                ljit_label *l = tmp_instr->instr->op1->data;
 
+                fg = _LJIT_LABEL_FG_GET(l, fun);
+
+                if (fg->marked)
+                    return fg;
+            }
             break;
         default:
             if ((fg = _ljit_new_flow_graph(tmp_instr->instr)) == NULL)
                 goto error;
-            fg->marked = 1;
+
             break;
     }
 
