@@ -84,6 +84,7 @@ ljit_flow_graph *_ljit_new_flow_graph(ljit_bytecode *instr)
     fg->first_next = NULL;
     fg->second_next = NULL;
     fg->index = _ljit_fg_index();
+    fg->marked = 1;
 
     return fg;
 }
@@ -174,79 +175,84 @@ ljit_flow_graph *_ljit_build_flow_graph(ljit_function *fun)
 
     _LJIT_LABEL_FG_FREE();
 
+    _ljit_unmark_flow_graph(fg);
+
     return fg;
 }
 
-#ifdef LJIT_DEBUG
-static void _ljit_dot_write_label(FILE *f, ljit_block *b)
+void _ljit_unmark_flow_graph(ljit_flow_graph *fg)
 {
-    /* struct _ljit_bytecode_list_element_s *tmp; */
+    if (!fg || !fg->marked)
+        return;
 
-    /* #<{(| Run all block to generate it corresponding label |)}># */
-    /* while (b) */
-    /* { */
-    /*     tmp = b->instrs->head; */
+    fg->marked = 0;
 
-    /*     #<{(| Generate the name of the label |)}># */
-    /*     fprintf(f, "label%u [label = \"", b->id); */
-
-    /*     #<{(| Dump all instructions that are in the block |)}># */
-    /*     while (tmp) */
-    /*     { */
-    /*         _ljit_dump_instr(f, tmp->instr); */
-    /*         fprintf(f, "\\n"); */
-    /*         tmp = tmp->next; */
-    /*     } */
-
-    /*     fprintf(f, "\"];\n"); */
-    /*     b = b->next; */
-    /* } */
+    _ljit_unmark_flow_graph(fg->first_next);
+    _ljit_unmark_flow_graph(fg->second_next);
 }
 
-static void _ljit_dot_write_edges(FILE *f, ljit_function *fun)
+static void _ljit_dot_write_label(FILE *f, ljit_flow_graph *fg)
 {
-    /* ljit_block *blocks = fun->start_blk; */
-    /* ljit_edge *edges = NULL; */
+    if (!fg || fg->marked)
+        return;
 
-    /* #<{(| Run every block to write all edges |)}># */
-    /* while (blocks) */
-    /* { */
-    /*     edges = blocks->edges; */
+    fg->marked = 1;
 
-    /*     #<{(| Link the block with all edges |)}># */
-    /*     while (edges) */
-    /*     { */
-    /*         fprintf(f, "label%u -> label%u;\n", blocks->id, edges->block->id); */
-    /*         edges = edges->next; */
-    /*     } */
+    /* Generate the name of the label */
+    fprintf(f, "label%u [label = \"", fg->index);
 
-    /*     blocks = blocks->next; */
-    /* } */
+    /* Dump instruction of the node */
+    _ljit_dump_instr(f, fg->instr);
+    fprintf(f, "\"];\n");
+
+    _ljit_dot_write_label(f, fg->first_next);
+    _ljit_dot_write_label(f, fg->second_next);
 }
 
-int _ljit_dot_flow_graph(ljit_function *fun, const char *name)
+static void _ljit_dot_write_edges(FILE *f, ljit_flow_graph *fg)
 {
-    /* FILE *f = NULL; */
+    if (!fg || fg->marked)
+        return;
 
-    /* if ((f = fopen(name, "w")) == NULL) */
-    /*     return -1; */
+    fg->marked = 1;
 
-    /* fprintf(f, "digraph flow_graph {\n"); */
+    if (fg->first_next)
+    {
+        fprintf(f, "label%u -> label%u;\n", fg->index, fg->first_next->index);
+        _ljit_dot_write_edges(f, fg->first_next);
+    }
 
-    /* #<{(| Write all node content |)}># */
-    /* _ljit_dot_write_label(f, fun->start_blk); */
+    if (fg->second_next)
+    {
+        fprintf(f, "label%u -> label%u;\n", fg->index, fg->second_next->index);
+        _ljit_dot_write_edges(f, fg->second_next);
+    }
+}
 
-    /* fprintf(f, "\n"); */
+int _ljit_dot_flow_graph(ljit_flow_graph *fg, const char *name)
+{
+    FILE *f = NULL;
 
-    /* #<{(| Write the flow graph edges |)}># */
-    /* _ljit_dot_write_edges(f, fun); */
+    if ((f = fopen(name, "w")) == NULL)
+        return -1;
 
-    /* fprintf(f, "}"); */
+    fprintf(f, "digraph flow_graph {\n");
 
-    /* fprintf(f, "\n"); */
+    /* Write all node content */
+    _ljit_dot_write_label(f, fg);
+    _ljit_unmark_flow_graph(fg);
 
-    /* fclose(f); */
+    fprintf(f, "\n");
+
+    /* Write the flow graph edges */
+    _ljit_dot_write_edges(f, fg);
+    _ljit_unmark_flow_graph(fg);
+
+    fprintf(f, "}");
+
+    fprintf(f, "\n");
+
+    fclose(f);
 
     return 0;
 }
-#endif /* LJIT_DEBUG */

@@ -54,6 +54,8 @@ struct _ljit_flow_graph_s
     ljit_flow_graph *second_next;
 
     int index;
+
+    int marked;
 };
 
 /**
@@ -81,6 +83,13 @@ void _ljit_free_flow_graph(ljit_flow_graph *fg);
 
 ljit_flow_graph *_ljit_build_flow_graph(ljit_function *fun);
 
+/**
+**  @brief  Unmark a flow_graph
+**  @param  fg  The flow graph you want to unmark
+*/
+
+void _ljit_unmark_flow_graph(ljit_flow_graph *fg);
+
 # ifdef LJIT_DEBUG
 /**
 **  @brief  Print the flow graph in the dot format into a file
@@ -91,7 +100,7 @@ ljit_flow_graph *_ljit_build_flow_graph(ljit_function *fun);
 **  @return 0 if everything went well, -1 otherwise
 */
 
-int _ljit_dot_flow_graph(ljit_function *fun, const char *name);
+int _ljit_dot_flow_graph(ljit_flow_graph *fg, const char *name);
 # endif /* LJIT_DEBUG */
 
 #endif /* !FLOW_GRAPH_H */

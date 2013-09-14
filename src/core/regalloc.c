@@ -8,7 +8,7 @@ int _ljit_regalloc(ljit_function *fun)
         return -1;
 
 #ifdef LJIT_DEBUG
-    _ljit_dot_flow_graph(fun, "ljit_flow_graph.dot");
+    _ljit_dot_flow_graph(fg, "ljit_flow_graph.dot");
 #endif /* LJIT_DEBUG */
 
     _ljit_free_flow_graph(fg);
