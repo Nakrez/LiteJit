@@ -84,7 +84,7 @@ ljit_flow_graph *_ljit_new_flow_graph(ljit_bytecode *instr)
     fg->first_next = NULL;
     fg->second_next = NULL;
     fg->index = _ljit_fg_index();
-    fg->marked = 1;
+    fg->marked = 0;
 
     return fg;
 }
@@ -126,6 +126,8 @@ _ljit_recurse_build_fg(ljit_block *blk,
                 if ((fg = _ljit_new_flow_graph(tmp_instr->instr)) == NULL)
                     goto error;
 
+                fg->marked = 1;
+
                 fg->first_next = _ljit_recurse_build_fg(b, b->instrs->head,
                                                         fun);
 
@@ -140,19 +142,26 @@ _ljit_recurse_build_fg(ljit_block *blk,
                 if ((fg = _ljit_new_flow_graph(tmp_instr->instr)) == NULL)
                     goto error;
 
+                fg->marked = 1;
+
                 second = _ljit_recurse_build_fg(b, b->instrs->head, fun);
             }
             break;
         case LABEL:
             fg = _LJIT_LABEL_FG_GET_INDEX(*(ljit_int*)tmp_instr->instr->op1,
                                          fun);
+            if (fg->marked)
+                return fg;
+
             break;
         default:
             if ((fg = _ljit_new_flow_graph(tmp_instr->instr)) == NULL)
                 goto error;
+            fg->marked = 1;
             break;
     }
 
+    fg->marked = 1;
     fg->first_next = _ljit_recurse_build_fg(blk, tmp_instr->next, fun);
     fg->second_next = second;
 

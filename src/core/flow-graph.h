@@ -90,7 +90,6 @@ ljit_flow_graph *_ljit_build_flow_graph(ljit_function *fun);
 
 void _ljit_unmark_flow_graph(ljit_flow_graph *fg);
 
-# ifdef LJIT_DEBUG
 /**
 **  @brief  Print the flow graph in the dot format into a file
 **  @param  fun     The function that contains the control flow graph you want
@@ -101,6 +100,5 @@ void _ljit_unmark_flow_graph(ljit_flow_graph *fg);
 */
 
 int _ljit_dot_flow_graph(ljit_flow_graph *fg, const char *name);
-# endif /* LJIT_DEBUG */
 
 #endif /* !FLOW_GRAPH_H */
