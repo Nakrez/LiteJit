@@ -29,12 +29,21 @@ static ljit_flow_graph *_ljit_label_fg_node(unsigned int init,
 
     if (init)
     {
+        /*
+        ** Init the temporary table with the number of temporaries of the
+        ** function
+        */
         size = number_tmp;
         fg = calloc(1, size * sizeof(ljit_flow_graph *));
+
         return NULL;
     }
     else if (destroy)
     {
+        /*
+        ** We don't free every element of the table because they compose the final
+        ** result of the flow graph
+        */
         free(fg);
         return NULL;
     }
@@ -42,13 +51,16 @@ static ljit_flow_graph *_ljit_label_fg_node(unsigned int init,
     {
         unsigned int label_num = l->index;
 
+        /* If the node does not exist for this label create it */
         if (!fg[label_num])
         {
             ljit_block *b = ljit_get_block_from_label(fun, l);
 
-            if (!b)
-                return NULL;
-
+            /*
+            ** The first instruction of each block is a label, this is why
+            ** we use the first instruction of the block associated with the 
+            ** label l
+            */
             fg[label_num] = _ljit_new_flow_graph(b->instrs->head->instr);
 
             if (!fg[label_num])
@@ -80,9 +92,14 @@ void _ljit_free_flow_graph(ljit_flow_graph *fg)
     if (!fg || fg->marked)
         return;
 
+    /* Mark this node so it won't be free more than once */
     fg->marked = 1;
+
+    /* Free the sons of the current node */
     _ljit_free_flow_graph(fg->first_next);
     _ljit_free_flow_graph(fg->second_next);
+
+    /* Free the current node */
     free(fg);
 }
 
@@ -107,6 +124,7 @@ _ljit_recurse_build_fg(ljit_block *blk,
     {
         case JUMP:
             {
+                /* Build the jump node */
                 ljit_label *l = tmp_instr->instr->op1->data;
                 ljit_block *b = ljit_get_block_from_label(fun, l);
 
@@ -115,6 +133,7 @@ _ljit_recurse_build_fg(ljit_block *blk,
 
                 fg->marked = 1;
 
+                /* Link with the target of the jump */
                 fg->first_next = _ljit_recurse_build_fg(b, b->instrs->head,
                                                         fun);
 
@@ -124,6 +143,7 @@ _ljit_recurse_build_fg(ljit_block *blk,
         case JUMP_IF:
         case JUMP_IF_NOT:
             {
+                /* Build the conditional jump node */
                 ljit_label *l = tmp_instr->instr->op2->data;
                 ljit_block *b = ljit_get_block_from_label(fun, l);
 
@@ -132,6 +152,10 @@ _ljit_recurse_build_fg(ljit_block *blk,
 
                 fg->marked = 1;
 
+                /*
+                ** Set the second son of the current node to the target of the
+                ** conditional jump
+                */
                 second = _ljit_recurse_build_fg(b, b->instrs->head, fun);
             }
             break;
@@ -139,13 +163,19 @@ _ljit_recurse_build_fg(ljit_block *blk,
             {
                 ljit_label *l = tmp_instr->instr->op1->data;
 
+                /*
+                ** Get the node from the temporary table (if it does not exists
+                ** the function will build a new one
+                */
                 fg = _LJIT_LABEL_FG_GET(l, fun);
 
+                /* If it has been marked we don't build it again */
                 if (fg->marked)
                     return fg;
             }
             break;
         default:
+            /* Build a regular node */
             if ((fg = _ljit_new_flow_graph(tmp_instr->instr)) == NULL)
                 goto error;
 
@@ -153,7 +183,14 @@ _ljit_recurse_build_fg(ljit_block *blk,
     }
 
     fg->marked = 1;
+
+    /* Build and link the next node */
     fg->first_next = _ljit_recurse_build_fg(blk, tmp_instr->next, fun);
+
+    /*
+    ** Link with a conditional jump (if the current node is a conditional jump
+    ** second will contained the address of target of the jump)
+    */
     fg->second_next = second;
 
     return fg;
@@ -167,14 +204,21 @@ ljit_flow_graph *_ljit_build_flow_graph(ljit_function *fun)
 {
     ljit_flow_graph *fg = NULL;
 
+    /*
+    ** Create the temporary table that holds a flow node that
+    ** represent a label
+    */
     _LJIT_LABEL_FG_INIT(fun->lbl_index);
 
+    /* Build the graph */
     fg = _ljit_recurse_build_fg(fun->start_blk,
                                 fun->start_blk->instrs->head,
                                 fun);
 
+    /* Free the temporary table created to build the graph */
     _LJIT_LABEL_FG_FREE();
 
+    /* Unmark all the graph */
     _ljit_unmark_flow_graph(fg);
 
     return fg;
@@ -216,6 +260,7 @@ static void _ljit_dot_write_edges(FILE *f, ljit_flow_graph *fg)
 
     fg->marked = 1;
 
+    /* Write association between the current node and it son(s) */
     if (fg->first_next)
     {
         fprintf(f, "label%u -> label%u;\n", fg->index, fg->first_next->index);

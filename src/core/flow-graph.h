@@ -53,8 +53,15 @@ struct _ljit_flow_graph_s
     */
     ljit_flow_graph *second_next;
 
+    /**
+    **  @brief  Unique index of a flow graph node
+    */
     int index;
 
+    /**
+    **  @brief  Indicate if a node has been marked. Useful when doing
+    **          recursive operation on the flow graph
+    */
     int marked;
 };
 
