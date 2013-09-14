@@ -52,6 +52,8 @@ struct _ljit_flow_graph_s
     **          no instruction can jump on three different destination
     */
     ljit_flow_graph *second_next;
+
+    int index;
 };
 
 /**
@@ -72,12 +74,12 @@ void _ljit_free_flow_graph(ljit_flow_graph *fg);
 
 /**
 **  @brief  Build flow graph of a function
-**  @param  fun The function of which you want to build the flow graph
+**  @param  fun The function from which you want to build the flow graph
 **
-**  @return 0 if everything went well, -1 otherwise
+**  @return The flow graph if everything went well, NULL otherwise
 */
 
-int _ljit_build_flow_graph(ljit_function *fun);
+ljit_flow_graph *_ljit_build_flow_graph(ljit_function *fun);
 
 # ifdef LJIT_DEBUG
 /**

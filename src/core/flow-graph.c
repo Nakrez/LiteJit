@@ -1,23 +1,76 @@
 #include "flow-graph.h"
 
-static int _ljit_add_edge(ljit_function *fun,
-                          ljit_block *block,
-                          ljit_label *lbl)
+#define _LJIT_LABEL_FG_INIT(size)                       \
+    _ljit_label_fg_node(1, 0, 0, size, NULL, NULL)
+
+#define _LJIT_LABEL_FG_FREE()                           \
+    _ljit_label_fg_node(0, 1, 0, 0, NULL, NULL)
+
+#define _LJIT_LABEL_FG_GET(label, fun)                  \
+    _ljit_label_fg_node(0, 0, 0, 0, label, fun)
+
+#define _LJIT_LABEL_FG_GET_INDEX(index, fun)                  \
+    _ljit_label_fg_node(0, 0, 1, index, NULL, fun)
+
+static int _ljit_fg_index()
 {
-    /* ljit_block *target_block = ljit_get_block_from_label(fun, lbl); */
-    /* ljit_edge *edge = NULL; */
+    static int i = -1;
 
-    /* if (!target_block) */
-    /*     return -1; */
+    ++i;
 
-    /* if ((edge = _ljit_new_edge(target_block)) == NULL) */
-    /*     return -1; */
+    return i;
+}
 
-    /* #<{(| Add the new edge at the beginning |)}># */
-    /* edge->next = block->edges; */
-    /* block->edges = edge; */
+static ljit_flow_graph *_ljit_label_fg_node(unsigned int init,
+                                            unsigned int destroy,
+                                            unsigned int set,
+                                            unsigned int number_tmp,
+                                            ljit_label *l,
+                                            ljit_function *fun)
+{
+    static unsigned int size = 0;
+    static ljit_flow_graph ** fg = NULL;
 
-    /* return 0; */
+    if (init)
+    {
+        size = number_tmp;
+        fg = calloc(1, size * sizeof(ljit_flow_graph *));
+        return NULL;
+    }
+    else if (destroy)
+    {
+        free(fg);
+        return NULL;
+    }
+    else
+    {
+        unsigned int label_num = 0;
+        ljit_block *b = NULL;
+
+        if (set)
+        {
+            label_num = number_tmp;
+            b = ljit_get_block_from_label_num(fun, label_num);
+        }
+        else
+        {
+            label_num = l->index;
+            b = ljit_get_block_from_label(fun, l);
+        }
+
+        if (!fg[label_num])
+        {
+            if (!b)
+                return NULL;
+
+            fg[label_num] = _ljit_new_flow_graph(b->instrs->head->instr);
+
+            if (!fg[label_num])
+                return NULL;
+        }
+
+        return fg[label_num];
+    }
 }
 
 ljit_flow_graph *_ljit_new_flow_graph(ljit_bytecode *instr)
@@ -30,6 +83,7 @@ ljit_flow_graph *_ljit_new_flow_graph(ljit_bytecode *instr)
     fg->instr = instr;
     fg->first_next = NULL;
     fg->second_next = NULL;
+    fg->index = _ljit_fg_index();
 
     return fg;
 }
@@ -44,41 +98,83 @@ void _ljit_free_flow_graph(ljit_flow_graph *fg)
     free(fg);
 }
 
-int _ljit_build_flow_graph(ljit_function *fun)
+static ljit_flow_graph *
+_ljit_recurse_build_fg(ljit_block *blk,
+                       struct _ljit_bytecode_list_element_s *tmp_instr,
+                       ljit_function *fun)
 {
-    /* ljit_block *tmp = fun->start_blk; */
-    /* struct _ljit_bytecode_list_element_s *tmp_instr = NULL; */
+    ljit_flow_graph *fg = NULL;
+    ljit_flow_graph *second = NULL;
 
-    /* #<{(| Iterate over all the block |)}># */
-    /* while (tmp) */
-    /* { */
-    /*     tmp_instr = tmp->instrs->head; */
+    if (!tmp_instr)
+    {
+        if (!blk->next)
+            return NULL;
+        else
+            return _ljit_recurse_build_fg(blk->next, blk->next->instrs->head,
+                                          fun);
+    }
 
-    /*     #<{(| Iterate over all instructions to find jumps |)}># */
-    /*     while (tmp_instr) */
-    /*     { */
-    /*         switch (tmp_instr->instr->type) */
-    /*         { */
-    /*             case JUMP: */
-    /*                 if (_ljit_add_edge(fun, tmp, tmp_instr->instr->op1->data)) */
-    /*                     return -1; */
-    /*                 break; */
-    /*             case JUMP_IF: */
-    /*             case JUMP_IF_NOT: */
-    /*                 if (_ljit_add_edge(fun, tmp, tmp_instr->instr->op2->data)) */
-    /*                     return -1; */
-    /*                 break; */
-    /*             default: */
-    /*                 break; */
-    /*         } */
+    switch (tmp_instr->instr->type)
+    {
+        case JUMP:
+            {
+                ljit_block *b = ljit_get_block_from_label(fun,
+                                                          (ljit_label*)tmp_instr->instr->op1);
 
-    /*         tmp_instr = tmp_instr->next; */
-    /*     } */
+                if ((fg = _ljit_new_flow_graph(tmp_instr->instr)) == NULL)
+                    goto error;
 
-    /*     tmp = tmp->next; */
-    /* } */
+                fg->first_next = _ljit_recurse_build_fg(b, b->instrs->head,
+                                                        fun);
 
-    return 0;
+                return fg;
+            }
+            break;
+        case JUMP_IF:
+        case JUMP_IF_NOT:
+            {
+                ljit_block *b = ljit_get_block_from_label(fun,
+                                                          (ljit_label*)tmp_instr->instr->op2);
+                if ((fg = _ljit_new_flow_graph(tmp_instr->instr)) == NULL)
+                    goto error;
+
+                second = _ljit_recurse_build_fg(b, b->instrs->head, fun);
+            }
+            break;
+        case LABEL:
+            fg = _LJIT_LABEL_FG_GET_INDEX(*(ljit_int*)tmp_instr->instr->op1,
+                                         fun);
+            break;
+        default:
+            if ((fg = _ljit_new_flow_graph(tmp_instr->instr)) == NULL)
+                goto error;
+            break;
+    }
+
+    fg->first_next = _ljit_recurse_build_fg(blk, tmp_instr->next, fun);
+    fg->second_next = second;
+
+    return fg;
+
+error:
+    free(fg);
+    return NULL;
+}
+
+ljit_flow_graph *_ljit_build_flow_graph(ljit_function *fun)
+{
+    ljit_flow_graph *fg = NULL;
+
+    _LJIT_LABEL_FG_INIT(fun->lbl_index);
+
+    fg = _ljit_recurse_build_fg(fun->start_blk,
+                                fun->start_blk->instrs->head,
+                                fun);
+
+    _LJIT_LABEL_FG_FREE();
+
+    return fg;
 }
 
 #ifdef LJIT_DEBUG
