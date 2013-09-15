@@ -34,6 +34,8 @@ set(ljit_src
             src/core/arch.c
             src/core/apply.c
             src/core/flow-graph.c
+            src/core/liveness.c
+            src/core/liveness-utils.c
 
             src/elf/elf.c
             src/elf/header.c
