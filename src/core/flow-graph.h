@@ -83,12 +83,13 @@ void _ljit_free_flow_graph(ljit_flow_graph *fg);
 
 /**
 **  @brief  Build flow graph of a function
-**  @param  fun The function from which you want to build the flow graph
+**  @param  fun     The function from which you want to build the flow graph
+**  @param  fg_size This variable will received the size of the flow graph
 **
 **  @return The flow graph if everything went well, NULL otherwise
 */
 
-ljit_flow_graph *_ljit_build_flow_graph(ljit_function *fun);
+ljit_flow_graph *_ljit_build_flow_graph(ljit_function *fun, int *fg_size);
 
 /**
 **  @brief  Unmark a flow_graph

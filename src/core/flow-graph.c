@@ -200,7 +200,7 @@ error:
     return NULL;
 }
 
-ljit_flow_graph *_ljit_build_flow_graph(ljit_function *fun)
+ljit_flow_graph *_ljit_build_flow_graph(ljit_function *fun, int *fg_size)
 {
     ljit_flow_graph *fg = NULL;
 
@@ -220,6 +220,8 @@ ljit_flow_graph *_ljit_build_flow_graph(ljit_function *fun)
 
     /* Unmark all the graph */
     _ljit_unmark_flow_graph(fg);
+
+    *fg_size = _ljit_fg_index();
 
     return fg;
 }
