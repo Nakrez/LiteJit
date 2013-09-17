@@ -1,5 +1,17 @@
 #include "liveness-utils.h"
 
+inline _ljit_liveness_info *_ljit_liveness_info_new(int elt)
+{
+    _ljit_liveness_info *li = NULL;
+
+    if ((li = malloc(sizeof(_ljit_liveness_info))) == NULL)
+        return NULL;
+
+    li->elt = elt;
+
+    return li;
+}
+
 void _ljit_liveness_info_free(_ljit_liveness_info *li)
 {
     _ljit_liveness_info *tmp = NULL;

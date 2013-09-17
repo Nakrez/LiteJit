@@ -48,6 +48,15 @@ struct _ljit_liveness_info_s
 };
 
 /**
+**  @brief  Create a new element of an liveness info list
+**  @param  elt The element contained in the new liveness info element
+**
+**  @return The new element if everything went well, NULL otherwise
+*/
+
+_ljit_liveness_info *_ljit_liveness_info_new(int elt);
+
+/**
 **  @brief  Free a liveness information list
 **  @param  li  The list you want to free
 */
