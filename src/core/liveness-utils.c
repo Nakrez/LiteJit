@@ -69,18 +69,24 @@ static inline void _ljit_liveness_add_head(_ljit_liveness_info **list,
     *list = elem;
 }
 
-static _ljit_liveness_info *_ljit_copy_list(_ljit_liveness_info *origin,
-                                            _ljit_liveness_info *result)
+static inline _ljit_liveness_info *_ljit_copy_list(_ljit_liveness_info *origin,
+                                                   _ljit_liveness_info *result)
 {
     _ljit_liveness_info *tmp = origin;
     _ljit_liveness_info *new_elem = NULL;
 
     while (tmp)
     {
+        /* Duplicate element */
         if ((new_elem = _ljit_liveness_info_new(tmp->elt)) == NULL)
             goto error;
 
+        /*
+        ** The order don't really matter so we add the new element in head
+        ** for better performances
+        */
         _ljit_liveness_add_head(&result, new_elem);
+
         tmp = tmp->next;
     }
 
