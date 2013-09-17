@@ -30,9 +30,28 @@
 #ifndef LIVENESS_UTILS_H
 # define LIVENESS_UTILS_H
 
-struct liveness_info
-{
+# include <stdlib.h>
 
+typedef struct _ljit_liveness_info_s _ljit_liveness_info;
+
+struct _ljit_liveness_info_s
+{
+    /*
+    **  @brief  The information represent the number of a temporary
+    */
+    int elt;
+
+    /*
+    **  @brief  The next element in the list
+    */
+    _ljit_liveness_info *next;
 };
+
+/**
+**  @brief Free a liveness information list
+**  @param  li  The list you want to free
+*/
+
+void _ljit_liveness_info_free(_ljit_liveness_info *li)
 
 #endif /* !LIVENESS_UTILS_H */
