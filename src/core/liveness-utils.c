@@ -8,6 +8,7 @@ inline _ljit_liveness_info *_ljit_liveness_info_new(unsigned short elt)
         return NULL;
 
     li->elt = elt;
+    li->next = NULL;
 
     return li;
 }
