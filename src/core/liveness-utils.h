@@ -48,10 +48,19 @@ struct _ljit_liveness_info_s
 };
 
 /**
-**  @brief Free a liveness information list
+**  @brief  Free a liveness information list
 **  @param  li  The list you want to free
 */
 
-void _ljit_liveness_info_free(_ljit_liveness_info *li)
+void _ljit_liveness_info_free(_ljit_liveness_info *li);
+
+/**
+**  @brief  Represent the minus operation of two lists
+**  @param  li  The list where you want to remove the elements
+**  @param  rem The elements to remove
+*/
+
+void _ljit_liveness_info_minus(_ljit_liveness_info *li,
+                               _ljit_liveness_info *rem);
 
 #endif /* !LIVENESS_UTILS_H */
