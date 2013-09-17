@@ -54,3 +54,51 @@ void _ljit_liveness_info_minus(_ljit_liveness_info *li,
         to_remove = to_remove->next;
     }
 }
+
+static inline void _ljit_liveness_add_head(_ljit_liveness_info **list,
+                                           _ljit_liveness_info *elem)
+{
+    if (!(*list))
+    {
+        *list = elem;
+        return;
+    }
+
+    elem->next = *list;
+    *list = elem;
+}
+
+static _ljit_liveness_info *_ljit_copy_list(_ljit_liveness_info *origin,
+                                            _ljit_liveness_info *result)
+{
+    _ljit_liveness_info *tmp = origin;
+    _ljit_liveness_info *new_elem = NULL;
+
+    while (tmp)
+    {
+        if ((new_elem = _ljit_liveness_info_new(tmp->elt)) == NULL)
+            goto error;
+
+        _ljit_liveness_add_head(&result, new_elem);
+        tmp = tmp->next;
+    }
+
+    return result;
+
+error:
+    _ljit_liveness_info_free(result);
+    return NULL;
+}
+
+_ljit_liveness_info *_ljit_liveness_info_merge(_ljit_liveness_info *li1,
+                                               _ljit_liveness_info *li2)
+{
+    _ljit_liveness_info *ret = NULL;
+
+    if ((ret = _ljit_copy_list(li1, ret)) == NULL)
+        return NULL;
+
+    ret = _ljit_copy_list(li2, ret);
+
+    return ret;
+}

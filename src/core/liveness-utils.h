@@ -72,4 +72,16 @@ void _ljit_liveness_info_free(_ljit_liveness_info *li);
 void _ljit_liveness_info_minus(_ljit_liveness_info *li,
                                _ljit_liveness_info *rem);
 
+/**
+**  @brief  Merge two list and return the new one
+**  @brief  li1 The first list to merge
+**  @brief  li2 The second list to merge
+**
+**  @return The result of the merge of li1 and li2, NULL if something wrong
+**          happened.
+*/
+
+_ljit_liveness_info *_ljit_liveness_info_merge(_ljit_liveness_info *li1,
+                                               _ljit_liveness_info *li2);
+
 #endif /* !LIVENESS_UTILS_H */
