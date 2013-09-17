@@ -39,7 +39,7 @@ struct _ljit_liveness_info_s
     /*
     **  @brief  The information represent the number of a temporary
     */
-    int elt;
+    unsigned short elt;
 
     /*
     **  @brief  The next element in the list
@@ -54,7 +54,7 @@ struct _ljit_liveness_info_s
 **  @return The new element if everything went well, NULL otherwise
 */
 
-_ljit_liveness_info *_ljit_liveness_info_new(int elt);
+_ljit_liveness_info *_ljit_liveness_info_new(unsigned short elt);
 
 /**
 **  @brief  Free a liveness information list

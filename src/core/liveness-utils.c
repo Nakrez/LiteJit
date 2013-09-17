@@ -1,6 +1,6 @@
 #include "liveness-utils.h"
 
-inline _ljit_liveness_info *_ljit_liveness_info_new(int elt)
+inline _ljit_liveness_info *_ljit_liveness_info_new(unsigned short elt)
 {
     _ljit_liveness_info *li = NULL;
 
