@@ -75,4 +75,14 @@ void _ljit_compute_liveness(ljit_flow_graph *fg, int graph_size)
                                        sizeof(_ljit_liveness_info *));
 
     _ljit_compute_def_use(fg, def, use);
+
+#ifdef LJIT_DEBUG
+    printf("---- Def array ----\n");
+    _ljit_dump_liveness_array(def, graph_size);
+    printf("----           ----\n\n");
+
+    printf("---- Use array ----\n");
+    _ljit_dump_liveness_array(use, graph_size);
+    printf("----           ----\n");
+#endif /* LJIT_DEBUG */
 }
