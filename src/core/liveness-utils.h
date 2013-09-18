@@ -73,7 +73,8 @@ void _ljit_liveness_info_minus(_ljit_liveness_info *li,
                                _ljit_liveness_info *rem);
 
 /**
-**  @brief  Merge two list and return the new one
+**  @brief  Merge two list and return the new one. If you want to merge a list
+**          and don't want to duplicate @a li1 just use _ljit_copy_list()
 **  @brief  li1 The first list to merge
 **  @brief  li2 The second list to merge
 **

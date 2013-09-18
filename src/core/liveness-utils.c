@@ -69,14 +69,40 @@ static inline void _ljit_liveness_add_head(_ljit_liveness_info **list,
     *list = elem;
 }
 
+static int _ljit_liveness_info_elt_exists(_ljit_liveness_info *li,
+                                          unsigned short elt)
+{
+    while (li)
+    {
+        if (li->elt == elt)
+            return 1;
+
+        li = li->next;
+    }
+
+    return 0;
+}
+
 static inline _ljit_liveness_info *_ljit_copy_list(_ljit_liveness_info *origin,
                                                    _ljit_liveness_info *result)
 {
     _ljit_liveness_info *tmp = origin;
     _ljit_liveness_info *new_elem = NULL;
+    int copy = result == NULL;
 
     while (tmp)
     {
+        /*
+        ** If the element already exists in the list don't copy it
+        ** If the result list was NULL don't perform this check since we assume
+        ** that elements are unique in the first place.
+        */
+        if (!copy && _ljit_liveness_info_elt_exists(result, tmp->elt))
+        {
+            tmp = tmp->next;
+            continue;
+        }
+
         /* Duplicate element */
         if ((new_elem = _ljit_liveness_info_new(tmp->elt)) == NULL)
             goto error;
