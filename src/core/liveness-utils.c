@@ -135,3 +135,18 @@ _ljit_liveness_info *_ljit_liveness_info_merge(_ljit_liveness_info *li1,
 
     return ret;
 }
+
+void _ljit_liveness_info_dump(_ljit_liveness_info *li, char *sep)
+{
+    _ljit_liveness_info *tmp = li;
+
+    while (tmp)
+    {
+        if (tmp != li)
+            printf("%s", sep);
+
+        printf("%u", li->elt);
+
+        tmp = tmp->next;
+    }
+}

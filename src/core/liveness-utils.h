@@ -30,6 +30,7 @@
 #ifndef LIVENESS_UTILS_H
 # define LIVENESS_UTILS_H
 
+# include <stdio.h>
 # include <stdlib.h>
 
 typedef struct _ljit_liveness_info_s _ljit_liveness_info;
@@ -107,5 +108,13 @@ _ljit_liveness_info *_ljit_copy_list(_ljit_liveness_info *origin,
 
 _ljit_liveness_info *_ljit_liveness_info_merge(_ljit_liveness_info *li1,
                                                _ljit_liveness_info *li2);
+
+/**
+**  @brief  Dump a liveness info list on STDOUT
+**  @param  li  The list you want to dump on STDOUT
+**  @param  sep The string that separates elements on the dump
+*/
+
+void _ljit_liveness_info_dump(_ljit_liveness_info *li, char *sep);
 
 #endif /* !LIVENESS_UTILS_H */
