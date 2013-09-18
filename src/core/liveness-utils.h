@@ -73,6 +73,16 @@ void _ljit_liveness_info_minus(_ljit_liveness_info *li,
                                _ljit_liveness_info *rem);
 
 /**
+**  @brief  Add @a elem as the head element of list @a list
+**  @param  list    The list where you want to add @a elem as the head of the
+**                  list
+**  @param  elem    The element you want to add as head of the list @a list
+*/
+
+void _ljit_liveness_add_head(_ljit_liveness_info **list,
+                             _ljit_liveness_info *elem);
+
+/**
 **  @brief  Copy the list @a origin at the beginning of @a result in reverse
 **          order. This order does not mean anything in case of liveness
 **          information. So this implementation is main to win some time.
@@ -88,8 +98,8 @@ _ljit_liveness_info *_ljit_copy_list(_ljit_liveness_info *origin,
 /**
 **  @brief  Merge two list and return the new one. If you want to merge a list
 **          and don't want to duplicate @a li1 just use _ljit_copy_list()
-**  @brief  li1 The first list to merge
-**  @brief  li2 The second list to merge
+**  @param  li1 The first list to merge
+**  @param  li2 The second list to merge
 **
 **  @return The result of the merge of li1 and li2, NULL if something wrong
 **          happened.

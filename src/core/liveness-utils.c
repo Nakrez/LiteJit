@@ -56,8 +56,8 @@ void _ljit_liveness_info_minus(_ljit_liveness_info *li,
     }
 }
 
-static inline void _ljit_liveness_add_head(_ljit_liveness_info **list,
-                                           _ljit_liveness_info *elem)
+inline void _ljit_liveness_add_head(_ljit_liveness_info **list,
+                                    _ljit_liveness_info *elem)
 {
     if (!(*list))
     {
