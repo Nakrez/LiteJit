@@ -1,5 +1,16 @@
 #include "liveness.h"
 
+static void _ljit_dump_liveness_array(_ljit_liveness_info **array,
+                                      int size)
+{
+    for (int i = 0; i < size; ++i)
+    {
+        printf("%i : ", i);
+        _ljit_liveness_info_dump(array[i], ", ");
+        printf("\n");
+    }
+}
+
 static void _ljit_add_value(_ljit_liveness_info **array,
                             ljit_value val,
                             int index)
