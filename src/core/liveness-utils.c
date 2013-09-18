@@ -69,8 +69,8 @@ inline void _ljit_liveness_add_head(_ljit_liveness_info **list,
     *list = elem;
 }
 
-static int _ljit_liveness_info_elt_exists(_ljit_liveness_info *li,
-                                          unsigned short elt)
+int _ljit_liveness_info_elt_exists(_ljit_liveness_info *li,
+                                   unsigned short elt)
 {
     while (li)
     {

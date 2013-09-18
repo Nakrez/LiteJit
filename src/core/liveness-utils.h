@@ -84,6 +84,16 @@ void _ljit_liveness_add_head(_ljit_liveness_info **list,
                              _ljit_liveness_info *elem);
 
 /**
+**  @brief  Test if an element is already in a liveness info list
+**  @param  li  The list where you want to test if @a elt exists
+**  @param  elt The element you want to check if it exists in @a li
+**
+**  @return 1 if the element is in the list, 0 otherwise
+*/
+
+int _ljit_liveness_info_elt_exists(_ljit_liveness_info *li,
+                                   unsigned short elt);
+/**
 **  @brief  Copy the list @a origin at the beginning of @a result in reverse
 **          order. This order does not mean anything in case of liveness
 **          information. So this implementation is main to win some time.
