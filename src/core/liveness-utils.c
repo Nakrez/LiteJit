@@ -83,8 +83,8 @@ static int _ljit_liveness_info_elt_exists(_ljit_liveness_info *li,
     return 0;
 }
 
-static inline _ljit_liveness_info *_ljit_copy_list(_ljit_liveness_info *origin,
-                                                   _ljit_liveness_info *result)
+inline _ljit_liveness_info *_ljit_copy_list(_ljit_liveness_info *origin,
+                                            _ljit_liveness_info *result)
 {
     _ljit_liveness_info *tmp = origin;
     _ljit_liveness_info *new_elem = NULL;

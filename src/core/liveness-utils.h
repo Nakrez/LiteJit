@@ -73,6 +73,19 @@ void _ljit_liveness_info_minus(_ljit_liveness_info *li,
                                _ljit_liveness_info *rem);
 
 /**
+**  @brief  Copy the list @a origin at the beginning of @a result in reverse
+**          order. This order does not mean anything in case of liveness
+**          information. So this implementation is main to win some time.
+**  @param  origin  The list you want to copy into @a result
+**  @param  result  The list where you want to copy @a origin
+**
+**  @return The new head of the list if everything went well, NULL otherwise
+*/
+
+_ljit_liveness_info *_ljit_copy_list(_ljit_liveness_info *origin,
+                                     _ljit_liveness_info *result);
+
+/**
 **  @brief  Merge two list and return the new one. If you want to merge a list
 **          and don't want to duplicate @a li1 just use _ljit_copy_list()
 **  @brief  li1 The first list to merge
