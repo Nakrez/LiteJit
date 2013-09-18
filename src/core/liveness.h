@@ -35,6 +35,13 @@
 # include "flow-graph.h"
 # include "liveness-utils.h"
 
+/**
+**  @brief  Compute liveness information on a control flow graph.
+**  @oaram  fg          The flow graph on which you want to compute liveness
+**                      analysis.
+**  @param  graph_size  The number of node of the control flow graph.
+*/
+
 void _ljit_compute_liveness(ljit_flow_graph *fg, int graph_size);
 
 #endif /* !LIVENESS_H */
