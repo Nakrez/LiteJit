@@ -56,17 +56,13 @@ void _ljit_liveness_info_minus(_ljit_liveness_info *li,
     }
 }
 
-inline void _ljit_liveness_add_head(_ljit_liveness_info **list,
-                                    _ljit_liveness_info *elem)
+inline _ljit_liveness_info *_ljit_liveness_add_head(_ljit_liveness_info *list,
+                                                    _ljit_liveness_info *elem)
 {
-    if (!(*list))
-    {
-        *list = elem;
-        return;
-    }
+    if (list)
+        elem->next = list;
 
-    elem->next = *list;
-    *list = elem;
+    return elem;
 }
 
 int _ljit_liveness_info_elt_exists(_ljit_liveness_info *li,
@@ -111,7 +107,7 @@ inline _ljit_liveness_info *_ljit_copy_list(_ljit_liveness_info *origin,
         ** The order don't really matter so we add the new element in head
         ** for better performances
         */
-        _ljit_liveness_add_head(&result, new_elem);
+        result = _ljit_liveness_add_head(result, new_elem);
 
         tmp = tmp->next;
     }
@@ -145,7 +141,7 @@ void _ljit_liveness_info_dump(_ljit_liveness_info *li, char *sep)
         if (tmp != li)
             printf("%s", sep);
 
-        printf("%u", li->elt);
+        printf("%u", tmp->elt);
 
         tmp = tmp->next;
     }

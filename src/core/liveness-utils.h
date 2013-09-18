@@ -80,8 +80,8 @@ void _ljit_liveness_info_minus(_ljit_liveness_info *li,
 **  @param  elem    The element you want to add as head of the list @a list
 */
 
-void _ljit_liveness_add_head(_ljit_liveness_info **list,
-                             _ljit_liveness_info *elem);
+_ljit_liveness_info *_ljit_liveness_add_head(_ljit_liveness_info *list,
+                                             _ljit_liveness_info *elem);
 
 /**
 **  @brief  Test if an element is already in a liveness info list

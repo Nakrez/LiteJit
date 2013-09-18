@@ -15,11 +15,12 @@ static void _ljit_add_value(_ljit_liveness_info **array,
                             ljit_value val,
                             int index)
 {
-    if (val && val->is_tmp)
+    if (val && val->is_tmp &&
+        !_ljit_liveness_info_elt_exists(array[index], val->index))
     {
         _ljit_liveness_info *elem = NULL;
         elem = _ljit_liveness_info_new(val->index);
-        _ljit_liveness_add_head(&array[index], elem);
+        array[index] = _ljit_liveness_add_head(array[index], elem);
     }
 }
 
@@ -56,7 +57,7 @@ void _ljit_compute_def_use(ljit_flow_graph *fg,
         case DIV:
             _ljit_add_value(use, fg->instr->op1, fg->index);
             _ljit_add_value(use, fg->instr->op2, fg->index);
-            _ljit_add_value(use, fg->instr->ret_val, fg->index);
+            _ljit_add_value(def, fg->instr->ret_val, fg->index);
             break;
 
         default: /* LABEL */
