@@ -32,6 +32,7 @@
 
 # include "internal.h"
 # include "flow-graph.h"
+# include "liveness.h"
 
 /**
 **  @brief  Compute the register allocation
