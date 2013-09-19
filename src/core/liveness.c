@@ -84,30 +84,16 @@ static void _ljit_flow_graph_array(ljit_flow_graph *fg,
     _ljit_flow_graph_array(fg->second_next, graph);
 }
 
-void _ljit_compute_liveness(ljit_flow_graph *fg, int graph_size)
+static void _ljit_compute_in_out(_ljit_liveness_info **def,
+                                 _ljit_liveness_info **use,
+                                 _ljit_liveness_info **in,
+                                 _ljit_liveness_info **out,
+                                 ljit_flow_graph **graph,
+                                 int graph_size)
 {
-    _ljit_liveness_info **def = alloca(graph_size *
-                                       sizeof(_ljit_liveness_info *));
-    _ljit_liveness_info **use = alloca(graph_size *
-                                       sizeof(_ljit_liveness_info *));
-    _ljit_liveness_info **in = alloca(graph_size *
-                                      sizeof(_ljit_liveness_info *));
-    _ljit_liveness_info **out = alloca(graph_size *
-                                       sizeof(_ljit_liveness_info *));
-    ljit_flow_graph **graph = alloca(graph_size *
-                                     sizeof(ljit_flow_graph *));
     _ljit_liveness_info *in_backup = NULL;
     _ljit_liveness_info *out_backup = NULL;
     int tmp = 1;
-
-    memset(in, 0, graph_size * sizeof(_ljit_liveness_info *));
-    memset(out, 0, graph_size* sizeof(_ljit_liveness_info *));
-
-    _ljit_compute_def_use(fg, def, use);
-    _ljit_unmark_flow_graph(fg);
-
-    _ljit_flow_graph_array(fg, graph);
-    _ljit_unmark_flow_graph(fg);
 
     while (tmp)
     {
@@ -141,6 +127,31 @@ void _ljit_compute_liveness(ljit_flow_graph *fg, int graph_size)
             /* _ljit_liveness_info_free(out_backup); */
         }
     }
+}
+
+void _ljit_compute_liveness(ljit_flow_graph *fg, int graph_size)
+{
+    _ljit_liveness_info **def = alloca(graph_size *
+                                       sizeof(_ljit_liveness_info *));
+    _ljit_liveness_info **use = alloca(graph_size *
+                                       sizeof(_ljit_liveness_info *));
+    _ljit_liveness_info **in = alloca(graph_size *
+                                      sizeof(_ljit_liveness_info *));
+    _ljit_liveness_info **out = alloca(graph_size *
+                                       sizeof(_ljit_liveness_info *));
+    ljit_flow_graph **graph = alloca(graph_size *
+                                     sizeof(ljit_flow_graph *));
+
+    memset(in, 0, graph_size * sizeof(_ljit_liveness_info *));
+    memset(out, 0, graph_size* sizeof(_ljit_liveness_info *));
+
+    _ljit_compute_def_use(fg, def, use);
+    _ljit_unmark_flow_graph(fg);
+
+    _ljit_flow_graph_array(fg, graph);
+    _ljit_unmark_flow_graph(fg);
+
+    _ljit_compute_in_out(def, use, in, out, graph, graph_size);
 
 #ifdef LJIT_DEBUG
     printf("---- Def array ----\n");
