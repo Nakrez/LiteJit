@@ -134,4 +134,14 @@ _ljit_liveness_info *_ljit_liveness_info_merge(_ljit_liveness_info *li1,
 
 void _ljit_liveness_info_dump(_ljit_liveness_info *li, char *sep);
 
+/**
+**  @brief  Test if two liveness info lists are equals
+**  @param  li1 The first list to compare
+**  @param  li2 The second list to compare
+**
+**  @return 1 if the lists are equals, 0 otherwise
+*/
+
+int _ljit_liveness_info_equals(_ljit_liveness_info *li1,
+                               _ljit_liveness_info *li2);
 #endif /* !LIVENESS_UTILS_H */

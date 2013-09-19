@@ -31,6 +31,7 @@
 # define LIVENESS_H
 
 # include <alloca.h>
+# include <string.h>
 
 # include "flow-graph.h"
 # include "liveness-utils.h"
