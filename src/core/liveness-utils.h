@@ -33,6 +33,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 
+# define LJIT_FORCE_COPY 1
+# define LJIT_NO_FORCE_COPY 0
+
 typedef struct _ljit_liveness_info_s _ljit_liveness_info;
 
 struct _ljit_liveness_info_s
@@ -68,10 +71,12 @@ void _ljit_liveness_info_free(_ljit_liveness_info *li);
 **  @brief  Represent the minus operation of two lists
 **  @param  li  The list where you want to remove the elements
 **  @param  rem The elements to remove
+**
+**  @return The new head of the list
 */
 
-void _ljit_liveness_info_minus(_ljit_liveness_info *li,
-                               _ljit_liveness_info *rem);
+_ljit_liveness_info *_ljit_liveness_info_minus(_ljit_liveness_info *li,
+                                               _ljit_liveness_info *rem);
 
 /**
 **  @brief  Add @a elem as the head element of list @a list
@@ -99,12 +104,14 @@ int _ljit_liveness_info_elt_exists(_ljit_liveness_info *li,
 **          information. So this implementation is main to win some time.
 **  @param  origin  The list you want to copy into @a result
 **  @param  result  The list where you want to copy @a origin
+**  @param  force   Force the list to be copied even if the result list is NULL
 **
 **  @return The new head of the list if everything went well, NULL otherwise
 */
 
 _ljit_liveness_info *_ljit_copy_list(_ljit_liveness_info *origin,
-                                     _ljit_liveness_info *result);
+                                     _ljit_liveness_info *result,
+                                     int force);
 
 /**
 **  @brief  Merge two list and return the new one. If you want to merge a list

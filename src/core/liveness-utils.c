@@ -25,8 +25,8 @@ void _ljit_liveness_info_free(_ljit_liveness_info *li)
     }
 }
 
-void _ljit_liveness_info_minus(_ljit_liveness_info *li,
-                               _ljit_liveness_info *rem)
+_ljit_liveness_info *_ljit_liveness_info_minus(_ljit_liveness_info *li,
+                                               _ljit_liveness_info *rem)
 {
     _ljit_liveness_info *to_remove = rem;
     _ljit_liveness_info *tmp = NULL;
@@ -42,6 +42,9 @@ void _ljit_liveness_info_minus(_ljit_liveness_info *li,
             /* If the element to destroy is the current element destroy it */
             if (tmp->elt == to_remove->elt)
             {
+                if (tmp == li)
+                    li = tmp->next;
+
                 /* Destroy the element */
                 free(tmp);
 
@@ -54,6 +57,8 @@ void _ljit_liveness_info_minus(_ljit_liveness_info *li,
 
         to_remove = to_remove->next;
     }
+
+    return li;
 }
 
 inline _ljit_liveness_info *_ljit_liveness_add_head(_ljit_liveness_info *list,
@@ -80,11 +85,15 @@ int _ljit_liveness_info_elt_exists(_ljit_liveness_info *li,
 }
 
 inline _ljit_liveness_info *_ljit_copy_list(_ljit_liveness_info *origin,
-                                            _ljit_liveness_info *result)
+                                            _ljit_liveness_info *result,
+                                            int force)
 {
     _ljit_liveness_info *tmp = origin;
     _ljit_liveness_info *new_elem = NULL;
     int copy = result == NULL;
+
+    if (force)
+        copy = 1;
 
     while (tmp)
     {
@@ -124,10 +133,10 @@ _ljit_liveness_info *_ljit_liveness_info_merge(_ljit_liveness_info *li1,
 {
     _ljit_liveness_info *ret = NULL;
 
-    if ((ret = _ljit_copy_list(li1, ret)) == NULL)
+    if ((ret = _ljit_copy_list(li1, ret, LJIT_NO_FORCE_COPY)) == NULL)
         return NULL;
 
-    ret = _ljit_copy_list(li2, ret);
+    ret = _ljit_copy_list(li2, ret, LJIT_NO_FORCE_COPY);
 
     return ret;
 }
