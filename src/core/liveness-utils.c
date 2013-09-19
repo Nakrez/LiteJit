@@ -90,7 +90,7 @@ inline _ljit_liveness_info *_ljit_copy_list(_ljit_liveness_info *origin,
 {
     _ljit_liveness_info *tmp = origin;
     _ljit_liveness_info *new_elem = NULL;
-    int copy = result == NULL;
+    int copy = result != NULL;
 
     if (force)
         copy = 1;
@@ -102,9 +102,17 @@ inline _ljit_liveness_info *_ljit_copy_list(_ljit_liveness_info *origin,
         ** If the result list was NULL don't perform this check since we assume
         ** that elements are unique in the first place.
         */
-        if (!copy && _ljit_liveness_info_elt_exists(result, tmp->elt))
+        if (_ljit_liveness_info_elt_exists(result, tmp->elt))
         {
             tmp = tmp->next;
+            continue;
+        }
+
+        if (!copy)
+        {
+            _ljit_liveness_info *l = tmp;
+            tmp = tmp->next;
+            result = _ljit_liveness_add_head(result, l);
             continue;
         }
 
@@ -133,10 +141,11 @@ _ljit_liveness_info *_ljit_liveness_info_merge(_ljit_liveness_info *li1,
 {
     _ljit_liveness_info *ret = NULL;
 
-    if ((ret = _ljit_copy_list(li1, ret, LJIT_NO_FORCE_COPY)) == NULL)
-        return NULL;
-
-    ret = _ljit_copy_list(li2, ret, LJIT_NO_FORCE_COPY);
+    ret = _ljit_copy_list(li1, ret, LJIT_NO_FORCE_COPY);
+    if (!ret)
+        ret = _ljit_copy_list(li2, ret, LJIT_FORCE_COPY);
+    else
+        ret = _ljit_copy_list(li2, ret, LJIT_NO_FORCE_COPY);
 
     return ret;
 }
@@ -154,4 +163,18 @@ void _ljit_liveness_info_dump(_ljit_liveness_info *li, char *sep)
 
         tmp = tmp->next;
     }
+}
+
+int _ljit_liveness_info_equals(_ljit_liveness_info *li1,
+                               _ljit_liveness_info *li2)
+{
+    while (li1)
+    {
+        if (!_ljit_liveness_info_elt_exists(li2, li1->elt))
+            return 0;
+
+        li1 = li1->next;
+    }
+
+    return 1;
 }
