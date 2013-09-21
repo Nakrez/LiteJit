@@ -113,7 +113,7 @@ void _ljit_interference_graph_debug(ljit_interference_graph *ig, char *file)
     if ((f = fopen(file, "w")) == NULL)
         return;
 
-    fprintf(f, "graph interference_graph {\n");
+    fprintf(f, "strict graph interference_graph {\n");
 
     for (int i = 0; i < ig->size; ++i)
     {
