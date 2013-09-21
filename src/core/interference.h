@@ -51,6 +51,11 @@ struct _ljit_interference_graph_s
     **  @brief  The edges of the interference graph
     */
     _ljit_liveness_info **graph;
+
+    /**
+    **  @brief  Color of each node of the interference graph
+    */
+    unsigned char *colors;
 };
 
 /**

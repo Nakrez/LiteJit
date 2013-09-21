@@ -1,5 +1,15 @@
 #include "interference.h"
 
+static char *_ljit_graph_color_name[] =
+{
+    "blue",
+    "yellow",
+    "green",
+    "orange",
+    "purple",
+    "pink",
+};
+
 ljit_interference_graph *_ljit_interference_graph_new(int size)
 {
     ljit_interference_graph *ig = NULL;
@@ -9,6 +19,13 @@ ljit_interference_graph *_ljit_interference_graph_new(int size)
 
     if ((ig->graph = calloc(1, size * sizeof (_ljit_liveness_info *))) == NULL)
     {
+        free(ig);
+        return NULL;
+    }
+
+    if ((ig->graph = calloc(1, size)) == NULL)
+    {
+        free(ig->graph);
         free(ig);
         return NULL;
     }
@@ -23,6 +40,7 @@ void _ljit_interference_graph_free(ljit_interference_graph *ig)
     for (int i = 0; i < ig->size; ++i)
         _ljit_liveness_info_free(ig->graph[i]);
 
+    free(ig->colors);
     free(ig->graph);
     free(ig);
 }
@@ -121,11 +139,8 @@ void _ljit_interference_graph_debug(ljit_interference_graph *ig, char *file)
     {
         tmp = ig->graph[i];
 
-        if (!tmp)
-        {
-            fprintf(f, "%u;\n", i);
-            continue;
-        }
+        fprintf(f, "%u [color=%s];\n", i,
+                _ljit_graph_color_name[ig->colors[i]]);
 
         while (tmp)
         {
