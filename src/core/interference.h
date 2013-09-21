@@ -67,7 +67,7 @@ ljit_interference_graph *_ljit_interference_graph_new(int size);
 **  @param  The interference graph you want to destroy
 */
 
-void _ljit_interference_graph(ljit_interference_graph *ig);
+void _ljit_interference_graph_free(ljit_interference_graph *ig);
 
 /**
 **  @brief  Check if an edge already exists in the interference graph

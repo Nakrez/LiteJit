@@ -3,6 +3,7 @@
 int _ljit_regalloc(ljit_function *fun)
 {
     ljit_flow_graph *fg = NULL;
+    ljit_interference_graph *ig = NULL;
     int flow_graph_size = 0;
 
     /* Build the flow graph */
@@ -14,11 +15,13 @@ int _ljit_regalloc(ljit_function *fun)
     _ljit_dot_flow_graph(fg, "ljit_flow_graph.dot");
 #endif /* LJIT_DEBUG */
 
-    _ljit_compute_liveness(fg, flow_graph_size);
-
+    ig = _ljit_compute_liveness(fg, flow_graph_size);
 
     /* Free the flow graph because it is not needed anymore */
     _ljit_free_flow_graph(fg);
+
+    /* Free the interference graph because it is not needed anymore */
+    _ljit_interference_graph_free(ig);
 
     return 0;
 }

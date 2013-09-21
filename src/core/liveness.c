@@ -135,7 +135,8 @@ void _ljit_free_liveness_array(_ljit_liveness_info **array, int array_size)
         _ljit_liveness_info_free(array[i]);
 }
 
-void _ljit_compute_liveness(ljit_flow_graph *fg, int graph_size)
+ljit_interference_graph *_ljit_compute_liveness(ljit_flow_graph *fg,
+                                                int graph_size)
 {
     _ljit_liveness_info **def = alloca(graph_size *
                                        sizeof(_ljit_liveness_info *));
@@ -147,6 +148,7 @@ void _ljit_compute_liveness(ljit_flow_graph *fg, int graph_size)
                                        sizeof(_ljit_liveness_info *));
     ljit_flow_graph **graph = alloca(graph_size *
                                      sizeof(ljit_flow_graph *));
+    ljit_interference_graph *ig = NULL;
 
     memset(in, 0, graph_size * sizeof(_ljit_liveness_info *));
     memset(out, 0, graph_size* sizeof(_ljit_liveness_info *));
@@ -158,6 +160,8 @@ void _ljit_compute_liveness(ljit_flow_graph *fg, int graph_size)
     _ljit_unmark_flow_graph(fg);
 
     _ljit_compute_in_out(def, use, in, out, graph, graph_size);
+
+    ig = _ljit_interference_graph_build_from_out(out, graph_size);
 
 
 #ifdef LJIT_DEBUG
@@ -183,4 +187,6 @@ void _ljit_compute_liveness(ljit_flow_graph *fg, int graph_size)
     _ljit_free_liveness_array(use, graph_size);
     _ljit_free_liveness_array(in, graph_size);
     _ljit_free_liveness_array(out, graph_size);
+
+    return ig;
 }
