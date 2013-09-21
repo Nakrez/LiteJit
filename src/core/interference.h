@@ -96,6 +96,7 @@ void _ljit_interference_graph_add_edge(ljit_interference_graph *ig,
 /**
 **  @brief  Build interference graph from out data of liveness analysis
 **  @param  out         The out data from liveness analysis
+**  @param  out_size    The size of out array
 **  @param  graph_size  The size of the graph
 **
 **  @return The interference graph if everything went well, NULL otherwise
@@ -103,6 +104,7 @@ void _ljit_interference_graph_add_edge(ljit_interference_graph *ig,
 
 ljit_interference_graph *
 _ljit_interference_graph_build_from_out(_ljit_liveness_info **out,
+                                        int out_size,
                                         int graph_size);
 
 /**

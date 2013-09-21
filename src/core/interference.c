@@ -62,6 +62,7 @@ void _ljit_interference_graph_add_edge(ljit_interference_graph *ig,
 
 ljit_interference_graph *
 _ljit_interference_graph_build_from_out(_ljit_liveness_info **out,
+                                        int out_size,
                                         int graph_size)
 {
     ljit_interference_graph *ig = NULL;
@@ -72,7 +73,7 @@ _ljit_interference_graph_build_from_out(_ljit_liveness_info **out,
         return NULL;
 
     /* Run through every data of the out data */
-    for (int i = 0; i < graph_size; ++i)
+    for (int i = 0; i < out_size; ++i)
     {
         ref = out[i];
 
@@ -82,6 +83,7 @@ _ljit_interference_graph_build_from_out(_ljit_liveness_info **out,
 
             while (tmp)
             {
+                printf("%u, %u\n", ref->elt, tmp->elt);
                 /*
                 ** If the value is the same as the current one don't create a
                 ** loop edge
