@@ -69,4 +69,40 @@ ljit_interference_graph *_ljit_interference_graph_new(int size);
 
 void _ljit_interference_graph(ljit_interference_graph *ig);
 
+/**
+**  @brief  Check if an edge already exists in the interference graph
+**  @param  ig  The graph you want to test if the edge exists
+**  @param  v1  The first vertex of the edge
+**  @param  v2  The second vertex of the edge
+**
+**  @return 1 if the edge exists, 0 if not
+*/
+
+int _ljit_interference_graph_edge_exists(ljit_interference_graph *ig,
+                                         unsigned short v1,
+                                         unsigned short v2);
+
+/**
+**  @brief  Add an edge to the interference graph
+**  @param  ig  The interference graph to which you want to add the edge
+**  @param  v1  The first vertex of the edge
+**  @param  v2  The second vertex of the edge
+*/
+
+void _ljit_interference_graph_add_edge(ljit_interference_graph *ig,
+                                       unsigned short v1,
+                                       unsigned short v2);
+
+/**
+**  @brief  Build interference graph from out data of liveness analysis
+**  @param  The out data from liveness analysis
+**  @param  The size of the graph
+**
+**  @return The interference graph if everything went well, NULL otherwise
+*/
+
+ljit_interference_graph *
+_ljit_interference_graph_build_from_out(_ljit_liveness_info **out,
+                                        int graph_size);
+
 #endif /* !INTERFERENCE_H */

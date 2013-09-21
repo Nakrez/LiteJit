@@ -26,3 +26,73 @@ void _ljit_interference_graph(ljit_interference_graph *ig)
     free(ig->graph);
     free(ig);
 }
+
+int _ljit_interference_graph_edge_exists(ljit_interference_graph *ig,
+                                         unsigned short v1,
+                                         unsigned short v2)
+{
+    _ljit_liveness_info *tmp = ig->graph[v1];
+
+    while (tmp)
+    {
+        if (tmp->elt == v2)
+            return 1;
+
+        tmp = tmp->next;
+    }
+
+    return 0;
+}
+
+void _ljit_interference_graph_add_edge(ljit_interference_graph *ig,
+                                       unsigned short v1,
+                                       unsigned short v2)
+{
+    /* If the edge exists nothing to do */
+    if (_ljit_interference_graph_edge_exists(ig, v1, v2))
+        return;
+
+    _ljit_liveness_info *e1 = _ljit_liveness_info_new(v1);
+    _ljit_liveness_info *e2 = _ljit_liveness_info_new(v2);
+
+
+    ig->graph[v1] = _ljit_liveness_add_head(ig->graph[v1], e2);
+    ig->graph[v2] = _ljit_liveness_add_head(ig->graph[v2], e1);
+}
+
+ljit_interference_graph *
+_ljit_interference_graph_build_from_out(_ljit_liveness_info **out,
+                                        int graph_size)
+{
+    ljit_interference_graph *ig = NULL;
+    _ljit_liveness_info *tmp = NULL;
+
+    if ((ig = _ljit_interference_graph_new(graph_size)) == NULL)
+        return NULL;
+
+    /* Run through every data of the out data */
+    for (int i = 0; i < graph_size; ++i)
+    {
+        tmp = out[i];
+
+        while (tmp)
+        {
+            /*
+            **  If the value is the same as the current one don't create a loop
+            **  edge
+            */
+            if (tmp->elt == i)
+            {
+                tmp = tmp->next;
+                continue;
+            }
+
+            /* Add the edge to the interference graph */
+            _ljit_interference_graph_add_edge(ig, i, tmp->elt);
+
+            tmp = tmp->next;
+        }
+    }
+
+    return ig;
+}
