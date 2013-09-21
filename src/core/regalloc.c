@@ -17,6 +17,10 @@ int _ljit_regalloc(ljit_function *fun)
 
     ig = _ljit_compute_liveness(fg, flow_graph_size);
 
+#ifdef LJIT_DEBUG
+    _ljit_interference_graph_debug(ig, "ljit_interference_graph.dot");
+#endif /* LJIT_DEBUG */
+
     /* Free the flow graph because it is not needed anymore */
     _ljit_free_flow_graph(fg);
 

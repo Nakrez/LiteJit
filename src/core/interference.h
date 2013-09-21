@@ -105,4 +105,13 @@ ljit_interference_graph *
 _ljit_interference_graph_build_from_out(_ljit_liveness_info **out,
                                         int graph_size);
 
+/**
+**  @brief  Export the interference graph to dot format
+**  @param  ig      The interference graph you want to export
+**  @param  file    The name of the file where you want to export the
+**                  interference graph
+*/
+
+void _ljit_interference_graph_debug(ljit_interference_graph *ig, char *file);
+
 #endif /* !INTERFERENCE_H */

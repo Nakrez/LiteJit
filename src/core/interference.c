@@ -96,3 +96,27 @@ _ljit_interference_graph_build_from_out(_ljit_liveness_info **out,
 
     return ig;
 }
+
+void _ljit_interference_graph_debug(ljit_interference_graph *ig, char *file)
+{
+    FILE *f = NULL;
+    _ljit_liveness_info *tmp = NULL;
+
+    if ((f = fopen(file, "w")) == NULL)
+        return;
+
+    fprintf(f, "graph interference_graph {\n");
+
+    for (int i = 0; i < ig->size; ++i)
+    {
+        tmp = ig->graph[i];
+
+        while (tmp)
+        {
+            fprintf(f, "%u -- %u\n", i, tmp->elt);
+            tmp = tmp->next;
+        }
+    }
+
+    fprintf(f, "}\n");
+}
