@@ -83,9 +83,9 @@ _ljit_interference_graph_build_from_out(_ljit_liveness_info **out,
             while (tmp)
             {
                 /*
-                 **  If the value is the same as the current one don't create a loop
-                 **  edge
-                 */
+                ** If the value is the same as the current one don't create a
+                ** loop edge
+                */
                 if (tmp->elt == ref->elt)
                 {
                     tmp = tmp->next;
@@ -133,4 +133,6 @@ void _ljit_interference_graph_debug(ljit_interference_graph *ig, char *file)
     }
 
     fprintf(f, "}\n");
+
+    fclose(f);
 }
