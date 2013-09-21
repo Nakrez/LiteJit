@@ -17,6 +17,7 @@ int _ljit_regalloc(ljit_function *fun)
 
     ig = _ljit_compute_liveness(fg, flow_graph_size, fun->uniq_index);
 
+    /* If debug options are on export the interference graph to dot format */
 #ifdef LJIT_DEBUG
     _ljit_interference_graph_debug(ig, "ljit_interference_graph.dot");
 #endif /* LJIT_DEBUG */

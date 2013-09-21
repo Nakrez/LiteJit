@@ -101,6 +101,8 @@ static void _ljit_compute_in_out(_ljit_liveness_info **def,
 
         for (int i = 0; i < graph_size; ++i)
         {
+            in_backup = NULL;
+            out_backup = NULL;
             in_backup = _ljit_copy_list(in[i], in_backup, LJIT_FORCE_COPY);
             out_backup = _ljit_copy_list(out[i], out_backup, LJIT_FORCE_COPY);
 
@@ -123,8 +125,8 @@ static void _ljit_compute_in_out(_ljit_liveness_info **def,
                 !_ljit_liveness_info_equals(out[i], out_backup))
                 tmp = 1;
 
-            /* _ljit_liveness_info_free(in_backup); */
-            /* _ljit_liveness_info_free(out_backup); */
+            _ljit_liveness_info_free(in_backup);
+            _ljit_liveness_info_free(out_backup);
         }
     }
 }
