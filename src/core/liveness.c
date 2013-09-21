@@ -176,7 +176,7 @@ ljit_interference_graph *_ljit_compute_liveness(ljit_flow_graph *fg,
     ig = _ljit_interference_graph_build_from_out(out, graph_size,
                                                  number_of_tmp);
 
-#ifdef lLJIT_DEBUG
+#ifdef LJIT_DEBUG
     printf("---- Def array ----\n");
     _ljit_dump_liveness_array(def, graph_size);
     printf("----           ----\n\n");

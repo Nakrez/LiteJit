@@ -32,7 +32,7 @@
 
 # include "typedef.h"
 
-# define LJIT_X86_USABLE_REGS 4
+# define LJIT_USABLE_REGS 4
 
 typedef enum
 {

@@ -6,7 +6,7 @@ void ljit_setup_platform(ljit_instance *instance)
     if (instance)
     {
         instance->target_arch = LJIT_ARCH_X86;
-        instance->usable_regs = LJIT_X86_USABLE_REGS;
+        instance->usable_regs = LJIT_USABLE_REGS;
     }
 }
 

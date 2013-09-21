@@ -7,13 +7,17 @@ GET_PARAM->
 MUL->
 [reg, reg]
 {
+    if (instr->ret_val->index != instr->op1->index)
+        ljit_x86_mov_reg_reg(code, instr->ret_val->index, instr->op1->index);
+
     ljit_x86_mul_reg_reg(code, instr->op1->index, instr->op2->index);
-    ljit_x86_mov_reg_reg(code, instr->ret_val->index, instr->op1->index);
 }
 RETURN->
 [reg]
 {
-    ljit_x86_mov_reg_reg(code, X86_EAX, instr->op1->index);
+    if (instr->op1->index != X86_EAX)
+        ljit_x86_mov_reg_reg(code, X86_EAX, instr->op1->index);
+
     ljit_x86_pop_reg(code, X86_EBP);
     ljit_x86_ret(code);
 }
