@@ -23,7 +23,7 @@ ljit_interference_graph *_ljit_interference_graph_new(int size)
         return NULL;
     }
 
-    if ((ig->graph = calloc(1, size)) == NULL)
+    if ((ig->colors = calloc(1, size)) == NULL)
     {
         free(ig->graph);
         free(ig);
