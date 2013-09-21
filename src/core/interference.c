@@ -66,6 +66,7 @@ _ljit_interference_graph_build_from_out(_ljit_liveness_info **out,
 {
     ljit_interference_graph *ig = NULL;
     _ljit_liveness_info *tmp = NULL;
+    _ljit_liveness_info *ref = NULL;
 
     if ((ig = _ljit_interference_graph_new(graph_size)) == NULL)
         return NULL;
@@ -73,24 +74,31 @@ _ljit_interference_graph_build_from_out(_ljit_liveness_info **out,
     /* Run through every data of the out data */
     for (int i = 0; i < graph_size; ++i)
     {
-        tmp = out[i];
+        ref = out[i];
 
-        while (tmp)
+        while (ref)
         {
-            /*
-            **  If the value is the same as the current one don't create a loop
-            **  edge
-            */
-            if (tmp->elt == i)
+            tmp = out[i];
+
+            while (tmp)
             {
+                /*
+                 **  If the value is the same as the current one don't create a loop
+                 **  edge
+                 */
+                if (tmp->elt == ref->elt)
+                {
+                    tmp = tmp->next;
+                    continue;
+                }
+
+                /* Add the edge to the interference graph */
+                _ljit_interference_graph_add_edge(ig, ref->elt, tmp->elt);
+
                 tmp = tmp->next;
-                continue;
             }
 
-            /* Add the edge to the interference graph */
-            _ljit_interference_graph_add_edge(ig, i, tmp->elt);
-
-            tmp = tmp->next;
+            ref = ref->next;
         }
     }
 
