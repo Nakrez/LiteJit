@@ -30,6 +30,7 @@ _ljit_liveness_info *_ljit_liveness_info_minus(_ljit_liveness_info *li,
 {
     _ljit_liveness_info *to_remove = rem;
     _ljit_liveness_info *tmp = NULL;
+    _ljit_liveness_info *guard = NULL;
 
     /* Try to remove all element on the rem list */
     while (to_remove)
@@ -44,6 +45,8 @@ _ljit_liveness_info *_ljit_liveness_info_minus(_ljit_liveness_info *li,
             {
                 if (tmp == li)
                     li = tmp->next;
+                else
+                    guard->next = tmp->next;
 
                 /* Destroy the element */
                 free(tmp);
@@ -52,6 +55,7 @@ _ljit_liveness_info *_ljit_liveness_info_minus(_ljit_liveness_info *li,
                 break;
             }
 
+            guard = tmp;
             tmp = tmp->next;
         }
 

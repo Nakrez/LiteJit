@@ -101,10 +101,10 @@ static void _ljit_compute_in_out(_ljit_liveness_info **def,
 
         for (int i = 0; i < graph_size; ++i)
         {
-            in_backup = NULL;
-            out_backup = NULL;
-            in_backup = _ljit_copy_list(in[i], in_backup, LJIT_FORCE_COPY);
-            out_backup = _ljit_copy_list(out[i], out_backup, LJIT_FORCE_COPY);
+            in_backup = _ljit_copy_list(in[i], NULL, LJIT_FORCE_COPY);
+            out_backup = _ljit_copy_list(out[i], NULL, LJIT_FORCE_COPY);
+
+            _ljit_liveness_info_free(in[i]);
 
             /* in[i] := use[i] U (out[i] - def[i]) */
             out[i] = _ljit_liveness_info_minus(out[i], def[i]);
