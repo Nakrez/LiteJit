@@ -104,6 +104,7 @@ static void _ljit_compute_in_out(_ljit_liveness_info **def,
             in_backup = _ljit_copy_list(in[i], NULL, LJIT_FORCE_COPY);
             out_backup = _ljit_copy_list(out[i], NULL, LJIT_FORCE_COPY);
 
+            /* We don't need in[i] anymore since we are recomputing it */
             _ljit_liveness_info_free(in[i]);
 
             /* in[i] := use[i] U (out[i] - def[i]) */
@@ -141,6 +142,7 @@ ljit_interference_graph *_ljit_compute_liveness(ljit_flow_graph *fg,
                                                 int graph_size,
                                                 int number_of_tmp)
 {
+    /* Use of alloca here to gain some speed */
     _ljit_liveness_info **def = alloca(graph_size *
                                        sizeof(_ljit_liveness_info *));
     _ljit_liveness_info **use = alloca(graph_size *
@@ -156,14 +158,21 @@ ljit_interference_graph *_ljit_compute_liveness(ljit_flow_graph *fg,
     memset(in, 0, graph_size * sizeof(_ljit_liveness_info *));
     memset(out, 0, graph_size* sizeof(_ljit_liveness_info *));
 
+    /* Compute def and use values for each node of the graph */
     _ljit_compute_def_use(fg, def, use);
     _ljit_unmark_flow_graph(fg);
 
+    /*
+    ** Makes an array that represent the flow graph
+    ** (allow access with node number)
+    */
     _ljit_flow_graph_array(fg, graph);
     _ljit_unmark_flow_graph(fg);
 
+    /* Compute in/out values for each node of the graph */
     _ljit_compute_in_out(def, use, in, out, graph, graph_size);
 
+    /* Exploit result of out values to build the interference graph */
     ig = _ljit_interference_graph_build_from_out(out, graph_size,
                                                  number_of_tmp);
 
