@@ -17,3 +17,12 @@ ljit_interference_graph *_ljit_interference_graph_new(int size)
 
     return ig;
 }
+
+void _ljit_interference_graph(ljit_interference_graph *ig)
+{
+    for (int i = 0; i < ig->size; ++i)
+        _ljit_liveness_info_free(ig->graph[i]);
+
+    free(ig->graph);
+    free(ig);
+}

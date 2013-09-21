@@ -62,4 +62,11 @@ struct _ljit_interference_graph_s
 
 ljit_interference_graph *_ljit_interference_graph_new(int size);
 
+/**
+**  @brief  Destroy an interference graph
+**  @param  The interference graph you want to destroy
+*/
+
+void _ljit_interference_graph(ljit_interference_graph *ig);
+
 #endif /* !INTERFERENCE_H */
