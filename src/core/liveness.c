@@ -129,6 +129,12 @@ static void _ljit_compute_in_out(_ljit_liveness_info **def,
     }
 }
 
+void _ljit_free_liveness_array(_ljit_liveness_info **array, int array_size)
+{
+    for (int i = 0; i < array_size; ++i)
+        _ljit_liveness_info_free(array[i]);
+}
+
 void _ljit_compute_liveness(ljit_flow_graph *fg, int graph_size)
 {
     _ljit_liveness_info **def = alloca(graph_size *
@@ -153,6 +159,7 @@ void _ljit_compute_liveness(ljit_flow_graph *fg, int graph_size)
 
     _ljit_compute_in_out(def, use, in, out, graph, graph_size);
 
+
 #ifdef LJIT_DEBUG
     printf("---- Def array ----\n");
     _ljit_dump_liveness_array(def, graph_size);
@@ -170,4 +177,10 @@ void _ljit_compute_liveness(ljit_flow_graph *fg, int graph_size)
     _ljit_dump_liveness_array(out, graph_size);
     printf("----           ----\n\n");
 #endif /* LJIT_DEBUG */
+
+    /* Release memory */
+    _ljit_free_liveness_array(def, graph_size);
+    _ljit_free_liveness_array(use, graph_size);
+    _ljit_free_liveness_array(in, graph_size);
+    _ljit_free_liveness_array(out, graph_size);
 }
