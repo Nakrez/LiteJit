@@ -55,7 +55,7 @@ struct _ljit_interference_graph_s
 
 /**
 **  @brief  Create an empty new interference graph
-**  @param  The size of the interference graph
+**  @param  size    The size of the interference graph
 **
 **  @return The new interference graph if everything went well, NULL otherwise
 */
@@ -64,7 +64,7 @@ ljit_interference_graph *_ljit_interference_graph_new(int size);
 
 /**
 **  @brief  Destroy an interference graph
-**  @param  The interference graph you want to destroy
+**  @param  ig  The interference graph you want to destroy
 */
 
 void _ljit_interference_graph_free(ljit_interference_graph *ig);
@@ -95,8 +95,8 @@ void _ljit_interference_graph_add_edge(ljit_interference_graph *ig,
 
 /**
 **  @brief  Build interference graph from out data of liveness analysis
-**  @param  The out data from liveness analysis
-**  @param  The size of the graph
+**  @param  out         The out data from liveness analysis
+**  @param  graph_size  The size of the graph
 **
 **  @return The interference graph if everything went well, NULL otherwise
 */
