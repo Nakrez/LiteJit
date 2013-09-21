@@ -119,9 +119,15 @@ void _ljit_interference_graph_debug(ljit_interference_graph *ig, char *file)
     {
         tmp = ig->graph[i];
 
+        if (!tmp)
+        {
+            fprintf(f, "%u;\n", i);
+            continue;
+        }
+
         while (tmp)
         {
-            fprintf(f, "%u -- %u\n", i, tmp->elt);
+            fprintf(f, "%u -- %u;\n", i, tmp->elt);
             tmp = tmp->next;
         }
     }

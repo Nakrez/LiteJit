@@ -41,10 +41,12 @@
 **  @brief  Compute liveness information on a control flow graph.
 **  @oaram  fg          The flow graph on which you want to compute liveness
 **                      analysis.
-**  @param  graph_size  The number of node of the control flow graph.
+**  @param  graph_size      The number of node of the control flow graph.
+**  @param  number_of_tmp   The number of node of the interference graph.
 */
 
 ljit_interference_graph *_ljit_compute_liveness(ljit_flow_graph *fg,
-                                                int graph_size);
+                                                int graph_size,
+                                                int number_of_tmp);
 
 #endif /* !LIVENESS_H */
