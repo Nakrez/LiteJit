@@ -21,28 +21,28 @@
 */
 
 /**
-**  @file   regalloc.h
-**  @brief  All register allocation related functions
+**  @file   color.h
+**  @brief  Color the interference graph
 **  @author Baptiste Covolato <b.covolato@gmail.com>
-**  @date   19 August 2013
+**  @date   28 September 2013
 */
 
-#ifndef REGALLOC_H
-# define REGALLOC_H
+#ifndef COLOR_H
+# define COLOR_H
 
-# include "internal.h"
-# include "flow-graph.h"
-# include "liveness.h"
-# include "color.h"
+# include <assert.h>
+# include <alloca.h>
+
+# include <ljit/core/arch.h>
+
+# include "interference.h"
+# include "color-stack.h"
 
 /**
-**  @brief  Compute the register allocation
-**  @param  fun The function on which you want to compute the register
-**              allocation
-**
-**  @return 0 if everything went well, -1 otherwise
+**  @brief  Color an interference graph
+**  @param  ig  The interference graph you want to color
 */
 
-int _ljit_regalloc(ljit_function *fun);
+void _ljit_color_graph(ljit_interference_graph *ig);
 
-#endif /* !REGALLOC_H */
+#endif /* !COLOR_H */
