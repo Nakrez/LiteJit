@@ -63,4 +63,11 @@ struct _ljit_color_stack_s
 
 _ljit_color_stack *_ljit_color_stack_new(unsigned int size);
 
+/**
+**  @brief  Destroy a color stack
+**  @param  The color stack you want to free
+*/
+
+void _ljit_colot_stack_free(_ljit_color_stack *cs);
+
 #endif /* !COLOR_STACK_H */

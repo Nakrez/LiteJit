@@ -25,3 +25,13 @@ _ljit_color_stack *_ljit_color_stack_new(unsigned int size)
 
     return cs;
 }
+
+void _ljit_colot_stack_free(_ljit_color_stack *cs)
+{
+    if (!cs)
+        return;
+
+    free(cs->node_vertex);
+    free(cs->edge_number);
+    free(cs);
+}
