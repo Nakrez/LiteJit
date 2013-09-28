@@ -75,6 +75,8 @@ ljit_elf_section *_ljit_new_elf_section()
         return NULL;
     }
 
+    section->next = NULL;
+
     return section;
 }
 
