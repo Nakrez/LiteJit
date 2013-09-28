@@ -154,4 +154,15 @@ int _ljit_liveness_info_equals(_ljit_liveness_info *li1,
 
 unsigned int _ljit_liveness_info_size(_ljit_liveness_info *li);
 
+/**
+**  @brief  Remove an element from liveness info list
+**  @param  li  The liveness info list where you want to remove the element
+**  @param  elt The element you want to remove from the liveness info list
+**
+**  @return The new head of the list
+*/
+
+_ljit_liveness_info *_ljit_liveness_info_remove(_ljit_liveness_info *li,
+                                                unsigned short elt);
+
 #endif /* !LIVENESS_UTILS_H */

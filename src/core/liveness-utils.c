@@ -195,3 +195,37 @@ unsigned int _ljit_liveness_info_size(_ljit_liveness_info *li)
 
     return size;
 }
+
+_ljit_liveness_info *_ljit_liveness_info_remove(_ljit_liveness_info *li,
+                                                unsigned short elt)
+{
+    _ljit_liveness_info *tmp = NULL;
+    _ljit_liveness_info *guard = NULL;
+
+    if (!li)
+        return NULL;
+
+    if (li->elt == elt)
+    {
+        tmp = li->next;
+        free(li);
+        return tmp;
+    }
+
+    tmp = li->next;
+    guard = li;
+
+    while (tmp)
+    {
+        if (tmp->elt == elt)
+        {
+            guard->next = tmp->next;
+            free(tmp);
+        }
+
+        tmp = tmp->next;
+        guard = guard->next;
+    }
+
+    return li;
+}
