@@ -37,6 +37,7 @@ set(ljit_src
             src/core/liveness.c
             src/core/liveness-utils.c
             src/core/interference.c
+            src/core/color-stack.c
 
             src/elf/elf.c
             src/elf/header.c
