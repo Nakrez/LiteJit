@@ -219,8 +219,10 @@ _ljit_liveness_info *_ljit_liveness_info_remove(_ljit_liveness_info *li,
     {
         if (tmp->elt == elt)
         {
+            /* We assume that all elements in a liveness info list are unique */
             guard->next = tmp->next;
             free(tmp);
+            break;
         }
 
         tmp = tmp->next;
