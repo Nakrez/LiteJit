@@ -182,3 +182,16 @@ int _ljit_liveness_info_equals(_ljit_liveness_info *li1,
 
     return 1;
 }
+
+unsigned int _ljit_liveness_info_size(_ljit_liveness_info *li)
+{
+    unsigned int size = 0;
+
+    while (li)
+    {
+        ++size;
+        li = li->next;
+    }
+
+    return size;
+}

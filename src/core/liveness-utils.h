@@ -144,4 +144,14 @@ void _ljit_liveness_info_dump(_ljit_liveness_info *li, char *sep);
 
 int _ljit_liveness_info_equals(_ljit_liveness_info *li1,
                                _ljit_liveness_info *li2);
+
+/**
+**  @brief  Get the size of a liveness info list
+**  @param  li  The liveness info list you want to get the size
+**
+**  @return The size of the liveness info list @a li
+*/
+
+unsigned int _ljit_liveness_info_size(_ljit_liveness_info *li);
+
 #endif /* !LIVENESS_UTILS_H */
