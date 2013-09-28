@@ -68,6 +68,17 @@ _ljit_color_stack *_ljit_color_stack_new(unsigned int size);
 **  @param  The color stack you want to free
 */
 
-void _ljit_colot_stack_free(_ljit_color_stack *cs);
+void _ljit_color_stack_free(_ljit_color_stack *cs);
+
+/**
+**  @brief  Push a new element on the stack
+**  @param  cs      The stack where you want to push the new element
+**  @param  num     The content of the edge
+**  @param  vertex  The vertex of the edge you want to push
+*/
+
+void _ljit_color_stack_push(_ljit_color_stack *cs,
+                            int num,
+                            _ljit_liveness_info *edges);
 
 #endif /* !COLOR_STACK_H */
