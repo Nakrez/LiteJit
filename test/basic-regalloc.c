@@ -43,7 +43,9 @@ int main(void)
 
     ljit_function_compile(fun);
 
-    ljit_elf_debug_function(fun, "./elf_basic_regalloc");
+    ljit_bytecode_dumper(stdout, fun);
+
+    /* ljit_elf_debug_function(fun, "./elf_basic_regalloc"); */
 
     ljit_call_function(fun, fun_params, &fun_ret);
 

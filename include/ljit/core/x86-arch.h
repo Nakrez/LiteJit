@@ -34,6 +34,7 @@
 
 # define LJIT_USABLE_REGS 4
 
+
 typedef enum
 {
     X86_EAX = 0,
