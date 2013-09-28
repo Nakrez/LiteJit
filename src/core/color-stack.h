@@ -101,4 +101,14 @@ void _ljit_color_stack_push(_ljit_color_stack *cs,
 
 _ljit_liveness_info *_ljit_color_stack_pop(_ljit_color_stack *cs, int *num);
 
+/**
+**  @brief  Check if an element is on the stack
+**  @param  cs  The stack where you want to check if an element is present
+**  @param  num The element you want to check the present
+**
+**  @return 1 if the element is present, 0 otherwise
+*/
+
+int _ljit_color_stack_is_present(_ljit_color_stack *cs, int num);
+
 #endif /* !COLOR_STACK_H */

@@ -64,3 +64,17 @@ _ljit_liveness_info *_ljit_color_stack_pop(_ljit_color_stack *cs, int *num)
 
     return cs->node_vertex[cs->size];
 }
+
+int _ljit_color_stack_is_present(_ljit_color_stack *cs, int num)
+{
+    if (!cs)
+        return 0;
+
+    for (unsigned int i = 0; i < cs->size; ++i)
+    {
+        if (cs->edge_number[i] == num)
+            return 1;
+    }
+
+    return 0;
+}
