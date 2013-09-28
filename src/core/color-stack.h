@@ -71,6 +71,15 @@ _ljit_color_stack *_ljit_color_stack_new(unsigned int size);
 void _ljit_color_stack_free(_ljit_color_stack *cs);
 
 /**
+**  @brief  Check if a color stack is empty
+**  @param  cs  The stack you want to check if it is empty
+**
+**  @return 1 if the stack is empty, 0 otherwise
+*/
+
+int _ljit_color_stack_is_empty(_ljit_color_stack *cs);
+
+/**
 **  @brief  Push a new element on the stack
 **  @param  cs      The stack where you want to push the new element
 **  @param  num     The content of the edge

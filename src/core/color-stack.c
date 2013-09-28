@@ -36,10 +36,21 @@ void _ljit_color_stack_free(_ljit_color_stack *cs)
     free(cs);
 }
 
+int _ljit_color_stack_is_empty(_ljit_color_stack *cs)
+{
+    if (!cs)
+        return 1;
+
+    return cs->size == 0;
+}
+
 void _ljit_color_stack_push(_ljit_color_stack *cs,
                             int num,
                             _ljit_liveness_info *edges)
 {
+    if (!cs)
+        return;
+
     cs->edge_number[cs->size++] = num;
     cs->node_vertex[cs->size] = edges;
 }
