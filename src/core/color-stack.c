@@ -54,3 +54,13 @@ void _ljit_color_stack_push(_ljit_color_stack *cs,
     cs->edge_number[cs->size++] = num;
     cs->node_vertex[cs->size] = edges;
 }
+
+_ljit_liveness_info *_ljit_color_stack_pop(_ljit_color_stack *cs, int *num)
+{
+    if (!cs || cs->size == 0)
+        return NULL;
+
+    *num = cs->edge_number[--cs->size];
+
+    return cs->node_vertex[cs->size];
+}

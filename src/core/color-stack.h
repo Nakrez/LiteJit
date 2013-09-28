@@ -90,4 +90,15 @@ void _ljit_color_stack_push(_ljit_color_stack *cs,
                             int num,
                             _ljit_liveness_info *edges);
 
+
+/**
+**  @brief  Pop an element from a color stack
+**  @param  cs  The color stack where you want to pop an element
+**  @param  num The number of the element popped
+**
+**  @return The vertex of the element popped, NULL if the stack is empty
+*/
+
+_ljit_liveness_info *_ljit_color_stack_pop(_ljit_color_stack *cs, int *num);
+
 #endif /* !COLOR_STACK_H */
